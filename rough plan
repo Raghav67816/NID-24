@@ -1,0 +1,1 @@
+EMG Signals -> ADS1239 ---(converted to digital)--> teensy 4.0 -> extract features -> to model -> to back to pc 
