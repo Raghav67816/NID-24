@@ -1,0 +1,9 @@
+{
+    "primary-color": "#00a6ff",
+    "primary-hover-color": "#007bbd",
+    "secondary-color": "#333333",
+    "danger-color": "#39c440",
+    "success-color": "#02c726",
+    "primary-background": "#111111",
+    "secondary-background": "#222222"
+}
