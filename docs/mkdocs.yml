@@ -1,3 +1,10 @@
-site_name: NID-24
+site_name: NID-24 - An EMG Based Human Device Interface System
 theme:
-  name: readthedocs
+  name: material
+  icon:
+      repo: fontawesome/brands/git-alt 
+
+markdown_extensions:
+    - admonition
+    - pymdownx.details
+    - pymdownx.superfences
