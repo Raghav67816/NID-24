@@ -6,8 +6,9 @@ manages functions related to graphs
 """
 
 import pyqtgraph as pg
+from PySide6.QtCore import QSize
 from PySide6.QtGui import QAction
-from PySide6.QtWidgets import QLayout, QMenu
+from PySide6.QtWidgets import QLayout, QMenu, QSizePolicy, QColorDialog
 
 def prepare_graphs(layout: QLayout) -> str:
     ch1 = pg.PlotWidget()
@@ -24,9 +25,37 @@ def prepare_graphs(layout: QLayout) -> str:
         channel_name = f"Channel {index+1}"
         graph = graphs[channel]
         graph.setTitle(channel_name)
+        graph.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         layout.addWidget(graphs[channel])
 
     return graphs
+
+def on_active_menu_triggered(action, channels: dict):
+    channel_name = action.text().lower().replace(" ", "_")
+    graph = channels[channel_name]
+    if action.isChecked(): # hidden
+        graph.show()
+    else:
+        graph.setMinimumSize(channels[channel_name].size())
+        graph.hide()
+
+def change_graph_color(color, graph):
+    print(f"type of color: {type(color.toRgb())}")
+    graph.getAxis("left").setPen(color.toRgb())
+    graph.getAxis("bottom").setPen(color.toRgb())
+
+    
+def show_color_dialog(graph_name: str, channels:dict):
+    graph_name = graph_name.lower().replace(" ", "_")
+    color_dialog = QColorDialog()
+    color_dialog.colorSelected.connect(lambda color: change_graph_color(color, channels[graph_name]))
+    color_dialog.show()
+    color_dialog.exec()
+
+
+def on_set_color(action: QAction, channels: dict):
+    show_color_dialog(action.text(), channels)
+    print(action.text())
 
 
 def prepare_menu(app, channels: dict, menu: QMenu):
@@ -46,4 +75,6 @@ def prepare_menu(app, channels: dict, menu: QMenu):
         color_menu.addAction(color_action)
 
     menu.addMenu(active_gmenu)
+    active_gmenu.triggered.connect(lambda checked: on_active_menu_triggered(checked, channels))
+    color_menu.triggered.connect(lambda checked: on_set_color(checked, channels))
     menu.addMenu(color_menu)

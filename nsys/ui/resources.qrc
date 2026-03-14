@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="icons">
     <file>tools.png</file>
+    <file>connection.png</file>
   </qresource>
 </RCC>

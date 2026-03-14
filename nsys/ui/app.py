@@ -17,7 +17,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QFrame, QGroupBox, QHBoxLayout,
     QLabel, QMainWindow, QSizePolicy, QSplitter,
-    QVBoxLayout, QWidget)
+    QToolButton, QVBoxLayout, QWidget)
 from ui import resources_rc
 
 class Ui_AppWindow(object):
@@ -40,6 +40,22 @@ class Ui_AppWindow(object):
         self.splitterLayout.setSpacing(0)
         self.splitterLayout.setObjectName(u"splitterLayout")
         self.splitterLayout.setContentsMargins(0, 0, 0, 0)
+        self.topBar = QFrame(self.container)
+        self.topBar.setObjectName(u"topBar")
+        self.topBar.setMinimumSize(QSize(0, 40))
+        self.topBar.setMaximumSize(QSize(16777215, 40))
+        self.topBar.setFrameShape(QFrame.Shape.StyledPanel)
+        self.topBar.setFrameShadow(QFrame.Shadow.Raised)
+        self.boardBtn = QToolButton(self.topBar)
+        self.boardBtn.setObjectName(u"boardBtn")
+        self.boardBtn.setGeometry(QRect(10, 10, 26, 25))
+        icon = QIcon()
+        icon.addFile(u":/icons/connection.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.boardBtn.setIcon(icon)
+        self.boardBtn.setIconSize(QSize(20, 20))
+
+        self.splitterLayout.addWidget(self.topBar)
+
         self.splitter = QSplitter(self.container)
         self.splitter.setObjectName(u"splitter")
         self.splitter.setOrientation(Qt.Orientation.Horizontal)
@@ -83,15 +99,16 @@ class Ui_AppWindow(object):
 
         self.splitterLayout.addWidget(self.splitter)
 
-        self.topBar = QFrame(self.container)
-        self.topBar.setObjectName(u"topBar")
-        self.topBar.setMaximumSize(QSize(16777215, 40))
-        self.topBar.setFrameShape(QFrame.Shape.StyledPanel)
-        self.topBar.setFrameShadow(QFrame.Shadow.Raised)
-        self.horizontalLayout_3 = QHBoxLayout(self.topBar)
+        self.bottomBar = QFrame(self.container)
+        self.bottomBar.setObjectName(u"bottomBar")
+        self.bottomBar.setMinimumSize(QSize(0, 40))
+        self.bottomBar.setMaximumSize(QSize(16777215, 40))
+        self.bottomBar.setFrameShape(QFrame.Shape.StyledPanel)
+        self.bottomBar.setFrameShadow(QFrame.Shadow.Raised)
+        self.horizontalLayout_3 = QHBoxLayout(self.bottomBar)
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.horizontalLayout_3.setContentsMargins(-1, 0, -1, 0)
-        self.statusLabel = QFrame(self.topBar)
+        self.statusLabel = QFrame(self.bottomBar)
         self.statusLabel.setObjectName(u"statusLabel")
         self.statusLabel.setStyleSheet(u"QFrame{\n"
 "	border: none\n"
@@ -116,7 +133,7 @@ class Ui_AppWindow(object):
         self.horizontalLayout_3.addWidget(self.statusLabel, 0, Qt.AlignmentFlag.AlignRight)
 
 
-        self.splitterLayout.addWidget(self.topBar, 0, Qt.AlignmentFlag.AlignLeft)
+        self.splitterLayout.addWidget(self.bottomBar, 0, Qt.AlignmentFlag.AlignLeft)
 
 
         self.verticalLayout.addWidget(self.container)
@@ -130,6 +147,7 @@ class Ui_AppWindow(object):
 
     def retranslateUi(self, AppWindow):
         AppWindow.setWindowTitle(QCoreApplication.translate("AppWindow", u"NID-24 Analysis Software", None))
+        self.boardBtn.setText("")
         self.ds_box.setTitle(QCoreApplication.translate("AppWindow", u"Data Simulator", None))
         self.featuresBox.setTitle(QCoreApplication.translate("AppWindow", u"Features", None))
         self.statusText.setText(QCoreApplication.translate("AppWindow", u"Status:", None))

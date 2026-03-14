@@ -118,3 +118,15 @@ QGroupBox::title{
 #left_container{
 	background-color: "$secondary-background"
 }
+
+#devicesContainer{
+	border: 1px solid white;
+}
+
+QListWidgetItem{
+	color: white;
+}
+
+QListWidget{
+	color: white;
+}
