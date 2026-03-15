@@ -57,7 +57,7 @@
        <property name="bottomMargin">
         <number>0</number>
        </property>
-       <item>
+       <item alignment="Qt::AlignmentFlag::AlignLeft">
         <widget class="QFrame" name="topBar">
          <property name="minimumSize">
           <size>
@@ -77,29 +77,46 @@
          <property name="frameShadow">
           <enum>QFrame::Shadow::Raised</enum>
          </property>
-         <widget class="QToolButton" name="boardBtn">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>10</y>
-            <width>26</width>
-            <height>25</height>
-           </rect>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <property name="spacing">
+           <number>0</number>
           </property>
-          <property name="text">
-           <string/>
+          <property name="leftMargin">
+           <number>12</number>
           </property>
-          <property name="icon">
-           <iconset resource="resources.qrc">
-            <normaloff>:/icons/connection.png</normaloff>:/icons/connection.png</iconset>
+          <property name="topMargin">
+           <number>0</number>
           </property>
-          <property name="iconSize">
-           <size>
-            <width>20</width>
-            <height>20</height>
-           </size>
+          <property name="rightMargin">
+           <number>12</number>
           </property>
-         </widget>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QToolButton" name="boardBtn">
+            <property name="minimumSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="resources.qrc">
+              <normaloff>:/icons/connection.png</normaloff>:/icons/connection.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>
@@ -171,6 +188,52 @@
              <property name="title">
               <string>Data Simulator</string>
              </property>
+             <layout class="QVBoxLayout" name="verticalLayout_3">
+              <item>
+               <widget class="QComboBox" name="deviceSelectionBox">
+                <item>
+                 <property name="text">
+                  <string>Simulated</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item>
+               <layout class="QFormLayout" name="dsParamLayout">
+                <item row="0" column="0">
+                 <widget class="QLabel" name="freqLabel">
+                  <property name="text">
+                   <string>Frequency:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QLineEdit" name="freqInput"/>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="noiseLabel">
+                  <property name="text">
+                   <string>Noise Level:</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QSlider" name="noiseLevel">
+                  <property name="orientation">
+                   <enum>Qt::Orientation::Horizontal</enum>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="QPushButton" name="toggleDataBtn">
+                <property name="text">
+                 <string>Start</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </widget>
            </item>
            <item>
