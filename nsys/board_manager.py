@@ -32,7 +32,7 @@ class BoardManager(QDialog):
         # configure serial port
         self.serial_port.setPortName("/dev/rfcomm0")
         self.serial_port.setReadBufferSize(1024)
-        self.serial_port.setBaudRate(QSerialPort.Baud11520) # check this
+        # self.serial_port.setBaudRate(QSerialPort.Baud11520) # check this
 
         self.on_device_selected = Signal(str)
         self.on_rfcomm_started = Signal(str)
@@ -40,7 +40,7 @@ class BoardManager(QDialog):
 
         self.refresh_view()
 
-        self.on_device_selected.connect(__on_device_selected__)
+        # self.on_device_selected.connect(__on_device_selected__)
         self.ui.refreshBtn.clicked.connect(self.refresh_view)
 
     def refresh_view(self):
