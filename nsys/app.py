@@ -8,6 +8,7 @@ from PySide6.QtWidgets import QApplication, QMainWindow, QMenu, QMessageBox
 
 import pyqtgraph as pg
 
+from connection_manager import RFComm
 from board_manager import BoardManager
 from graphs_manager import prepare_graphs, prepare_menu
 
@@ -15,25 +16,38 @@ class AppWindow(QMainWindow):
     def __init__(self):
         super(AppWindow, self).__init__()
 
+        """
+        Setup Ui here
+        """
         self.ui = Ui_AppWindow()
         self.ui.setupUi(self)
         self.setStyleSheet(prepare_sheet())
-        
-        self.menu = QMenu(self)
-
-        # define utilities here
-        self.board_manager = BoardManager()
-        self.board_manager.on_rfcomm_started.connect(self.on_rfcomm_started)
-        self.board_manager.on_rfcomm_finished.connect(self.on_rfcomm_finished)
-
-        self.ui.boardBtn.clicked.connect(self.board_manager.show_board_manager)
-        self.channels = prepare_graphs(self.ui.graphLayout)
-        prepare_menu(self, self.channels, self.menu)
 
         self.ui.graphLayout.setSpacing(12)
         self.ui.graphLayout.setContentsMargins(QMargins(12, 12, 12, 12))
 
+        """
+        Define all utilities here.
+        """
+        self.menu = QMenu(self)
+        self.conn_manager = RFComm(self)
+        self.board_manager = BoardManager()
+        
+        self.channels = prepare_graphs(self.ui.graphLayout)
+        prepare_menu(self, self.channels, self.menu)
 
+        """
+        Connect to signals here
+        """
+        self.ui.boardBtn.clicked.connect(self.board_manager.show_board_manager)
+        self.board_manager.device_selected.connect(self.on_device_selected)
+        self.ui.toggleDataBtn.clicked.connect(self.on_start_clicked)
+
+        self.conn_manager.com_started.connect(self.on_rfcomm_started)
+        self.conn_manager.com_finished.connect(self.on_rfcomm_finished)
+        
+
+    # override default context menu
     def contextMenuEvent(self, event):
         self.menu.exec(event.globalPos())
 
@@ -42,21 +56,38 @@ class AppWindow(QMainWindow):
     """
     def on_rfcomm_started(self):
         self.ui.statusVal.setText("CONNECTED")
-        self.board_manager.serial_port.open(QIODeviceBase.OpenModeFlag.ReadOnly)
 
-    def on_rfcomm_finished(self, code: int):
+    def on_rfcomm_finished(self, code: int, desc: str):
         self.ui.statusVal.setText("DISCONNECTED")
-        if code != 0:
-            msgBox = QMessageBox()
-            msgBox.setWindowTitle("Connection Error")
-            msgBox.setText("RFCOMM process exited with non 0 exit code.")
-            msgBox.setStandardButtons(QMessageBox.StandardButton.Close)
-            msgBox.show()
-            msgBox.exec()
 
-    def read_serial_data(self):
-        while self.board_manager.serial_port.canReadLine():
-            self.process_data(self.board_manager.serial_port.readLine().data.decode('utf-8').strip())            
+    """
+    once user selected target board from Board Manager dialog
+    add it to data sources list
+    """
+    def on_device_selected(self, device_addr: str):
+        self.ui.deviceSelectionBox.insertItem(0, device_addr)
+
+
+    """
+    start simulating data
+    first checks if port is already bounded or not.
+    """
+    def on_start_clicked(self):
+        self.conn_manager.start_server()
+        if not self.conn_manager.isReading:
+            self.conn_manager.isReading = True
+            self.ui.toggleDataBtn.setText("Stop")
+
+        else:
+            self.conn_manager = False
+            self.ui.toggleDataBtn.setText("Start")
+
+
+    def closeEvent(self, event):
+        print("Exiting")
+        self.conn_manager.server_shutdown()
+        event.accept()
+        
 
 app = QApplication()
 app_win = AppWindow()

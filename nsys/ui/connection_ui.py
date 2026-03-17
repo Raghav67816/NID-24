@@ -19,6 +19,7 @@ from PySide6.QtWidgets import (QAbstractButton, QApplication, QDialog, QDialogBu
     QFrame, QHBoxLayout, QLabel, QListWidget,
     QListWidgetItem, QSizePolicy, QToolButton, QVBoxLayout,
     QWidget)
+from ui import resources_rc
 
 class Ui_DeviceConnDialog(object):
     def setupUi(self, DeviceConnDialog):
@@ -41,6 +42,10 @@ class Ui_DeviceConnDialog(object):
 
         self.refreshBtn = QToolButton(self.header)
         self.refreshBtn.setObjectName(u"refreshBtn")
+        icon = QIcon()
+        icon.addFile(u":/icons/refresh.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.refreshBtn.setIcon(icon)
+        self.refreshBtn.setIconSize(QSize(20, 20))
 
         self.horizontalLayout.addWidget(self.refreshBtn)
 
