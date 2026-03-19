@@ -1,9 +1,66 @@
-import uuid
+import numpy as np
+from os import kill
+from signal import SIGINT
+from scipy.signal import decimate
 
-from PySide6.QtSerialPort import QSerialPort
-from PySide6.QtCore import QProcess, Signal, QObject, QIODevice
+from PySide6.QtWidgets import QMessageBox
+from PySide6.QtCore import QProcess, Signal, QObject, QTimer
+from PySide6.QtSerialPort import QSerialPort, QSerialPortInfo
 
-from PySide6.QtBluetooth import QBluetoothServer, QBluetoothServiceInfo, QBluetoothSocket, QBluetoothLocalDevice, QBluetoothServiceInfo, QBluetoothUuid
+
+"""
+Connect your android app before you start the reader
+"""
+class DataReader(QObject):
+    data_ready = Signal(object)
+
+    def __init__(self):
+        super(DataReader, self).__init__()
+
+        self.isReading = False
+        self.isOpen = False
+
+        self.internal_buffer = np.array([])
+        
+        self.serial_port = QSerialPort()
+        self.serial_port.setBaudRate(QSerialPort.Baud115200)
+        self.serial_port.setReadBufferSize(1024)
+        self.serial_port.setFlowControl(QSerialPort.FlowControl.HardwareControl)
+        self.serial_port.setParity(QSerialPort.Parity.NoParity)
+                
+        self.serial_port.readyRead.connect(self.on_data_rcvd)
+        self.serial_port.errorOccurred.connect(self.on_error)
+
+    def open_port(self):
+        try:
+            self.serial_port.setPortName("/dev/rfcomm0")
+            self.isOpen = self.serial_port.open(QSerialPort.ReadOnly)
+            print(f"is port opened: {self.isOpen}")
+            
+
+        except Exception as e:
+            print("failed to open ports")
+            self.isOpen = False
+            print(str(e))
+
+    def on_error(self):
+        print(f"Error occurred: {self.serial_port.error()}")
+
+    def on_data_rcvd(self):
+        """
+        worked like a charm for 6 mins
+        """
+        data_b = self.serial_port.readLine().data().decode("utf-8")
+        self.internal_buffer = np.append(self.internal_buffer, float(data_b))
+        if len(self.internal_buffer) > 200:
+            self.data_ready.emit(decimate(self.internal_buffer, 3))
+            self.internal_buffer = np.array([])
+
+
+    def cleanup(self):
+        self.isOpen = False
+        self.serial_port.close()
+        
 
 
 """
@@ -16,7 +73,7 @@ this class internally handles:
 3. sending it to main application
 4. look after QProcess
 """
-class RFComm(QObject):
+class RFCommProcess(QProcess):
 
     com_started = Signal()
 
@@ -25,67 +82,60 @@ class RFComm(QObject):
     1 for graceful exit
     """
     com_finished = Signal(int, str)
+    new_connection = Signal()
     
     def __init__(self, app):
-        super(RFComm, self).__init__()
+        super(RFCommProcess, self).__init__(app)
 
-        self.service = QBluetoothServiceInfo()                
-        self.server = QBluetoothServer(QBluetoothServiceInfo.RfcommProtocol, app)
-        self.socket = None
-
-        self.isReading = True
-
-        self.server.newConnection.connect(self.on_new_connection)
-        self.server.errorOccurred.connect(self.on_error_occurred)
-
-    def start_server(self):
-        if not self.server.isListening():
-            local_adp = QBluetoothLocalDevice()
-            if local_adp.isValid():
-                l = self.server.listen(local_adp.address())
-                if l:
-                    self.register(local_adp)
-
-    def register(self, local_adp: QBluetoothLocalDevice):
-    
-        protocol_seq = QBluetoothServiceInfo.Sequence()
-        rfcomm_seq = QBluetoothServiceInfo.Sequence()
-        l2dp = QBluetoothServiceInfo.Sequence()
-
-        l2dp.append(QBluetoothUuid(QBluetoothUuid.ProtocolUuid.L2cap))
-
-        rfcomm_seq.append(
-            QBluetoothUuid.ProtocolUuid.Rfcomm
-        )
-        rfcomm_seq.append(
-            QBluetoothUuid.ServiceClassUuid.SerialPort.value
-        )
+        self.addr = None
+        self.setProgram("/usr/bin/rfcomm")
         
-        # protocol_seq.append(l2dp)
-        protocol_seq.append(rfcomm_seq)
+        self.setProcessChannelMode(QProcess.MergedChannels)
 
-        self.service.setServiceName("nid-24 data collection")
-        self.service.setServiceUuid(str(uuid.uuid4()))
-        self.service.setAttribute(
-            QBluetoothServiceInfo.ProtocolDescriptorList.value,
-            protocol_seq   
-        )
-        # self.service.setAttribute(QBluetoothServiceInfo.ServiceName.value, "nid-24 data collection")
+        self.finished.connect(self.on_process_finish)
+        self.errorOccurred.connect(self.on_error_occurred)
+        self.readyReadStandardOutput.connect(self.on_read_output)
 
-        x = self.service.registerService(local_adp.address())
-        if x:
-            print("Service is now registered")
+    def set_device_addr(self, addr: str):
+        self.addr = addr
+
+    def start_process(self):
+        self.setArguments(["watch", "hci0"])
+        self.start()
+        print(self.readAllStandardError())
+
+    def on_process_finish(self, exit_code: int):
+        msg = f"RFComm exited with {str(exit_code)}"
+        if exit_code != 0:
+            msgBox = QMessageBox()
+            msgBox.setWindowTitle("Connection Error")
+            msgBox.setText(msg)
+            msgBox.setStandardButtons(QMessageBox.StandardButtons.Close)
+            
+        self.com_finished.emit(-1, msg)
+
+    def on_read_output(self):
+        data = self.readAllStandardOutput().data()
+        if not data:
+            return
+
+        data_str = data.decode("utf-8")
+        print(data_str)
+
+    def on_error_occurred(self, error: QProcess.ProcessError):
+        print("Error occurred")
+        print(self.error())
 
 
-    def on_new_connection(self):
-        print("New connection")
-        self.socket = self.server.nextPendingConnection()
-        com_started.emit()
+    def cleanup(self):
+        try:
+            kill(self.processId(), SIGINT)
+            print("Process finished")
 
+        except Exception as error:
+            print("error intterupting the process")
+            print(str(error))
 
-    def on_error_occurred(self, error: QBluetoothServer.Error):
-        self.com_finished(-1, str(error))
-
-    def server_shutdown(self):
-        self.server.close()
-        self.service.unregisterService()
+        hasEnded = self.waitForFinished(5000)
+        if not hasEnded:
+            self.terminate()

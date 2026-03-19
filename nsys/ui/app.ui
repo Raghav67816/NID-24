@@ -186,45 +186,56 @@
            <item>
             <widget class="QGroupBox" name="ds_box">
              <property name="title">
-              <string>Data Simulator</string>
+              <string>Data Tools</string>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_3">
               <item>
                <widget class="QComboBox" name="deviceSelectionBox">
-                <item>
-                 <property name="text">
-                  <string>Simulated</string>
-                 </property>
-                </item>
+                <property name="placeholderText">
+                 <string>Select Your Device</string>
+                </property>
                </widget>
               </item>
               <item>
-               <layout class="QFormLayout" name="dsParamLayout">
-                <item row="0" column="0">
-                 <widget class="QLabel" name="freqLabel">
-                  <property name="text">
-                   <string>Frequency:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QLineEdit" name="freqInput"/>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QLabel" name="noiseLabel">
-                  <property name="text">
-                   <string>Noise Level:</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="1">
-                 <widget class="QSlider" name="noiseLevel">
-                  <property name="orientation">
-                   <enum>Qt::Orientation::Horizontal</enum>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
+               <widget class="QFrame" name="recorderContainer">
+                <property name="frameShape">
+                 <enum>QFrame::Shape::StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Shadow::Raised</enum>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_5">
+                 <item>
+                  <layout class="QVBoxLayout" name="verticalLayout_4">
+                   <item>
+                    <layout class="QHBoxLayout" name="horizontalLayout_5">
+                     <item>
+                      <widget class="QLabel" name="timeLabel">
+                       <property name="text">
+                        <string>Time Elapsed:</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="timeVal">
+                       <property name="text">
+                        <string>00:00</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="recordData">
+                     <property name="text">
+                      <string>Record Data</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
+                </layout>
+               </widget>
               </item>
               <item>
                <widget class="QPushButton" name="toggleDataBtn">

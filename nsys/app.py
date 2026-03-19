@@ -6,11 +6,13 @@ from theme_engine import prepare_sheet
 from PySide6.QtCore import QMargins, Qt, QProcess, QIODevice
 from PySide6.QtWidgets import QApplication, QMainWindow, QMenu, QMessageBox
 
+import numpy as np
 import pyqtgraph as pg
+from collections import deque
 
-from connection_manager import RFComm
 from board_manager import BoardManager
 from graphs_manager import prepare_graphs, prepare_menu
+from connection_manager import RFCommProcess, DataReader
 
 class AppWindow(QMainWindow):
     def __init__(self):
@@ -30,8 +32,11 @@ class AppWindow(QMainWindow):
         Define all utilities here.
         """
         self.menu = QMenu(self)
-        self.conn_manager = RFComm(self)
+        self.conn_manager = RFCommProcess(self)
         self.board_manager = BoardManager()
+        self.data_reader = DataReader()
+
+        self.buffer = deque(maxlen=500)
         
         self.channels = prepare_graphs(self.ui.graphLayout)
         prepare_menu(self, self.channels, self.menu)
@@ -43,9 +48,12 @@ class AppWindow(QMainWindow):
         self.board_manager.device_selected.connect(self.on_device_selected)
         self.ui.toggleDataBtn.clicked.connect(self.on_start_clicked)
 
-        self.conn_manager.com_started.connect(self.on_rfcomm_started)
+        self.conn_manager.new_connection.connect(self.on_rfcomm_started)
         self.conn_manager.com_finished.connect(self.on_rfcomm_finished)
-        
+
+        self.conn_manager.start_process()        
+
+        self.data_reader.data_ready.connect(self.update_graphs)
 
     # override default context menu
     def contextMenuEvent(self, event):
@@ -73,19 +81,41 @@ class AppWindow(QMainWindow):
     first checks if port is already bounded or not.
     """
     def on_start_clicked(self):
-        self.conn_manager.start_server()
-        if not self.conn_manager.isReading:
-            self.conn_manager.isReading = True
+        btn_text = self.ui.toggleDataBtn.text().lower()
+
+        if btn_text == "start":
+            if not self.data_reader.isOpen:
+                self.data_reader.open_port()
+                
+            self.data_reader.isReading = True
             self.ui.toggleDataBtn.setText("Stop")
 
-        else:
-            self.conn_manager = False
+        elif btn_text == "stop":
+            self.data_reader.isReading = False
             self.ui.toggleDataBtn.setText("Start")
 
 
+    """
+    update the graph when data is received
+    """
+    def update_graphs(self, data: np.ndarray):
+        for channel in self.channels.keys():
+            self.channels[channel].clear()
+            self.channels[channel].plot().setData(data)
+
+    """
+    the new problem:
+    HIGH CPU USAGE
+    and it was obvious 
+
+    solution:
+        the buffer fills up every second with 200 samples
+        trim the buffer, take last 100 i.e latest 100 sample and plot them         
+    """
+    
     def closeEvent(self, event):
         print("Exiting")
-        self.conn_manager.server_shutdown()
+        self.conn_manager.cleanup()
         event.accept()
         
 
