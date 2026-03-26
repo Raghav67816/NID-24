@@ -98,10 +98,16 @@ class AppWindow(QMainWindow):
     """
     update the graph when data is received
     """
-    def update_graphs(self, data: np.ndarray):
-        for channel in self.channels.keys():
-            self.channels[channel].clear()
-            self.channels[channel].plot().setData(data)
+    def update_graphs(self, cha: np.ndarray, chb: np.ndarray, chc: np.ndarray):
+        self.channels["channel_1"].clear()
+        self.channels["channel_1"].plot().setData(cha)
+        
+        self.channels["channel_2"].clear()
+        self.channels["channel_2"].plot().setData(chb)
+
+        
+        self.channels["channel_3"].clear()
+        self.channels["channel_3"].plot().setData(chc)
 
     """
     the new problem:
