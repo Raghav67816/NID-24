@@ -2,13 +2,12 @@
 from ui.app import Ui_AppWindow
 
 from PySide6.QtGui import QAction
-from theme_engine import prepare_sheet 
+from theme_engine import prepare_sheet
 from PySide6.QtCore import QMargins, Qt, QProcess, QIODevice
 from PySide6.QtWidgets import QApplication, QMainWindow, QMenu, QMessageBox
 
 import numpy as np
 import pyqtgraph as pg
-from collections import deque
 
 from board_manager import BoardManager
 from graphs_manager import prepare_graphs, prepare_menu
@@ -36,9 +35,9 @@ class AppWindow(QMainWindow):
         self.board_manager = BoardManager()
         self.data_reader = DataReader()
 
-        self.buffer = deque(maxlen=500)
+        self.buffer = np.array([])
         
-        self.channels = prepare_graphs(self.ui.graphLayout)
+        self.channels, self.curves = prepare_graphs(self.ui.graphLayout)
         prepare_menu(self, self.channels, self.menu)
 
         """
@@ -51,9 +50,9 @@ class AppWindow(QMainWindow):
         self.conn_manager.new_connection.connect(self.on_rfcomm_started)
         self.conn_manager.com_finished.connect(self.on_rfcomm_finished)
 
-        self.conn_manager.start_process()        
-
-        self.data_reader.data_ready.connect(self.update_graphs)
+        self.data_reader.update.connect(self.update_graphs)
+        
+        self.conn_manager.start_process()
 
     # override default context menu
     def contextMenuEvent(self, event):
@@ -99,25 +98,10 @@ class AppWindow(QMainWindow):
     update the graph when data is received
     """
     def update_graphs(self, cha: np.ndarray, chb: np.ndarray, chc: np.ndarray):
-        self.channels["channel_1"].clear()
-        self.channels["channel_1"].plot().setData(cha)
-        
-        self.channels["channel_2"].clear()
-        self.channels["channel_2"].plot().setData(chb)
+        self.curves["channel_1"].setData(cha)
+        self.curves["channel_2"].setData(chb)
+        self.curves["channel_3"].setData(chc)
 
-        
-        self.channels["channel_3"].clear()
-        self.channels["channel_3"].plot().setData(chc)
-
-    """
-    the new problem:
-    HIGH CPU USAGE
-    and it was obvious 
-
-    solution:
-        the buffer fills up every second with 200 samples
-        trim the buffer, take last 100 i.e latest 100 sample and plot them         
-    """
     
     def closeEvent(self, event):
         print("Exiting")

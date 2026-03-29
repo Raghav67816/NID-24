@@ -10,7 +10,7 @@ from PySide6.QtCore import QSize
 from PySide6.QtGui import QAction
 from PySide6.QtWidgets import QLayout, QMenu, QSizePolicy, QColorDialog
 
-def prepare_graphs(layout: QLayout) -> str:
+def prepare_graphs(layout: QLayout) -> tuple:
     ch1 = pg.PlotWidget()
     ch2 = pg.PlotWidget()
     ch3 = pg.PlotWidget()
@@ -21,6 +21,12 @@ def prepare_graphs(layout: QLayout) -> str:
         "channel_3": ch3
     }
 
+    curves = {
+        "channel_1": ch1.plot(),
+        "channel_2": ch2.plot(),
+        "channel_3": ch3.plot()
+    }
+
     for index, channel in enumerate(graphs.keys()):
         channel_name = f"Channel {index+1}"
         graph = graphs[channel]
@@ -28,7 +34,7 @@ def prepare_graphs(layout: QLayout) -> str:
         graph.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         layout.addWidget(graphs[channel])
 
-    return graphs
+    return graphs, curves
 
 def on_active_menu_triggered(action, channels: dict):
     channel_name = action.text().lower().replace(" ", "_")

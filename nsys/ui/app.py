@@ -16,9 +16,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QComboBox, QFormLayout, QFrame,
-    QGroupBox, QHBoxLayout, QLabel, QLineEdit,
-    QMainWindow, QPushButton, QSizePolicy, QSlider,
-    QSplitter, QToolButton, QVBoxLayout, QWidget)
+    QGroupBox, QHBoxLayout, QLabel, QMainWindow,
+    QPushButton, QSizePolicy, QSplitter, QToolButton,
+    QVBoxLayout, QWidget)
 from ui import resources_rc
 
 class Ui_AppWindow(object):
@@ -98,36 +98,28 @@ class Ui_AppWindow(object):
         self.verticalLayout_3 = QVBoxLayout(self.ds_box)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.deviceSelectionBox = QComboBox(self.ds_box)
-        self.deviceSelectionBox.addItem("")
         self.deviceSelectionBox.setObjectName(u"deviceSelectionBox")
 
         self.verticalLayout_3.addWidget(self.deviceSelectionBox)
 
-        self.dsParamLayout = QFormLayout()
-        self.dsParamLayout.setObjectName(u"dsParamLayout")
-        self.freqLabel = QLabel(self.ds_box)
-        self.freqLabel.setObjectName(u"freqLabel")
+        self.frame = QFrame(self.ds_box)
+        self.frame.setObjectName(u"frame")
+        self.frame.setFrameShape(QFrame.Shape.StyledPanel)
+        self.frame.setFrameShadow(QFrame.Shadow.Raised)
+        self.formLayout_2 = QFormLayout(self.frame)
+        self.formLayout_2.setObjectName(u"formLayout_2")
+        self.latencyLabel = QLabel(self.frame)
+        self.latencyLabel.setObjectName(u"latencyLabel")
 
-        self.dsParamLayout.setWidget(0, QFormLayout.ItemRole.LabelRole, self.freqLabel)
+        self.formLayout_2.setWidget(0, QFormLayout.ItemRole.LabelRole, self.latencyLabel)
 
-        self.freqInput = QLineEdit(self.ds_box)
-        self.freqInput.setObjectName(u"freqInput")
+        self.latencyVal = QLabel(self.frame)
+        self.latencyVal.setObjectName(u"latencyVal")
 
-        self.dsParamLayout.setWidget(0, QFormLayout.ItemRole.FieldRole, self.freqInput)
-
-        self.noiseLabel = QLabel(self.ds_box)
-        self.noiseLabel.setObjectName(u"noiseLabel")
-
-        self.dsParamLayout.setWidget(1, QFormLayout.ItemRole.LabelRole, self.noiseLabel)
-
-        self.noiseLevel = QSlider(self.ds_box)
-        self.noiseLevel.setObjectName(u"noiseLevel")
-        self.noiseLevel.setOrientation(Qt.Orientation.Horizontal)
-
-        self.dsParamLayout.setWidget(1, QFormLayout.ItemRole.FieldRole, self.noiseLevel)
+        self.formLayout_2.setWidget(0, QFormLayout.ItemRole.FieldRole, self.latencyVal)
 
 
-        self.verticalLayout_3.addLayout(self.dsParamLayout)
+        self.verticalLayout_3.addWidget(self.frame)
 
         self.toggleDataBtn = QPushButton(self.ds_box)
         self.toggleDataBtn.setObjectName(u"toggleDataBtn")
@@ -195,11 +187,13 @@ class Ui_AppWindow(object):
     def retranslateUi(self, AppWindow):
         AppWindow.setWindowTitle(QCoreApplication.translate("AppWindow", u"NID-24 Analysis Software", None))
         self.boardBtn.setText("")
-        self.ds_box.setTitle(QCoreApplication.translate("AppWindow", u"Data Simulator", None))
-        self.deviceSelectionBox.setItemText(0, QCoreApplication.translate("AppWindow", u"Simulated", None))
-
-        self.freqLabel.setText(QCoreApplication.translate("AppWindow", u"Frequency:", None))
-        self.noiseLabel.setText(QCoreApplication.translate("AppWindow", u"Noise Level:", None))
+        self.ds_box.setTitle(QCoreApplication.translate("AppWindow", u"Data Tools", None))
+        self.deviceSelectionBox.setPlaceholderText(QCoreApplication.translate("AppWindow", u"Select Your Device", None))
+#if QT_CONFIG(tooltip)
+        self.latencyLabel.setToolTip(QCoreApplication.translate("AppWindow", u"<html><head/><body><p>Ideal Value is 1 ms for 1KHz Frequency</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+        self.latencyLabel.setText(QCoreApplication.translate("AppWindow", u"Latency:", None))
+        self.latencyVal.setText(QCoreApplication.translate("AppWindow", u"0", None))
         self.toggleDataBtn.setText(QCoreApplication.translate("AppWindow", u"Start", None))
         self.featuresBox.setTitle(QCoreApplication.translate("AppWindow", u"Features", None))
         self.statusText.setText(QCoreApplication.translate("AppWindow", u"Status:", None))

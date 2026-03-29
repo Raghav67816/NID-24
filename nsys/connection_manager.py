@@ -11,9 +11,20 @@ from PySide6.QtSerialPort import QSerialPort, QSerialPortInfo
 
 """
 Connect your android app before you start the reader
+
+This class manages unpacking and sending data to other classes.
+This is the entry gate for the data.
+
+for now we only create vbuffers should hold 100 values
 """
 class DataReader(QObject):
-    data_ready = Signal(object, object, object) # send both ch1 and ch2 data
+
+    update = Signal(object, object, object)
+
+    PLOT_UPDATE_INTERVAL = 60 # ms
+    BUFFER_SIZE = 1000
+    VBUFFER_SIZE = 100
+    DECI_CNT = 6
 
     def __init__(self):
         super(DataReader, self).__init__()
@@ -21,21 +32,40 @@ class DataReader(QObject):
         self.isReading = False
         self.isOpen = False
 
-        self.buffer_a = np.array([])
-        self.buffer_b = np.array([])
-        self.buffer_c = np.array([])
-
         self.data_unpacked = None
+
+        self.index = 0
+        self.vindex = 0
+
+        # buffers
+        self.buffer_a = np.zeros(self.BUFFER_SIZE + 1)
+        self.buffer_b = np.zeros(self.BUFFER_SIZE + 1)
+        self.buffer_c = np.zeros(self.BUFFER_SIZE + 1)
+
+        self.vbuffer_a = np.zeros(self.VBUFFER_SIZE + 1)
+        self.vbuffer_b = np.zeros(self.VBUFFER_SIZE + 1)
+        self.vbuffer_c = np.zeros(self.VBUFFER_SIZE + 1)
+
+        self.x = np.zeros(self.VBUFFER_SIZE + 1)
+        
+        # graph update timer
+        self.update_timer = QTimer()
+        self.update_timer.setInterval(self.PLOT_UPDATE_INTERVAL)
+        self.update_timer.timeout.connect(self.update_plots) # TODO: MAKE UPDATE GRAPH FUNCTION
+        self.update_timer.start()
         
         self.serial_port = QSerialPort()
+        self.init_serial()
+                
+        self.serial_port.readyRead.connect(self.on_data_rcvd)
+        self.serial_port.errorOccurred.connect(self.on_error)
+
+    def init_serial(self):
         self.serial_port.setBaudRate(QSerialPort.Baud115200)
         self.serial_port.setReadBufferSize(1024)
         self.serial_port.setFlowControl(QSerialPort.FlowControl.HardwareControl)
         self.serial_port.setParity(QSerialPort.Parity.NoParity)
         self.serial_port.setReadBufferSize(12) # in bytes (3 floats, 4 bytes per float)
-                
-        self.serial_port.readyRead.connect(self.on_data_rcvd)
-        self.serial_port.errorOccurred.connect(self.on_error)
 
     def open_port(self):
         try:
@@ -52,35 +82,31 @@ class DataReader(QObject):
     def on_error(self):
         print(f"Error occurred: {self.serial_port.error()}")
 
-    """
-    receving: bytearray -> QByteArray
-    we are using little eadian byte order
-    we unpack data with <ff tag.
-
-    float values might have more decimal places than the original float
-    don't worry data is fine. it's just that computers can't represent it precisely.
-
-    trim the float till 2nd decimal place.
-    """
     def on_data_rcvd(self):
-        data_b = self.serial_port.readAll()
-
+        data_packed = self.serial_port.readAll()
         try:
-            self.data_unpacked = unpack("<fff", bytes(data_b))
+            self.data_unpacked = unpack("<fff", bytes(data_packed))
 
         except error:
-            pass # it's just that the data size is not 8 bytes (corruption possible let's bribe the data)
+            pass
+
+        # reset index, keeps rolling
+        if self.index >= self.BUFFER_SIZE:
+            self.index = 0
+
+        # flip data
         
-        self.buffer_a = np.append(self.buffer_a, round(self.data_unpacked[0], 6))        
-        self.buffer_b = np.append(self.buffer_b, round(self.data_unpacked[1], 6))
-        self.buffer_c = np.append(self.buffer_c, round(self.data_unpacked[2], 6))
+    def update_plots(self):
+        self.vbuffer_a[:-1] = self.vbuffer_a[1:]
+        self.vbuffer_b[:-1] = self.vbuffer_b[1:]
+        self.vbuffer_c[:-1] = self.vbuffer_c[1:]
 
-        if len(self.buffer_a) == 1000 and len(self.buffer_b) == 1000 and len(self.buffer_c) == 1000:
-            self.data_ready.emit(self.buffer_a, self.buffer_b, self.buffer_c)
-            self.buffer_a = np.array([])
-            self.buffer_b = np.array([])
-            self.buffer_c = np.array([])
-
+        self.vbuffer_a[-1] = round(self.data_unpacked[0], 6)
+        self.vbuffer_b[-1] = round(self.data_unpacked[1], 6)
+        self.vbuffer_c[-1] = round(self.data_unpacked[2], 6)
+    
+        self.update.emit(self.vbuffer_a, self.vbuffer_b, self.vbuffer_c)
+    
     def cleanup(self):
         self.isOpen = False
         self.serial_port.close()
@@ -93,9 +119,7 @@ simulators are also designed with bluetooth protocol in mind
 
 this class internally handles:
 1. binding baddr to virtual port
-2. reading data from it
-3. sending it to main application
-4. look after QProcess
+2. look after QProcess
 """
 class RFCommProcess(QProcess):
 
