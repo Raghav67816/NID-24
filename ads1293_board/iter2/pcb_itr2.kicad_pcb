@@ -1276,7 +1276,7 @@
       (net 33 "Net-(U1-VDD)") (pinfunction "VDD") (pintype "power_in") (solder_mask_margin 0.102) (tstamp 2df2e4ec-2795-40b9-a7db-c03ec60ce7e9))
     (pad "29" smd rect (at 0 0) (size 3 3) (layers "F.Cu" "F.Mask")
       (net 21 "unconnected-(U1-EPAD-Pad29)") (pinfunction "EPAD") (pintype "unspecified+no_connect") (solder_mask_margin 0.102) (tstamp c9af0769-5528-4ee7-9a47-1583caabca72))
-    (model "/mnt/Sector16/nid24/pcb/ADS1293CISQ_NOPB/ADS1293CISQ_NOPB.step"
+    (model "/mnt/Sector16/nid24/ads1293_board/ADS1293CISQ_NOPB/ADS1293CISQ_NOPB.step"
       (offset (xyz 0 0 0))
       (scale (xyz 1 1 1))
       (rotate (xyz -90 0 0))

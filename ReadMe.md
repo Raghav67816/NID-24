@@ -63,7 +63,7 @@ This will act like ADS1293 and send data to our computer/analysis software for a
 
 | Image 1 | Image 2 |
 |--------|--------|
-| ![alt text](<images/image-1.png>) | ![alt text](<images/Screenshot from 2026-03-30 13-17-23-2.png>) |
+| ![alt text](<images/ads.png>) | ![alt text](<images/Screenshot from 2026-03-30 13-17-23-2.png>) |
 
 ### Features:
  - 24-bit resolution
@@ -78,7 +78,7 @@ We read this data and draw our conclusions
 
 ## Controller Board
 
-![alt text](images/image-2.png)
+![alt text](images/controller.png)
 
 Using simulator is easy you can connect to your PC via system ui bluetooth but we don't have any way to connect out Teensy 4.0 to our PC. So, this PCB has 3 push buttons, 
 Teensy 4.0, OLED 0.96 Display and a bluetooth module for data transfer. 
