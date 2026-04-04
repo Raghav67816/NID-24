@@ -1,0 +1,6 @@
+[submodule "emg_signals_simulator"]
+	path = emg_signals_simulator
+	url = https://github.com/Raghav67816/EMG-Signals-Simulator.git
+[submodule "SignalsSimulator"]
+	path = SignalsSimulator
+	url = https://github.com/Raghav67816/EMG-Signals-Simulator.git

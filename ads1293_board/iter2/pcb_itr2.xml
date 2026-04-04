@@ -1,0 +1,597 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>/mnt/Sector16/nid24/ads1293_board/iter2/pcb_itr2.kicad_sch</source>
+    <date>Fri 03 Apr 2026 08:23:32 PM IST</date>
+    <tool>Eeschema 7.0.11+dfsg-1build4</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>pcb_itr2.kicad_sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="C1">
+      <value>1uF</value>
+      <footprint>C0603C223J5RACTU:CAPC1608X87N</footprint>
+      <libsource lib="C0603C223J5RACTU" part="C0603C223J5RACTU" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pcb_itr2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>c8551f14-47ff-4d86-9839-55b2d7774a59</tstamps>
+    </comp>
+    <comp ref="C2">
+      <value>1.5 nF</value>
+      <footprint>C0603C223J5RACTU:CAPC1608X87N</footprint>
+      <libsource lib="C0603C223J5RACTU" part="C0603C223J5RACTU" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pcb_itr2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>46428fd9-afc5-4f11-bfa6-f7dd36f3cc75</tstamps>
+    </comp>
+    <comp ref="C3">
+      <value>0.1uF</value>
+      <footprint>C0603C223J5RACTU:CAPC1608X87N</footprint>
+      <libsource lib="C0603C223J5RACTU" part="C0603C223J5RACTU" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pcb_itr2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>7a71f45b-387a-4365-b307-d5ec609b1de9</tstamps>
+    </comp>
+    <comp ref="C4">
+      <value>1uF</value>
+      <footprint>C0603C223J5RACTU:CAPC1608X87N</footprint>
+      <libsource lib="C0603C223J5RACTU" part="C0603C223J5RACTU" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pcb_itr2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>2b58a2e5-09fc-4044-b671-e03b8160b8a8</tstamps>
+    </comp>
+    <comp ref="C5">
+      <value>22pF</value>
+      <footprint>C0603C223J5RACTU:CAPC1608X87N</footprint>
+      <libsource lib="C0603C223J5RACTU" part="C0603C223J5RACTU" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pcb_itr2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>7289fafc-7b72-4ec9-8390-7d78156e4cc5</tstamps>
+    </comp>
+    <comp ref="C6">
+      <value>22pF</value>
+      <footprint>C0603C223J5RACTU:CAPC1608X87N</footprint>
+      <libsource lib="C0603C223J5RACTU" part="C0603C223J5RACTU" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pcb_itr2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>5f4655dc-17f6-4c2f-8b55-7eebd6a3923e</tstamps>
+    </comp>
+    <comp ref="C7">
+      <value>0.1 uF</value>
+      <footprint>C0603C223J5RACTU:CAPC1608X87N</footprint>
+      <libsource lib="C0603C223J5RACTU" part="C0603C223J5RACTU" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pcb_itr2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>9098cb68-1ba9-4092-91c8-d5923f417687</tstamps>
+    </comp>
+    <comp ref="C8">
+      <value>1uF</value>
+      <footprint>C0603C223J5RACTU:CAPC1608X87N</footprint>
+      <libsource lib="C0603C223J5RACTU" part="C0603C223J5RACTU" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pcb_itr2.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>e38759d3-2bbf-410f-a3ce-cea392438ee3</tstamps>
+    </comp>
+    <comp ref="J1">
+      <value>Conn_01x05_Pin</value>
+      <footprint>Connector_PinHeader_1.00mm:PinHeader_1x05_P1.00mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x05_Pin" description="Generic connector, single row, 01x05, script generated"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pcb_itr2.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x05, script generated"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>d0119311-898d-4074-9284-1a865e8ac05a</tstamps>
+    </comp>
+    <comp ref="J2">
+      <value>Conn_01x01_Pin</value>
+      <footprint>Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x01_Pin" description="Generic connector, single row, 01x01, script generated"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pcb_itr2.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x01, script generated"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>1de7754b-d483-45fb-a29a-e1f2e4c0c71c</tstamps>
+    </comp>
+    <comp ref="J3">
+      <value>Conn_01x06_Pin</value>
+      <footprint>Connector_PinHeader_1.00mm:PinHeader_1x06_P1.00mm_Vertical</footprint>
+      <libsource lib="Connector" part="Conn_01x06_Pin" description="Generic connector, single row, 01x06, script generated"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pcb_itr2.kicad_sch"/>
+      <property name="ki_description" value="Generic connector, single row, 01x06, script generated"/>
+      <property name="ki_keywords" value="connector"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>2685efa5-fe4b-4302-adff-ef4dde495ca8</tstamps>
+    </comp>
+    <comp ref="R1">
+      <value>R_Small</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pcb_itr2.kicad_sch"/>
+      <property name="ki_description" value="Resistor, small symbol"/>
+      <property name="ki_keywords" value="R resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>c79e3464-2beb-4d72-97a8-a2d4b19b59c5</tstamps>
+    </comp>
+    <comp ref="R2">
+      <value>1M Ohms</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pcb_itr2.kicad_sch"/>
+      <property name="ki_description" value="Resistor, small symbol"/>
+      <property name="ki_keywords" value="R resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>e8e0f951-a002-496c-99f9-1c312038a1f0</tstamps>
+    </comp>
+    <comp ref="R3">
+      <value>1M Ohm</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pcb_itr2.kicad_sch"/>
+      <property name="ki_description" value="Resistor, small symbol"/>
+      <property name="ki_keywords" value="R resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>af4c2420-0f37-4480-a5ea-df553b067ff9</tstamps>
+    </comp>
+    <comp ref="R4">
+      <value>1 M Ohms</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pcb_itr2.kicad_sch"/>
+      <property name="ki_description" value="Resistor, small symbol"/>
+      <property name="ki_keywords" value="R resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>b430cf30-6d0d-438a-8bd3-db7b2efc0e73</tstamps>
+    </comp>
+    <comp ref="R5">
+      <value>10K</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pcb_itr2.kicad_sch"/>
+      <property name="ki_description" value="Resistor, small symbol"/>
+      <property name="ki_keywords" value="R resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>fcd88fe7-2d63-4d70-9209-1d9e9232587d</tstamps>
+    </comp>
+    <comp ref="R6">
+      <value>10K</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pcb_itr2.kicad_sch"/>
+      <property name="ki_description" value="Resistor, small symbol"/>
+      <property name="ki_keywords" value="R resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>66038c6f-13e6-41ab-b926-caf2cceaa1e5</tstamps>
+    </comp>
+    <comp ref="R7">
+      <value>R_Small</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pcb_itr2.kicad_sch"/>
+      <property name="ki_description" value="Resistor, small symbol"/>
+      <property name="ki_keywords" value="R resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>2bd0ff23-8fe8-4230-ab18-693924bf1888</tstamps>
+    </comp>
+    <comp ref="R8">
+      <value>10K</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pcb_itr2.kicad_sch"/>
+      <property name="ki_description" value="Resistor, small symbol"/>
+      <property name="ki_keywords" value="R resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>49586677-f61a-4bf5-abc9-2b9b6e475563</tstamps>
+    </comp>
+    <comp ref="R9">
+      <value>10K</value>
+      <footprint>Resistor_SMD:R_0603_1608Metric</footprint>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pcb_itr2.kicad_sch"/>
+      <property name="ki_description" value="Resistor, small symbol"/>
+      <property name="ki_keywords" value="R resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>b191bc9c-42dc-43e3-9684-78718aee15e4</tstamps>
+    </comp>
+    <comp ref="U1">
+      <value>ADS1293CISQ/NOPB</value>
+      <footprint>ADS1293CISQ_NOPB:QFN50P500X500X80-29N</footprint>
+      <datasheet>https://www.ti.com/lit/gpn/ads1293</datasheet>
+      <libsource lib="2026-03-01_08-01-02" part="ADS1293CISQ_NOPB" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pcb_itr2.kicad_sch"/>
+      <property name="ki_keywords" value="ADS1293CISQ/NOPB"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>f1781906-6aa6-4caf-8c0d-c3ae211b0179</tstamps>
+    </comp>
+    <comp ref="U2">
+      <value>SPX5205M5-L-5-0/TR</value>
+      <footprint>SP6201EM5</footprint>
+      <datasheet>SPX5205M5-L-5-0/TR</datasheet>
+      <libsource lib="2026-04-03_06-39-59" part="SPX5205M5-L-5-0_TR" description=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pcb_itr2.kicad_sch"/>
+      <property name="ki_keywords" value="SPX5205M5-L-5-0/TR"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>c2f73228-9d94-4cc3-9b5a-fb5851e7ee06</tstamps>
+    </comp>
+    <comp ref="Y1">
+      <value>4.096 MHz</value>
+      <footprint>Crystal:Crystal_HC18-U_Vertical</footprint>
+      <libsource lib="Device" part="Crystal" description="Two pin crystal"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="pcb_itr2.kicad_sch"/>
+      <property name="ki_description" value="Two pin crystal"/>
+      <property name="ki_keywords" value="quartz ceramic resonator oscillator"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>7cb6de92-d140-4e89-9246-cf0552c9b594</tstamps>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="2026-03-01_08-01-02" part="ADS1293CISQ_NOPB">
+      <docs>https://www.ti.com/lit/gpn/ads1293</docs>
+      <footprints>
+        <fp>RSG28_3P6X3P6_TEX</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">ADS1293CISQ/NOPB</field>
+        <field name="Footprint">RSG28_3P6X3P6_TEX</field>
+        <field name="Datasheet">https://www.ti.com/lit/gpn/ads1293</field>
+      </fields>
+      <pins>
+        <pin num="1" name="IN1" type="input"/>
+        <pin num="2" name="IN2" type="input"/>
+        <pin num="3" name="IN3" type="input"/>
+        <pin num="4" name="IN4" type="input"/>
+        <pin num="5" name="IN5" type="input"/>
+        <pin num="6" name="IN6" type="input"/>
+        <pin num="7" name="WCT" type="output"/>
+        <pin num="8" name="CMOUT" type="output"/>
+        <pin num="9" name="RLDOUT" type="output"/>
+        <pin num="10" name="RLDINV" type="input"/>
+        <pin num="11" name="RLDIN" type="bidirectional"/>
+        <pin num="12" name="RLDREF" type="output"/>
+        <pin num="13" name="SYNCB" type="bidirectional"/>
+        <pin num="14" name="VSSIO" type="power_in"/>
+        <pin num="15" name="ALARMB" type="output"/>
+        <pin num="16" name="CSB" type="input"/>
+        <pin num="17" name="SCLK" type="input"/>
+        <pin num="18" name="SDI" type="input"/>
+        <pin num="19" name="SDO" type="output"/>
+        <pin num="20" name="DRDYB" type="output"/>
+        <pin num="21" name="CLK" type="bidirectional"/>
+        <pin num="22" name="VDDIO" type="power_in"/>
+        <pin num="23" name="XTAL1" type="input"/>
+        <pin num="24" name="XTAL2" type="input"/>
+        <pin num="25" name="RSTB" type="input"/>
+        <pin num="26" name="CVREF" type="bidirectional"/>
+        <pin num="27" name="VSS" type="power_in"/>
+        <pin num="28" name="VDD" type="power_in"/>
+        <pin num="29" name="EPAD" type="unspecified"/>
+      </pins>
+    </libpart>
+    <libpart lib="2026-04-03_06-39-59" part="SPX5205M5-L-5-0_TR">
+      <docs>SPX5205M5-L-5-0/TR</docs>
+      <footprints>
+        <fp>SP6201EM5</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">SPX5205M5-L-5-0/TR</field>
+        <field name="Footprint">SP6201EM5</field>
+        <field name="Datasheet">SPX5205M5-L-5-0/TR</field>
+      </fields>
+      <pins>
+        <pin num="1" name="IN" type="input"/>
+        <pin num="2" name="GND" type="power_out"/>
+        <pin num="3" name="EN" type="input"/>
+        <pin num="4" name="RST/ADJ" type="unspecified"/>
+        <pin num="5" name="OUT" type="output"/>
+      </pins>
+    </libpart>
+    <libpart lib="C0603C223J5RACTU" part="C0603C223J5RACTU">
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C0603C223J5RACTU</field>
+        <field name="Footprint">C0603C223J5RACTU:CAPC1608X87N</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector" part="Conn_01x01_Pin">
+      <description>Generic connector, single row, 01x01, script generated</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x01_Pin</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector" part="Conn_01x05_Pin">
+      <description>Generic connector, single row, 01x05, script generated</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x05_Pin</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector" part="Conn_01x06_Pin">
+      <description>Generic connector, single row, 01x06, script generated</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_1x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x06_Pin</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+        <pin num="6" name="Pin_6" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="Crystal">
+      <description>Two pin crystal</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Crystal*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">Y</field>
+        <field name="Value">Crystal</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="R_Small">
+      <description>Resistor, small symbol</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R_Small</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="2026-03-01_08-01-02">
+      <uri>/mnt/Sector16/sample_2/refs/ads/KiCADv6/2026-03-01_08-01-02.kicad_sym</uri>
+    </library>
+    <library logical="2026-04-03_06-39-59">
+      <uri>/mnt/Sector16/nid24/ads1293_board/SPX5205M5_L_5_0_TR/KiCADv6/2026-04-03_06-39-59.kicad_sym</uri>
+    </library>
+    <library logical="C0603C223J5RACTU">
+      <uri>/mnt/Sector16/nid24/pcb/C0603C223J5RACTU/C0603C223J5RACTU.kicad_sym</uri>
+    </library>
+    <library logical="Connector">
+      <uri>/usr/share/kicad/symbols//Connector.kicad_sym</uri>
+    </library>
+    <library logical="Device">
+      <uri>/usr/share/kicad/symbols//Device.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="+3.3V">
+      <node ref="C7" pin="2" pintype="passive"/>
+      <node ref="R3" pin="1" pintype="passive"/>
+      <node ref="U1" pin="22" pinfunction="VDDIO" pintype="power_in"/>
+    </net>
+    <net code="2" name="+9V">
+      <node ref="U2" pin="1" pinfunction="IN" pintype="input"/>
+      <node ref="U2" pin="3" pinfunction="EN" pintype="input"/>
+    </net>
+    <net code="3" name="GND">
+      <node ref="C1" pin="1" pintype="passive"/>
+      <node ref="C3" pin="1" pintype="passive"/>
+      <node ref="C4" pin="2" pintype="passive"/>
+      <node ref="C5" pin="2" pintype="passive"/>
+      <node ref="C6" pin="2" pintype="passive"/>
+      <node ref="C7" pin="1" pintype="passive"/>
+      <node ref="C8" pin="2" pintype="passive"/>
+      <node ref="U1" pin="14" pinfunction="VSSIO" pintype="power_in"/>
+      <node ref="U1" pin="27" pinfunction="VSS" pintype="power_in"/>
+      <node ref="U2" pin="2" pinfunction="GND" pintype="power_out"/>
+    </net>
+    <net code="4" name="Net-(J1-Pin_1)">
+      <node ref="J1" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="R5" pin="1" pintype="passive"/>
+    </net>
+    <net code="5" name="Net-(J1-Pin_2)">
+      <node ref="J1" pin="2" pinfunction="Pin_2" pintype="passive"/>
+      <node ref="R6" pin="1" pintype="passive"/>
+    </net>
+    <net code="6" name="Net-(J1-Pin_3)">
+      <node ref="J1" pin="3" pinfunction="Pin_3" pintype="passive"/>
+      <node ref="R7" pin="1" pintype="passive"/>
+    </net>
+    <net code="7" name="Net-(J1-Pin_4)">
+      <node ref="J1" pin="4" pinfunction="Pin_4" pintype="passive"/>
+      <node ref="R8" pin="1" pintype="passive"/>
+    </net>
+    <net code="8" name="Net-(J1-Pin_5)">
+      <node ref="J1" pin="5" pinfunction="Pin_5" pintype="passive"/>
+      <node ref="R9" pin="1" pintype="passive"/>
+    </net>
+    <net code="9" name="Net-(J2-Pin_1)">
+      <node ref="J2" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="R4" pin="2" pintype="passive"/>
+    </net>
+    <net code="10" name="Net-(J3-Pin_1)">
+      <node ref="J3" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="U1" pin="15" pinfunction="ALARMB" pintype="output"/>
+    </net>
+    <net code="11" name="Net-(J3-Pin_2)">
+      <node ref="J3" pin="2" pinfunction="Pin_2" pintype="passive"/>
+      <node ref="U1" pin="16" pinfunction="CSB" pintype="input"/>
+    </net>
+    <net code="12" name="Net-(J3-Pin_3)">
+      <node ref="J3" pin="3" pinfunction="Pin_3" pintype="passive"/>
+      <node ref="U1" pin="17" pinfunction="SCLK" pintype="input"/>
+    </net>
+    <net code="13" name="Net-(J3-Pin_4)">
+      <node ref="J3" pin="4" pinfunction="Pin_4" pintype="passive"/>
+      <node ref="U1" pin="18" pinfunction="SDI" pintype="input"/>
+    </net>
+    <net code="14" name="Net-(J3-Pin_5)">
+      <node ref="J3" pin="5" pinfunction="Pin_5" pintype="passive"/>
+      <node ref="U1" pin="19" pinfunction="SDO" pintype="output"/>
+    </net>
+    <net code="15" name="Net-(J3-Pin_6)">
+      <node ref="J3" pin="6" pinfunction="Pin_6" pintype="passive"/>
+      <node ref="U1" pin="20" pinfunction="DRDYB" pintype="output"/>
+    </net>
+    <net code="16" name="Net-(U1-CMOUT)">
+      <node ref="R1" pin="2" pintype="passive"/>
+      <node ref="U1" pin="8" pinfunction="CMOUT" pintype="output"/>
+    </net>
+    <net code="17" name="Net-(U1-CVREF)">
+      <node ref="C4" pin="1" pintype="passive"/>
+      <node ref="U1" pin="26" pinfunction="CVREF" pintype="bidirectional"/>
+    </net>
+    <net code="18" name="Net-(U1-IN1)">
+      <node ref="R5" pin="2" pintype="passive"/>
+      <node ref="U1" pin="1" pinfunction="IN1" pintype="input"/>
+    </net>
+    <net code="19" name="Net-(U1-IN2)">
+      <node ref="R6" pin="2" pintype="passive"/>
+      <node ref="U1" pin="2" pinfunction="IN2" pintype="input"/>
+    </net>
+    <net code="20" name="Net-(U1-IN3)">
+      <node ref="R7" pin="2" pintype="passive"/>
+      <node ref="U1" pin="3" pinfunction="IN3" pintype="input"/>
+    </net>
+    <net code="21" name="Net-(U1-IN4)">
+      <node ref="R8" pin="2" pintype="passive"/>
+      <node ref="U1" pin="4" pinfunction="IN4" pintype="input"/>
+    </net>
+    <net code="22" name="Net-(U1-IN5)">
+      <node ref="R9" pin="2" pintype="passive"/>
+      <node ref="U1" pin="5" pinfunction="IN5" pintype="input"/>
+    </net>
+    <net code="23" name="Net-(U1-RLDIN)">
+      <node ref="C1" pin="2" pintype="passive"/>
+      <node ref="U1" pin="11" pinfunction="RLDIN" pintype="bidirectional"/>
+      <node ref="U1" pin="12" pinfunction="RLDREF" pintype="output"/>
+    </net>
+    <net code="24" name="Net-(U1-RLDINV)">
+      <node ref="C2" pin="1" pintype="passive"/>
+      <node ref="R1" pin="1" pintype="passive"/>
+      <node ref="R2" pin="2" pintype="passive"/>
+      <node ref="U1" pin="10" pinfunction="RLDINV" pintype="input"/>
+    </net>
+    <net code="25" name="Net-(U1-RLDOUT)">
+      <node ref="C2" pin="2" pintype="passive"/>
+      <node ref="R2" pin="1" pintype="passive"/>
+      <node ref="U1" pin="9" pinfunction="RLDOUT" pintype="output"/>
+    </net>
+    <net code="26" name="Net-(U1-RSTB)">
+      <node ref="R4" pin="1" pintype="passive"/>
+      <node ref="U1" pin="25" pinfunction="RSTB" pintype="input"/>
+    </net>
+    <net code="27" name="Net-(U1-SYNCB)">
+      <node ref="R3" pin="2" pintype="passive"/>
+      <node ref="U1" pin="13" pinfunction="SYNCB" pintype="bidirectional"/>
+    </net>
+    <net code="28" name="Net-(U1-VDD)">
+      <node ref="C3" pin="2" pintype="passive"/>
+      <node ref="C8" pin="1" pintype="passive"/>
+      <node ref="U1" pin="28" pinfunction="VDD" pintype="power_in"/>
+      <node ref="U2" pin="5" pinfunction="OUT" pintype="output"/>
+    </net>
+    <net code="29" name="Net-(U1-XTAL1)">
+      <node ref="C6" pin="1" pintype="passive"/>
+      <node ref="U1" pin="23" pinfunction="XTAL1" pintype="input"/>
+      <node ref="Y1" pin="1" pinfunction="1" pintype="passive"/>
+    </net>
+    <net code="30" name="Net-(U1-XTAL2)">
+      <node ref="C5" pin="1" pintype="passive"/>
+      <node ref="U1" pin="24" pinfunction="XTAL2" pintype="input"/>
+      <node ref="Y1" pin="2" pinfunction="2" pintype="passive"/>
+    </net>
+    <net code="31" name="unconnected-(U1-CLK-Pad21)">
+      <node ref="U1" pin="21" pinfunction="CLK" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="32" name="unconnected-(U1-EPAD-Pad29)">
+      <node ref="U1" pin="29" pinfunction="EPAD" pintype="unspecified+no_connect"/>
+    </net>
+    <net code="33" name="unconnected-(U1-IN6-Pad6)">
+      <node ref="U1" pin="6" pinfunction="IN6" pintype="input+no_connect"/>
+    </net>
+    <net code="34" name="unconnected-(U1-WCT-Pad7)">
+      <node ref="U1" pin="7" pinfunction="WCT" pintype="output+no_connect"/>
+    </net>
+    <net code="35" name="unconnected-(U2-RST{slash}ADJ-Pad4)">
+      <node ref="U2" pin="4" pinfunction="RST/ADJ" pintype="unspecified+no_connect"/>
+    </net>
+  </nets>
+</export>

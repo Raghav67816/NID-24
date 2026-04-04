@@ -1,0 +1,31 @@
+# --- KiCad .gitignore ---
+# Temporary/Backup files
+pcb_itr2/*.000 
+pcb_itr2/*.bak 
+pcb_itr2/*.bck 
+pcb_itr2/*.kicad_pcb-bak 
+pcb_itr2/*.kicad_sch-bak 
+pcb_itr2/*-backups 
+pcb_itr2/*-cache* 
+pcb_itr2/*-bak* 
+pcb_itr2/*~  
+pcb_itr2/_autosave-* \#auto_saved_files\# 
+pcb_itr2/*.tmp 
+pcb_itr2/*-save.pro 
+pcb_itr2/*-save.kicad_pcb 
+fp-info-cache 
+~*.lck
+
+# Archived Backups (KiCad 6.0+)
+pcb_itr2/***/*-backups/*.zip
+
+# Generated files
+pcb_itr2/*.net 
+pcb_itr2/*.dsn 
+pcb_itr2/*.ses 
+pcb_itr2/*.xml 
+pcb_itr2/*.csv
+
+# Local project settings
+pcb_itr2/*.kicad_prl
+pcb_itr2/*.zip
