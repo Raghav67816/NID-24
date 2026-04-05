@@ -47,6 +47,8 @@ class AppWindow(QMainWindow):
         self.recorder = RecorderService()
         self.data_reader = DataReader(self.recorder)
 
+        self.normal_mode = True
+
         self.buffer = np.array([])
         
         self.channels, self.curves = prepare_graphs(self.ui.graphLayout)
@@ -59,11 +61,13 @@ class AppWindow(QMainWindow):
         self.board_manager.device_selected.connect(self.on_device_selected)
         self.ui.toggleDataBtn.clicked.connect(self.on_start_clicked)
         self.ui.recordBtn.clicked.connect(self.recorder.toggleRecording)
+        self.ui.modeToggleBtn.clicked.connect(self.change_application_mode)
 
         self.conn_manager.new_connection.connect(self.on_rfcomm_started)
         self.conn_manager.com_finished.connect(self.on_rfcomm_finished)
-
+        
         self.data_reader.update.connect(self.update_graphs)
+        self.data_reader.connected.connect(self.update_status)
         
         self.conn_manager.start_process()
 
@@ -132,6 +136,46 @@ class AppWindow(QMainWindow):
     def update_latency(self, latency: int):
         self.ui.latencyVal.setText(f"{str(latency)} sec")
 
+    def update_status(self, isConnected: bool):
+        def set_color(text: str, color: str):
+            return f"<p style='color: {color}'>{text}</p>"
+    
+        if isConnected:
+            self.ui.statusVal.setTextFormat(Qt.TextFormat.RichText)
+            self.ui.statusVal.setText(
+                set_color("Connected", "green")
+            )
+
+        else:
+            self.ui.statusVal.setTextFormat(Qt.TextFormat.RichText)
+            self.ui.statusVal.setText(
+                set_color("Disconnected", "red")
+            )
+
+    def change_application_mode(self):
+        msg_box = QMessageBox()
+        msg_box.setWindowTitle("Application Mode Change")
+        msg_box.setText("Changing Application Mode Will Reset Your Current State")
+        msg_box.setStandardButtons(
+            QMessageBox.StandardButtons.Ok |
+            QMessageBox.StandardButtons.Cancel
+        )
+        msg_box.show()
+        ret = msg_box.exec()
+
+        if ret == QMessageBox.StandardButtons.Ok:
+            if self.normal_mode:
+                self.ui.modeToggleBtn.setText("OBS")
+                self.ui.modeToggleBtn.setStyleSheet("QToolButton{ color: orange; font-weight: bold  }")
+                self.normal_mode = False
+
+            elif self.normal_mode != True:
+                self.ui.modeToggleBtn.setText("NOR")
+                self.ui.modeToggleBtn.setStyleSheet("QToolButton{ color: green; font-weight: bold  }")
+                self.normal_mode = True
+
+        else:
+            pass
     
     def closeEvent(self, event):
         print("Exiting")

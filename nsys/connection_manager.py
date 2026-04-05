@@ -30,6 +30,7 @@ class DataReader(QObject):
 
     update = Signal(object, object, object)
     write_latency = Signal(int)
+    connected = Signal(bool)
 
     PLOT_UPDATE_INTERVAL = 60 # ms
     DECI_CNT = 6
@@ -64,7 +65,7 @@ class DataReader(QObject):
         # graph update timer
         self.update_timer = QTimer()
         self.update_timer.setInterval(self.PLOT_UPDATE_INTERVAL)
-        self.update_timer.timeout.connect(self.update_plots) # TODO: MAKE UPDATE GRAPH FUNCTION
+        self.update_timer.timeout.connect(self.update_plots)
         self.update_timer.start()
         
         self.serial_port = QSerialPort()
@@ -84,13 +85,13 @@ class DataReader(QObject):
         try:
             self.serial_port.setPortName("/dev/rfcomm0")
             self.isOpen = self.serial_port.open(QSerialPort.ReadOnly)
-            print(f"is port opened: {self.isOpen}")
-            
+
+            if self.isOpen:
+                self.connected.emit(self.isOpen)
 
         except Exception as e:
-            print("failed to open ports")
             self.isOpen = False
-            print(str(e))
+            self.connected.emit(False)
 
     def on_error(self):
         print(f"Error occurred: {self.serial_port.error()}")

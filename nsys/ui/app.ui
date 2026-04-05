@@ -145,6 +145,19 @@
            </spacer>
           </item>
           <item>
+           <widget class="QToolButton" name="modeToggleBtn">
+            <property name="minimumSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>NOR</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QToolButton" name="boardBtn">
             <property name="minimumSize">
              <size>

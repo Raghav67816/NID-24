@@ -140,3 +140,9 @@ QComboBox{
 	padding: 3px;
 	background-color: transparent;
 }
+
+
+#modeToggleBtn{
+	color: green;
+	font-weight: bold;
+}

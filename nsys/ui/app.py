@@ -81,6 +81,12 @@ class Ui_AppWindow(object):
 
         self.horizontalLayout_4.addItem(self.horizontalSpacer)
 
+        self.modeToggleBtn = QToolButton(self.topBar)
+        self.modeToggleBtn.setObjectName(u"modeToggleBtn")
+        self.modeToggleBtn.setMinimumSize(QSize(40, 40))
+
+        self.horizontalLayout_4.addWidget(self.modeToggleBtn)
+
         self.boardBtn = QToolButton(self.topBar)
         self.boardBtn.setObjectName(u"boardBtn")
         self.boardBtn.setMinimumSize(QSize(40, 40))
@@ -230,6 +236,7 @@ class Ui_AppWindow(object):
         self.recLabel.setText(QCoreApplication.translate("AppWindow", u"Data Recorder: ", None))
         self.recordBtn.setText("")
         self.recordingTime.setText(QCoreApplication.translate("AppWindow", u"00:00", None))
+        self.modeToggleBtn.setText(QCoreApplication.translate("AppWindow", u"NOR", None))
         self.boardBtn.setText("")
         self.settingsBtn.setText("")
         self.ds_box.setTitle(QCoreApplication.translate("AppWindow", u"Data Tools", None))
