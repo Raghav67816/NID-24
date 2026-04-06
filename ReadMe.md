@@ -83,7 +83,7 @@ We read this data and draw our conclusions
 Using simulator is easy you can connect to your PC via system ui bluetooth but we don't have any way to connect out Teensy 4.0 to our PC. So, this PCB has 3 push buttons, 
 Teensy 4.0, OLED 0.96 Display and a bluetooth module for data transfer. 
 
-## How To Use / Build ?
+## How To Use ?
 
 Step 1: Order all the parts.
 
