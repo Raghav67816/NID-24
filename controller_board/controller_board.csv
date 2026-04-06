@@ -1,0 +1,8 @@
+"#","Reference","Qty","Value","Footprint","DNP"
+"1","C1, C2","2","1uF","C0603C223J5RACTU:CAPC1608X87N",""
+"2","J1","1","Conn_01x02_Pin","Connector_PinHeader_1.00mm:PinHeader_1x02_P1.00mm_Vertical",""
+"3","S1, S2, S3","3","TS02-66-55-BK-100-LCR-D","TS02_66_55_BK_100_LCR_D:SW_TS02-66-55-BK-100-LCR-D",""
+"4","U1","1","NRF24L01_Breakout","RF_Module:nRF24L01_Breakout",""
+"5","U2","1","DEV-15583","DEV-15583:MODULE_DEV-15583",""
+"6","U3","1","DM-OLED096-636","DM-OLED096-636:MODULE_DM-OLED096-636",""
+"7","U4","1","TLV1117LV33DCYR","TLV1117LV33DCYR:VREG_TLV1117LV33DCYR",""

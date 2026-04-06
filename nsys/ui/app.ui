@@ -158,29 +158,6 @@
            </widget>
           </item>
           <item>
-           <widget class="QToolButton" name="boardBtn">
-            <property name="minimumSize">
-             <size>
-              <width>40</width>
-              <height>40</height>
-             </size>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset resource="resources.qrc">
-              <normaloff>:/icons/connection.png</normaloff>:/icons/connection.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>20</width>
-              <height>20</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QToolButton" name="settingsBtn">
             <property name="minimumSize">
              <size>

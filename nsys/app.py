@@ -2,9 +2,9 @@
 from ui.app import Ui_AppWindow
 
 from PySide6.QtGui import QAction
-from theme_engine import prepare_sheet
 from PySide6.QtCore import QMargins, Qt, QProcess, QIODevice
 from PySide6.QtWidgets import QApplication, QMainWindow, QMenu, QMessageBox
+from PySide6.QtBluetooth import QBluetoothLocalDevice
 
 import numpy as np
 import pyqtgraph as pg
@@ -13,6 +13,9 @@ from board_manager import BoardManager
 from recorder.rec_service import RecorderService
 from graphs_manager import prepare_graphs, prepare_menu
 from connection_manager import RFCommProcess, DataReader
+
+from utils.combobox import ComboBox
+from theme_engine import prepare_sheet
 
 
 """
@@ -48,23 +51,22 @@ class AppWindow(QMainWindow):
         self.data_reader = DataReader(self.recorder)
 
         self.normal_mode = True
-
-        self.buffer = np.array([])
         
         self.channels, self.curves = prepare_graphs(self.ui.graphLayout)
         prepare_menu(self, self.channels, self.menu)
 
+        # change the device selection combo box to custom combo box
+        self.ui.deviceSelectionBox = ComboBox()
+        self.ui.deviceSelectionBox.setPlaceholderText("Your Device...")
+        self.ui.deviceSelectionBox.addItem("Load From Folder")
+
         """
         Connect to signals here
         """
-        self.ui.boardBtn.clicked.connect(self.board_manager.show_board_manager)
-        self.board_manager.device_selected.connect(self.on_device_selected)
         self.ui.toggleDataBtn.clicked.connect(self.on_start_clicked)
         self.ui.recordBtn.clicked.connect(self.recorder.toggleRecording)
         self.ui.modeToggleBtn.clicked.connect(self.change_application_mode)
-
-        self.conn_manager.new_connection.connect(self.on_rfcomm_started)
-        self.conn_manager.com_finished.connect(self.on_rfcomm_finished)
+        self.ui.deviceSelectionBox.clicked.connect(self.on_device_box_clicked)
         
         self.data_reader.update.connect(self.update_graphs)
         self.data_reader.connected.connect(self.update_status)
@@ -73,33 +75,21 @@ class AppWindow(QMainWindow):
 
         self.recorder.update_time.connect(self.update_recorder_time)
 
+        print(self.ui.deviceSelectionBox)
+
 
     # override default context menu
     def contextMenuEvent(self, event):
         self.menu.exec(event.globalPos())
 
-    """
-    RF COMM CALLBACKS
-    """
-    def on_rfcomm_started(self):
-        self.ui.statusVal.setText("CONNECTED")
 
-    def on_rfcomm_finished(self, code: int, desc: str):
-        self.ui.statusVal.setText("DISCONNECTED")
-
-    """
-    once user selected target board from Board Manager dialog
-    add it to data sources list
-    """
-    def on_device_selected(self, device_addr: str):
-        count = 0
-        items = []
-
-        for i in range(self.ui.deviceSelectionBox.count()):
-            items.append(self.ui.deviceSelectionBox.itemText(i))
-
-        if device_addr not in items:
-            self.ui.deviceSelectionBox.insertItem(0, device_addr)
+    def on_device_box_clicked(self):
+        print("clicked")
+        localDevice = QBluetoothLocalDevice()
+        for device in localDevice.connectedDevices():
+            item = QListWidgetItem()
+            item.setText(device.toString())
+            self.ui.deviceSelectionBox.insertItem(0, item)
 
 
     """

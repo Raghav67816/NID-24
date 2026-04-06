@@ -2,7 +2,7 @@
 
 NID-24 is a EMG based Humand Device Interface system that allows users to experience unique ways to interact with computers.
 
-![alt text](<images/NUERAL INTENT DECODER 24.png>)
+![alt text](<images/Zine.png>)
 
 This project allows users to use their hand as mouse. Based on ADS1293 and state-of-the-art software architecture, it continously classifies intent and executes it via bluetooth.
 
@@ -82,3 +82,26 @@ We read this data and draw our conclusions
 
 Using simulator is easy you can connect to your PC via system ui bluetooth but we don't have any way to connect out Teensy 4.0 to our PC. So, this PCB has 3 push buttons, 
 Teensy 4.0, OLED 0.96 Display and a bluetooth module for data transfer. 
+
+## How To Use / Build ?
+
+Step 1: Order all the parts.
+
+Step 2: Get the PCBs printed.
+
+Step 3: Assemble by yourself or get it assembled by PCB manufacturer using the schematics.
+
+Step 4: (Important) Before plugging the ADS1293 into the board check all the input passives.
+No input passives should exceed the limits provided by Texas Instruments in their documentation.
+
+Step 5: Load the firmwares for both boards
+
+Step 6: Connect both boads via breakout pins on the ADS1293 Breakout board
+
+Step 7: Connect to the Analysis software via bluetooth using Controller Board
+
+Step 8: Enjoy
+
+**Note: This project involves RLD i.e small amount of current is injected in your body to counter noise. Since, this project is still under development. DO NOT USE THE RLD ELECTRODE UNTIL DEVELOPMENT STATUS IS UPDATED IN THE README**
+
+However, you can try the Signals Simulator App to simulate the ADS1293 Breakout Board.

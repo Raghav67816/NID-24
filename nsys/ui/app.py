@@ -87,22 +87,12 @@ class Ui_AppWindow(object):
 
         self.horizontalLayout_4.addWidget(self.modeToggleBtn)
 
-        self.boardBtn = QToolButton(self.topBar)
-        self.boardBtn.setObjectName(u"boardBtn")
-        self.boardBtn.setMinimumSize(QSize(40, 40))
-        icon1 = QIcon()
-        icon1.addFile(u":/icons/connection.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.boardBtn.setIcon(icon1)
-        self.boardBtn.setIconSize(QSize(20, 20))
-
-        self.horizontalLayout_4.addWidget(self.boardBtn)
-
         self.settingsBtn = QToolButton(self.topBar)
         self.settingsBtn.setObjectName(u"settingsBtn")
         self.settingsBtn.setMinimumSize(QSize(40, 40))
-        icon2 = QIcon()
-        icon2.addFile(u":/icons/icons8-gear-32.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.settingsBtn.setIcon(icon2)
+        icon1 = QIcon()
+        icon1.addFile(u":/icons/icons8-gear-32.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.settingsBtn.setIcon(icon1)
         self.settingsBtn.setIconSize(QSize(24, 24))
         self.settingsBtn.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonIconOnly)
 
@@ -237,7 +227,6 @@ class Ui_AppWindow(object):
         self.recordBtn.setText("")
         self.recordingTime.setText(QCoreApplication.translate("AppWindow", u"00:00", None))
         self.modeToggleBtn.setText(QCoreApplication.translate("AppWindow", u"NOR", None))
-        self.boardBtn.setText("")
         self.settingsBtn.setText("")
         self.ds_box.setTitle(QCoreApplication.translate("AppWindow", u"Data Tools", None))
         self.deviceSelectionBox.setPlaceholderText(QCoreApplication.translate("AppWindow", u"Select Your Device", None))
