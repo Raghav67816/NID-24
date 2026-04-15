@@ -1,9 +1,8 @@
 import numpy as np
-from time import time_ns
 from signal import SIGINT
 from os import kill, system
+from time import time_ns, time
 from struct import unpack, error
-from scipy.signal import decimate
 
 from recorder.rec_service import RecorderService
 
@@ -77,9 +76,9 @@ class DataReader(QObject):
     def init_serial(self):
         self.serial_port.setBaudRate(QSerialPort.Baud115200)
         self.serial_port.setReadBufferSize(1024)
-        self.serial_port.setFlowControl(QSerialPort.FlowControl.HardwareControl)
+        self.serial_port.setFlowControl(QSerialPort.FlowControl.NoFlowControl)
         self.serial_port.setParity(QSerialPort.Parity.NoParity)
-        self.serial_port.setReadBufferSize(12) # in bytes (3 floats, 4 bytes per float)
+        # self.serial_port.setReadBufferSize(12) # in bytes (3 floats, 4 bytes per float)
 
     def open_port(self):
         try:
@@ -123,11 +122,6 @@ class DataReader(QObject):
             self.buffer_c[-1] = round(self.data_unpacked[2], self.DECI_CNT)
     
             self.packet_index += 1
-            c_time = time_ns() * 10**9
-
-            latency = time() - c_time
-
-            write_latency.emit(latency)
 
         # flip data
         

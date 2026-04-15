@@ -13,6 +13,7 @@ and sampling frequency and channels
 freq = float(input("Enter sampling frequency (hz): "))
 channels = int(input("Enter number of channels: "))
 duration = int(input("Enter duration (secs): "))
+filename = str(input("Enter filename: "))
 
 def generate():
     channels = []
@@ -34,9 +35,8 @@ def generate():
         
     array = np.array(channels)
     
-    file_id = {randint(0, 10)}
-    nbin = open(f"{getcwd()}/synthetic_data/{file_id}.npy", "wb+")
-    csv_file = open(f"{getcwd()}/synthetic_data/{file_id}.csv", "wb+")
+    nbin = open(f"{getcwd()}/synthetic_data/{filename}.npy", "wb+")
+    csv_file = open(f"{getcwd()}/synthetic_data/{filename}.csv", "wb+")
     
     df.to_csv(csv_file, ",", "%.6f")
     

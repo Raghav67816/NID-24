@@ -38,8 +38,8 @@ def generate():
     array = np.array(channels)
     
     file_id = {randint(0, 10)}
-    nbin = open(f"{getcwd()}/synthetic_data/{file_id}.npy", "wb+")
-    csv_file = open(f"{getcwd()}/synthetic_data/{file_id}.csv", "wb+")
+    nbin = open(f"{getcwd()}/synthetic_data/data.npy", "wb+")
+    csv_file = open(f"{getcwd()}/synthetic_data/data.csv", "wb+")
     
     df.to_csv(csv_file, ",", "%.6f")
     
