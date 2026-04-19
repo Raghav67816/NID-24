@@ -18,7 +18,7 @@ filename = str(input("Enter filename: "))
 def generate():
     channels = []
     burst_number = randint(0, 5)
-    for i in range(0, channels):
+    for i in range(0, len(channels)):
         signals = emg_simulate(
             duration=duration,
             sampling_rate=freq,

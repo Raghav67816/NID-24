@@ -7,15 +7,9 @@ from struct import unpack, error
 from recorder.rec_service import RecorderService
 
 from PySide6.QtWidgets import QMessageBox
+from PySide6.QtSerialPort import QSerialPort
 from PySide6.QtCore import QProcess, Signal, QObject, QTimer
-from PySide6.QtSerialPort import QSerialPort, QSerialPortInfo
 
-
-"""
-i.e calculating for each sec
-
-if latency > 1 sec it's kind of slow
-"""
 
 """
 Connect your android app before you start the reader
@@ -88,12 +82,16 @@ class DataReader(QObject):
             if self.isOpen:
                 self.connected.emit(self.isOpen)
 
-        except Exception as e:
+        except Exception:
             self.isOpen = False
             self.connected.emit(False)
 
-    def on_error(self):
-        print(f"Error occurred: {self.serial_port.error()}")
+    def on_error(self, error: QSerialPort.SerialPortError):
+        if error != QSerialPort.SerialPortError.NoError:
+            self.connected.emit(False)
+            print(f"Error occurred: {self.serial_port.error()}")
+        else:
+            self.connected.emit(True)
 
     def on_data_rcvd(self):
         data_packed = self.serial_port.readAll()
@@ -123,8 +121,7 @@ class DataReader(QObject):
     
             self.packet_index += 1
 
-        # flip data
-        
+
     def update_plots(self):
         if self.data_unpacked:
 
@@ -137,7 +134,8 @@ class DataReader(QObject):
             self.vbuffer_b[-1] = round(self.data_unpacked[1], self.DECI_CNT)
             self.vbuffer_c[-1] = round(self.data_unpacked[2], self.DECI_CNT)
         
-            self.update.emit(self.vbuffer_a, self.vbuffer_b, self.vbuffer_c)
+            if self.isReading:
+                self.update.emit(self.vbuffer_a, self.vbuffer_b, self.vbuffer_c)
     
     def cleanup(self):
         self.isOpen = False

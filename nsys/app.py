@@ -1,13 +1,11 @@
 # import dependencies
 from ui.app import Ui_AppWindow
 
-from PySide6.QtGui import QAction
-from PySide6.QtCore import QMargins, Qt, QProcess, QIODevice
-from PySide6.QtWidgets import QApplication, QMainWindow, QMenu, QMessageBox
+from PySide6.QtCore import QMargins, Qt
 from PySide6.QtBluetooth import QBluetoothLocalDevice
+from PySide6.QtWidgets import QApplication, QMainWindow, QMenu, QMessageBox, QListWidgetItem
 
 import numpy as np
-import pyqtgraph as pg
 
 from board_manager import BoardManager
 from recorder.rec_service import RecorderService
@@ -98,15 +96,19 @@ class AppWindow(QMainWindow):
     """
     def on_start_clicked(self):
         btn_text = self.ui.toggleDataBtn.text().lower()
-
+        
         if btn_text == "start":
+            
+            # if port is not opened when start is pressed 
+            # open the port, if the port is opened connected will be emitted
+            # and we can change the text
             if not self.data_reader.isOpen:
                 self.data_reader.open_port()
-                
+            
             self.data_reader.isReading = True
             self.ui.toggleDataBtn.setText("Stop")
-
-        elif btn_text == "stop":
+            
+        if btn_text == "stop":
             self.data_reader.isReading = False
             self.ui.toggleDataBtn.setText("Start")
 
@@ -135,6 +137,16 @@ class AppWindow(QMainWindow):
             self.ui.statusVal.setText(
                 set_color("Connected", "green")
             )
+            # self.ui.toggleDataBtn.setText("Stop")
+            # self.ui.toggleDataBtn.setStyleSheet(
+            #     """
+            #     QPushButton{
+            #         background-color: red;
+            #         text: white;
+            #     }
+            #     """
+            # )
+            
 
         else:
             self.ui.statusVal.setTextFormat(Qt.TextFormat.RichText)
