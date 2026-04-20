@@ -8,7 +8,7 @@ from neurokit2.emg import emg_simulate
 generate emg signals for specified duration
 and sampling frequency and channels
 
-* FOR 3 CHANNELS IN THIS SCRIPT *
+* FOR 3 CHANNELS IN THIS SCRIPT *`
 """
 freq = float(input("Enter sampling frequency (hz): "))
 channels = int(input("Enter number of channels: "))

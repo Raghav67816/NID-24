@@ -257,9 +257,9 @@
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_3">
               <item>
-               <widget class="QComboBox" name="deviceSelectionBox">
+               <widget class="QLineEdit" name="loadFilePathEdit">
                 <property name="placeholderText">
-                 <string>Select Your Device</string>
+                 <string>Load From File....</string>
                 </property>
                </widget>
               </item>

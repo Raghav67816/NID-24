@@ -8,7 +8,7 @@ QFrame:-
 	- border less
 	- primary-color as background
  */
-QFrame{
+QFrame {
 	border: none;
 	background-color: "$primary-background";
 	/* background-color: #111111; */
@@ -21,13 +21,13 @@ rounded border
 change color on hover
 transparent background by default
  */
-QToolButton{
+QToolButton {
 	border: 1px solid transparent;
 	border-radius: 5px;
 	background-color: transparent;
 }
 
-QToolButton:hover{
+QToolButton:hover {
 	background-color: "$secondary-color";
 	/* background-color: #333333; */
 }
@@ -38,7 +38,7 @@ QDialog
 Most of the dialogs are covered by frames
 to make design more good they are set to have same background as that of frames
  */
-QDialog{
+QDialog {
 	background-color: "$primary-background";
 	/* background-color: #111111; */
 }
@@ -50,7 +50,7 @@ rounded border
 variation-3 as background-color
 variation-4 as hover background-color
  */
-QPushButton{
+QPushButton {
 	border: 1px solid;
 	padding: 2px;
 	height: 30px;
@@ -60,7 +60,7 @@ QPushButton{
 	background-color: #00a6ff;
 }
 
-QPushButton:hover{
+QPushButton:hover {
 	background-color: "$primary-hover-color";
 	/* background-color: #007bbd; */
 }
@@ -71,7 +71,7 @@ QLineEdit
 White border when idle
 primary color as border color on focused
 */
-QLineEdit{
+QLineEdit {
 	border: 1px solid white;
 	border-radius: 5px;
 	color: white;
@@ -80,7 +80,7 @@ QLineEdit{
 	background-color: transparent;
 }
 
-QLineEdit:focus{
+QLineEdit:focus {
 	border: 1px solid #00a6ff;
 }
 
@@ -89,7 +89,7 @@ QPlainTextEdit
 secondary background
 white border
  */
-QPlainTextEdit{
+QPlainTextEdit {
 	color: white;
 	padding: 5px;
 	border: 1px solid white;
@@ -97,41 +97,41 @@ QPlainTextEdit{
 	background-color: transparent;
 }
 
-QTabWidget{
+QTabWidget {
 	background-color: transparent;
 }
 
 
-QLabel{
+QLabel {
 	color: white;
 }
 
-QGroupBox{
+QGroupBox {
 	color: white;
 }
 
-QGroupBox::title{
+QGroupBox::title {
 	color: white;
 	background-color: "$secondary-background"
 }
 
-#left_container{
+#left_container {
 	background-color: "$secondary-background"
 }
 
-#devicesContainer{
+#devicesContainer {
 	border: 1px solid white;
 }
 
-QListWidgetItem{
+QListWidgetItem {
 	color: white;
 }
 
-QListWidget{
+QListWidget {
 	color: white;
 }
 
-QComboBox{
+QComboBox {
 	border: 1px solid white;
 	border-radius: 5px;
 	padding-left: 5px;
@@ -142,7 +142,28 @@ QComboBox{
 }
 
 
-#modeToggleBtn{
+#modeToggleBtn {
 	color: green;
 	font-weight: bold;
+}
+
+QTabWidget{
+	background-color: "$primary-background";
+	/* background-color: #111111; */
+}
+
+QTabBar::tab{
+	background-color: "$secondary-background";
+	border: 1px solid "$primary-background";
+	color: white;
+	padding: 10px;
+}
+
+QTabBar::tab:selected{
+	background-color: "$primary-background"
+}
+
+QMainWindow{
+	background-color: "$primary-background";
+	/* background-color: #111111; */
 }

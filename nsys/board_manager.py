@@ -1,4 +1,4 @@
-from theme_engine import prepare_sheet
+from utils.theme_engine import prepare_sheet
 from ui.connection_ui import Ui_DeviceConnDialog
 
 from PySide6.QtSerialPort import QSerialPort

@@ -7,13 +7,15 @@ from PySide6.QtWidgets import QApplication, QMainWindow, QMenu, QMessageBox, QLi
 
 import numpy as np
 
-from board_manager import BoardManager
+from settings import SettingsApp, Settings
+
+from recorder.loader import DataLoader
 from recorder.rec_service import RecorderService
 from graphs_manager import prepare_graphs, prepare_menu
 from connection_manager import RFCommProcess, DataReader
 
-from utils.combobox import ComboBox
-from theme_engine import prepare_sheet
+from utils.theme_engine import ThemeEngine
+from utils.custom_widgets import Mod_LineEdit, swap_widgets
 
 
 """
@@ -28,13 +30,15 @@ but considering i will have a standalone board which does not know where to conn
 class AppWindow(QMainWindow):
     def __init__(self):
         super(AppWindow, self).__init__()
+        
+        self.theme_engine = ThemeEngine()
 
         """
         Setup Ui here
         """
         self.ui = Ui_AppWindow()
         self.ui.setupUi(self)
-        self.setStyleSheet(prepare_sheet())
+        self.setStyleSheet(self.theme_engine.prepare_sheet())
 
         self.ui.graphLayout.setSpacing(12)
         self.ui.graphLayout.setContentsMargins(QMargins(12, 12, 12, 12))
@@ -43,9 +47,10 @@ class AppWindow(QMainWindow):
         Define all utilities here.
         """
         self.menu = QMenu(self)
+        self.settings = Settings()
         self.conn_manager = RFCommProcess(self)
-        self.board_manager = BoardManager()
         self.recorder = RecorderService()
+        self.data_loader = DataLoader()
         self.data_reader = DataReader(self.recorder)
 
         self.normal_mode = True
@@ -53,10 +58,18 @@ class AppWindow(QMainWindow):
         self.channels, self.curves = prepare_graphs(self.ui.graphLayout)
         prepare_menu(self, self.channels, self.menu)
 
-        # change the device selection combo box to custom combo box
-        self.ui.deviceSelectionBox = ComboBox()
-        self.ui.deviceSelectionBox.setPlaceholderText("Your Device...")
-        self.ui.deviceSelectionBox.addItem("Load From Folder")
+        # load config before access config
+        self.settings.load_config()
+        print("dumping config")
+        print(self.settings.config)
+
+        # change the device selection combo box to custom line edit
+        self.loadFromDir = Mod_LineEdit()
+        self.loadFromDir.setPlaceholderText("Load from directory...")
+        self.loadFromDir.clicked.connect(self.on_load_from_dir_clicked)
+        
+        swap_widgets(self.ui.deviceSelectionBox, self.loadFromDir)
+        
 
         """
         Connect to signals here
@@ -64,31 +77,23 @@ class AppWindow(QMainWindow):
         self.ui.toggleDataBtn.clicked.connect(self.on_start_clicked)
         self.ui.recordBtn.clicked.connect(self.recorder.toggleRecording)
         self.ui.modeToggleBtn.clicked.connect(self.change_application_mode)
-        self.ui.deviceSelectionBox.clicked.connect(self.on_device_box_clicked)
         
         self.data_reader.update.connect(self.update_graphs)
         self.data_reader.connected.connect(self.update_status)
         
         self.conn_manager.start_process()
 
+        self.ui.settingsBtn.clicked.connect(self.open_settings)
+
         self.recorder.update_time.connect(self.update_recorder_time)
-
-        print(self.ui.deviceSelectionBox)
-
 
     # override default context menu
     def contextMenuEvent(self, event):
         self.menu.exec(event.globalPos())
 
 
-    def on_device_box_clicked(self):
-        print("clicked")
-        localDevice = QBluetoothLocalDevice()
-        for device in localDevice.connectedDevices():
-            item = QListWidgetItem()
-            item.setText(device.toString())
-            self.ui.deviceSelectionBox.insertItem(0, item)
-
+    def on_load_from_dir_clicked(self):
+        self.data_loader.request_loader(self)
 
     """
     start simulating data
@@ -107,10 +112,26 @@ class AppWindow(QMainWindow):
             
             self.data_reader.isReading = True
             self.ui.toggleDataBtn.setText("Stop")
+            self.ui.toggleDataBtn.setStyleSheet(
+                """
+                QPushButton{
+                    color: white;
+                    background-color: {0}
+                }
+                """.format(self.theme_engine.get_color("danger-color"))
+            )
             
         if btn_text == "stop":
             self.data_reader.isReading = False
             self.ui.toggleDataBtn.setText("Start")
+            self.ui.toggleDataBtn.setStyleSheet(
+                """
+                QPushButton{
+                    color: white;
+                    background-color: {0}
+                }
+                """.format(self.theme_engine.get_color("primary-color"))
+            )
 
 
     """
@@ -137,15 +158,6 @@ class AppWindow(QMainWindow):
             self.ui.statusVal.setText(
                 set_color("Connected", "green")
             )
-            # self.ui.toggleDataBtn.setText("Stop")
-            # self.ui.toggleDataBtn.setStyleSheet(
-            #     """
-            #     QPushButton{
-            #         background-color: red;
-            #         text: white;
-            #     }
-            #     """
-            # )
             
 
         else:
@@ -178,6 +190,16 @@ class AppWindow(QMainWindow):
 
         else:
             pass
+
+    
+    def open_settings(self):
+        settings_app = SettingsApp(
+            self.settings,
+            self.theme_engine
+        )
+
+        settings_app.show()
+        settings_app.exec_()
     
     def closeEvent(self, event):
         print("Exiting")
@@ -186,6 +208,7 @@ class AppWindow(QMainWindow):
         
 
 app = QApplication()
+
 app_win = AppWindow()
 app_win.show()
 app.exec()
