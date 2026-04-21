@@ -4,3 +4,6 @@
 [submodule "SignalsSimulator"]
 	path = SignalsSimulator
 	url = https://github.com/Raghav67816/EMG-Signals-Simulator.git
+[submodule "nid-24-firmware"]
+	path = nid-24-firmware
+	url = https://github.com/Raghav67816/nid-24-firmware.git
