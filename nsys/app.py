@@ -15,7 +15,7 @@ from graphs_manager import prepare_graphs, prepare_menu
 from connection_manager import RFCommProcess, DataReader
 
 from utils.theme_engine import ThemeEngine
-from utils.custom_widgets import Mod_LineEdit, swap_widgets
+from utils.custom_widgets import Mod_LineEdit, swap_widgets, DataControlsWidget
 
 
 """
@@ -166,6 +166,11 @@ class AppWindow(QMainWindow):
                 set_color("Disconnected", "red")
             )
 
+    def change_mode(self, mode: str):
+        if mode.lower() == "obs":
+            controls_widget = DataControlsWidget()
+            swap_widgets(self.ui.toggleDataBtn, controls_widget)
+
     def change_application_mode(self):
         msg_box = QMessageBox()
         msg_box.setWindowTitle("Application Mode Change")
@@ -182,6 +187,8 @@ class AppWindow(QMainWindow):
                 self.ui.modeToggleBtn.setText("OBS")
                 self.ui.modeToggleBtn.setStyleSheet("QToolButton{ color: orange; font-weight: bold  }")
                 self.normal_mode = False
+
+                self.change_mode(self.ui.modeToggleBtn.text())
 
             elif self.normal_mode != True:
                 self.ui.modeToggleBtn.setText("NOR")

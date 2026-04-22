@@ -1,29 +1,30 @@
-#,Reference,Qty,Value,Footprint,Link
-1,"C1, C2",2,1uF,C0603C223J5RACTU:CAPC1608X87N,https://www.digikey.com/en/products/detail/kemet/C0402C105K9PACTU/1090778
-2,J1,1,Conn_01x02_Pin,Connector_PinHeader_1.00mm:PinHeader_1x02_P1.00mm_Vertical,https://robu.in/product/1-month-warranty-892/
-3,"S1, S2, S3",3,TS02-66-55-BK-100-LCR-D,TS02_66_55_BK_100_LCR_D:SW_TS02-66-55-BK-100-LCR-D,https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/TS02-66-55-BK-100-LCR-D/15634297
-4,U1,1,NRF24L01_Breakout,RF_Module:nRF24L01_Breakout,https://robu.in/product/m177-nrf24l01-2-4ghz-antenna-wireless-transceiver-module/
-5,U2,1,DEV-15583,DEV-15583:MODULE_DEV-15583,https://robu.in/product/teensy-4-0-development-board/
-6,U3,1,DM-OLED096-636,DM-OLED096-636:MODULE_DM-OLED096-636,https://robu.in/product/0-96-inch-yellow-yellow-blue-oled-lcd-led-display-module/?gad_campaignid=17416544847
-7,U4,1,TLV1117LV33DCYR,TLV1117LV33DCYR:VREG_TLV1117LV33DCYR,https://www.digikey.in/en/products/detail/texas-instruments/TLV1117LV33DCYR/2666508
-8,"C1, C4, C8",3,1uF,C0603C223J5RACTU:CAPC1608X87N,https://www.digikey.in/en/products/detail/kemet/C0402C105K9PACTU/1090778
-9,C2,1,1.5 nF,C0603C223J5RACTU:CAPC1608X87N,https://www.digikey.in/en/products/detail/kemet/C1206C152J5GACTU/3471881
-10,C3,1,0.1uF,C0603C223J5RACTU:CAPC1608X87N,https://www.digikey.in/en/products/detail/kemet/C0603C104K3RACTU/416044
-11,"C5, C6",2,22pF,C0603C223J5RACTU:CAPC1608X87N,https://robu.in/product/22pf-0603-surface-mount-multilayer-ceramic-capacitor-pack-of-50/
-12,C7,1,0.1 uF,C0603C223J5RACTU:CAPC1608X87N,https://www.digikey.in/en/products/detail/kemet/C0603C104K3RACTU/416044
-13,D1,1,LED,LED_SMD:LED_0603_1608Metric,https://robu.in/product/0603-surface-mount-led-orange-50-pcs/
-14,J1,1,Conn_01x05_Pin,Connector_PinHeader_1.00mm:PinHeader_1x05_P1.00mm_Vertical,https://www.digikey.com/en/products/detail/kemet/C0402C105K9PACTU/1090778
-15,J2,1,RSTB_J,Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical,https://www.digikey.com/en/products/detail/kemet/C0402C105K9PACTU/1090778
-16,J3,1,Breakout Pins,Connector_PinHeader_1.00mm:PinHeader_1x06_P1.00mm_Vertical,https://www.digikey.com/en/products/detail/kemet/C0402C105K9PACTU/1090778
-17,J4,1,Power Input,Connector_PinHeader_1.00mm:PinHeader_1x02_P1.00mm_Vertical,https://www.digikey.com/en/products/detail/kemet/C0402C105K9PACTU/1090778
-18,R1,1,100K,Resistor_SMD:R_0603_1608Metric,https://www.digikey.com/en/products/detail/yageo/RC0603FR-07100KL/726889
-19,R2,1,1M Ohms,Resistor_SMD:R_0603_1608Metric,https://www.digikey.com/en/products/detail/yageo/RC0603FR-071ML/726844
-20,R3,1,1M Ohm,Resistor_SMD:R_0603_1608Metric,https://www.digikey.com/en/products/detail/yageo/RC0603FR-071ML/726844
-21,R4,1,1 M Ohms,Resistor_SMD:R_0603_1608Metric,https://www.digikey.com/en/products/detail/yageo/RC0603FR-071ML/726844
-22,"R5, R6, R7, R8, R9",5,10K,Resistor_SMD:R_0603_1608Metric,https://www.digikey.com/en/products/detail/stackpole-electronics-inc/RMCF0603FT220K/1760805
-23,R10,1,22K Ohm,Resistor_SMD:R_0603_1608Metric,https://www.digikey.com/en/products/detail/yageo/RC0603FR-0722KL/727056
-24,R11,1,12K Ohm,Resistor_SMD:R_0603_1608Metric,https://www.digikey.com/en/products/detail/yageo/RC0603FR-0712K7L/726919
-25,R12,1,220 Ohms,Resistor_SMD:R_0603_1608Metric,https://www.digikey.com/en/products/detail/yageo/RC0402FR-07220KL/726564
-26,U1,1,ADS1293CISQ/NOPB,ADS1293CISQ_NOPB:QFN50P500X500X80-29N,https://www.digikey.in/en/products/detail/texas-instruments/ADS1293CISQ-NOPB/3749460
-27,U2,1,SPX5205M5-L-5-0/TR,SP6201EM5,https://www.digikey.in/en/products/detail/maxlinear-inc/SPX5205M5-L-5-0-TR/2472459
-28,Y1,1,4.096 MHz,Crystal:Crystal_HC18-U_Vertical,https://www.digikey.in/en/products/detail/ilsi/HC49US-FF5F18-4-0960MHZ/12617507
+#,Reference,Qty,Value,Footprint,Link,Price
+1,"C1, C2",2,1uF,C0603C223J5RACTU:CAPC1608X87N,https://www.digikey.com/en/products/detail/kemet/C0402C105K9PACTU/1090778,0.24
+2,J1,1,Conn_01x02_Pin,Connector_PinHeader_1.00mm:PinHeader_1x02_P1.00mm_Vertical,https://robu.in/product/1-month-warranty-892/,0.12
+3,"S1, S2, S3",3,TS02-66-55-BK-100-LCR-D,TS02_66_55_BK_100_LCR_D:SW_TS02-66-55-BK-100-LCR-D,https://www.digikey.com/en/products/detail/same-sky-formerly-cui-devices/TS02-66-55-BK-100-LCR-D/15634297,0.99
+4,U1,1,NRF24L01_Breakout,RF_Module:nRF24L01_Breakout,https://robu.in/product/m177-nrf24l01-2-4ghz-antenna-wireless-transceiver-module/,0.68
+5,U2,1,DEV-15583,DEV-15583:MODULE_DEV-15583,https://robu.in/product/teensy-4-0-development-board/,24
+6,U3,1,DM-OLED096-636,DM-OLED096-636:MODULE_DM-OLED096-636,https://robu.in/product/0-96-inch-yellow-yellow-blue-oled-lcd-led-display-module/?gad_campaignid=17416544847,1.66
+7,U4,1,TLV1117LV33DCYR,TLV1117LV33DCYR:VREG_TLV1117LV33DCYR,https://www.digikey.in/en/products/detail/texas-instruments/TLV1117LV33DCYR/2666508,1.75
+8,"C1, C4, C8",3,1uF,C0603C223J5RACTU:CAPC1608X87N,https://www.digikey.in/en/products/detail/kemet/C0402C105K9PACTU/1090778,0.22
+9,C2,1,1.5 nF,C0603C223J5RACTU:CAPC1608X87N,https://www.digikey.in/en/products/detail/kemet/C1206C152J5GACTU/3471881,0.44
+10,C3,1,0.1uF,C0603C223J5RACTU:CAPC1608X87N,https://www.digikey.in/en/products/detail/kemet/C0603C104K3RACTU/416044,0.51
+11,"C5, C6",2,22pF,C0603C223J5RACTU:CAPC1608X87N,https://robu.in/product/22pf-0603-surface-mount-multilayer-ceramic-capacitor-pack-of-50/,0.032
+12,C7,1,0.1 uF,C0603C223J5RACTU:CAPC1608X87N,https://www.digikey.in/en/products/detail/kemet/C0603C104K3RACTU/416044,0.22
+13,D1,1,LED,LED_SMD:LED_0603_1608Metric,https://robu.in/product/0603-surface-mount-led-orange-50-pcs/,0.97
+14,J1,1,Conn_01x05_Pin,Connector_PinHeader_1.00mm:PinHeader_1x05_P1.00mm_Vertical,"cant find the specific model, might need to cut a smaller part out of a big piece ",0.32
+15,J2,1,RSTB_J,Connector_PinHeader_1.00mm:PinHeader_1x01_P1.00mm_Vertical,"cant find the specific model, might need to cut a smaller part out of a big piece ",0.32
+16,J3,1,Breakout Pins,Connector_PinHeader_1.00mm:PinHeader_1x06_P1.00mm_Vertical,"cant find the specific model, might need to cut a smaller part out of a big piece ",0.32
+17,J4,1,Power Input,Connector_PinHeader_1.00mm:PinHeader_1x02_P1.00mm_Vertical,"cant find the specific model, might need to cut a smaller part out of a big piece ",0.32
+18,R1,1,100K,Resistor_SMD:R_0603_1608Metric,https://www.digikey.com/en/products/detail/yageo/RC0603FR-07100KL/726889,0.24
+19,R2,1,1M Ohms,Resistor_SMD:R_0603_1608Metric,https://www.digikey.com/en/products/detail/yageo/RC0603FR-071ML/726844,0.24
+20,R3,1,1M Ohm,Resistor_SMD:R_0603_1608Metric,https://www.digikey.com/en/products/detail/yageo/RC0603FR-071ML/726844,0.24
+21,R4,1,1 M Ohms,Resistor_SMD:R_0603_1608Metric,https://www.digikey.com/en/products/detail/yageo/RC0603FR-071ML/726844,0.24
+22,"R5, R6, R7, R8, R9",5,10K,Resistor_SMD:R_0603_1608Metric,https://www.digikey.com/en/products/detail/stackpole-electronics-inc/RMCF0603FT220K/1760805,0.24
+23,R10,1,22K Ohm,Resistor_SMD:R_0603_1608Metric,https://www.digikey.com/en/products/detail/yageo/RC0603FR-0722KL/727056,0.24
+24,R11,1,12K Ohm,Resistor_SMD:R_0603_1608Metric,https://www.digikey.com/en/products/detail/yageo/RC0603FR-0712K7L/726919,0.24
+25,R12,1,220 Ohms,Resistor_SMD:R_0603_1608Metric,https://www.digikey.com/en/products/detail/yageo/RC0402FR-07220KL/726564,0.24
+26,U1,1,ADS1293CISQ/NOPB,ADS1293CISQ_NOPB:QFN50P500X500X80-29N,https://www.digikey.in/en/products/detail/texas-instruments/ADS1293CISQ-NOPB/3749460,19.3
+27,U2,1,SPX5205M5-L-5-0/TR,SP6201EM5,https://www.digikey.in/en/products/detail/maxlinear-inc/SPX5205M5-L-5-0-TR/2472459,0.33
+28,Y1,1,4.096 MHz,Crystal:Crystal_HC18-U_Vertical,https://www.digikey.in/en/products/detail/ilsi/HC49US-FF5F18-4-0960MHZ/12617507,0.65
+,,,,,GRAND TOTAL,55.312

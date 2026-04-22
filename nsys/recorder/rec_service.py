@@ -7,6 +7,23 @@ from PySide6.QtCore import Signal, QObject, QTimer
 
 from datetime import datetime
 
+"""
+
+DESIGN RULE
+
+to maintaince consistency in system design both recorder and generator:
+1. MUST store data in the following format
+
+    PARENT ARRAY
+    [
+        [x1, x2, x3, x4 ...... xn] -> channel 1
+        [y1, y2, y3, y4 ...... yn] -> channel 2
+        [z1, z2, z3, z4 ...... zn] -> channel 3
+    ]
+
+2. Instead of generating data in chunk, write data in chunk.
+"""
+
 class RecorderService(QObject):
 
     started = Signal()
@@ -33,12 +50,13 @@ class RecorderService(QObject):
     def on_buff_full(self, ch1: np.ndarray, ch2: np.ndarray, ch3: np.ndarray):
         if self.isRunning:
             combined_buffer = np.array([ch1, ch2, ch3])
-            np.savetxt(
-                f"{self.default_dump_location}/recorder/{self.file_index}.csv",
-                combined_buffer,
-                delimiter=",",
-                fmt='%.6f'
-            )
+            # np.savetxt(
+            #     f"{self.default_dump_location}/recorder/{self.file_index}.csv",
+            #     combined_buffer,
+            #     delimiter=",",
+            #     fmt='%.6f'
+            # )
+            np.save(f"{self.default_dump_location}/recorder/{self.file_index}.npy", combined_buffer)
             self.file_index += 1
 
     def on_timeout(self):

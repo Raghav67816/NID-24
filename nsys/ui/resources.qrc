@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="icons">
+    <file>forward.png</file>
+    <file>back.png</file>
     <file>icons8-play-30.png</file>
     <file>icons8-pause-32.png</file>
     <file>icons8-gear-32.png</file>

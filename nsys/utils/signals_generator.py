@@ -17,35 +17,32 @@ CHANNELS = 3
 AMPL_MAX = 10 # mv
 AMPL_MIN = 0 # mv
 
-# def generate():
-#     channels = []
-#     burst_number = randint(0, 5)
-#     for i in range(0, CHANNELS):
-#         signals = emg_simulate(
-#             duration=DURATION,
-#             sampling_rate=FREQ,
-#             burst_number=burst_number
-#         )
-        
-#         channels.append([signals])
-        
-#     df = pd.DataFrame({
-#         "channel_1": channels[0][0],
-#         "channel_2": channels[1][0],
-#         "channel_3": channels[2][0]
-#     })
-        
-#     array = np.array(channels)
-    
-#     nbin = open(f"{getcwd()}/synthetic_data/data.npy", "wb+")
-#     csv_file = open(f"{getcwd()}/synthetic_data/data.csv", "wb+")
-    
-#     df.to_csv(csv_file, ",", "%.6f")
-    
-#     np.save(nbin, array)
-    
-
 def generate():
-    channel_data = np.array()
+    channels = []
+    burst_number = randint(0, 5)
+    for i in range(0, CHANNELS):
+        signals = emg_simulate(
+            duration=DURATION,
+            sampling_rate=FREQ,
+            burst_number=burst_number
+        )
+        
+        channels.append(signals)
+        
+    df = pd.DataFrame({
+        "channel_1": channels[0],
+        "channel_2": channels[1],
+        "channel_3": channels[2]
+    })
+
+    array = np.array(channels)
+    
+    nbin = open(f"{getcwd()}/data.npy", "wb+")
+    csv_file = open(f"{getcwd()}/data.csv", "wb+")
+    
+    df.to_csv(csv_file, ",", float_format="%.6f", index=False)
+    
+    np.save(nbin, array)
+    
     
 generate()

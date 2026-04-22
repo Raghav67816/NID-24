@@ -27,7 +27,7 @@ class DataReader(QObject):
 
     PLOT_UPDATE_INTERVAL = 60 # ms
     DECI_CNT = 6
-    MAX_PACKET_INDEX = 10**6
+    MAX_PACKET_INDEX = 1024
     BUFFER_SIZE = 1000
     VBUFFER_SIZE = 100
 
@@ -69,7 +69,7 @@ class DataReader(QObject):
 
     def init_serial(self):
         self.serial_port.setBaudRate(QSerialPort.Baud115200)
-        self.serial_port.setReadBufferSize(1024)
+        # self.serial_port.setReadBufferSize(1024)
         self.serial_port.setFlowControl(QSerialPort.FlowControl.NoFlowControl)
         self.serial_port.setParity(QSerialPort.Parity.NoParity)
         # self.serial_port.setReadBufferSize(12) # in bytes (3 floats, 4 bytes per float)
@@ -105,9 +105,9 @@ class DataReader(QObject):
         if self.data_unpacked != None:
             if self.packet_index >= self.MAX_PACKET_INDEX:
                 self.recorder_service.on_buff_full(
-                    self.vbuffer_a,
-                    self.vbuffer_b,
-                    self.vbuffer_c
+                    self.buffer_a,
+                    self.buffer_b,
+                    self.buffer_c
                 )
                 self.packet_index = 0
             
