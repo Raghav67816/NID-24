@@ -1,7 +1,7 @@
 import numpy as np
+from time import time_ns
 from signal import SIGINT
 from os import kill, system
-from time import time_ns, time
 from struct import unpack, error
 
 from recorder.rec_service import RecorderService
@@ -69,10 +69,8 @@ class DataReader(QObject):
 
     def init_serial(self):
         self.serial_port.setBaudRate(QSerialPort.Baud115200)
-        # self.serial_port.setReadBufferSize(1024)
         self.serial_port.setFlowControl(QSerialPort.FlowControl.NoFlowControl)
         self.serial_port.setParity(QSerialPort.Parity.NoParity)
-        # self.serial_port.setReadBufferSize(12) # in bytes (3 floats, 4 bytes per float)
 
     def open_port(self):
         try:
@@ -94,9 +92,15 @@ class DataReader(QObject):
             self.connected.emit(True)
 
     def on_data_rcvd(self):
+
+        # data coming might not receive 12 bytes directly
+        # we must manually check if the data is 12 bytes
+        # if not manually add successive bytes to complete 12 bytes
         data_packed = self.serial_port.readAll()
+        print(f"Data size: {data_packed.size()}")
         try:
-            self.data_unpacked = unpack("<fff", bytes(data_packed))
+            if data_packed.size() >= 12:
+                self.data_unpacked = unpack("<fff", data_packed.data())
 
         except error:
             pass
