@@ -61,9 +61,9 @@ This will act like ADS1293 and send data to our computer/analysis software for a
 ## ADS1293 Based Board (THE HEART)
 
 
-| Image 1 | Image 2 |
+| Render | PCB |
 |--------|--------|
-| ![alt text](<images/ads.png>) | ![alt text](<images/Screenshot from 2026-03-30 13-17-23-2.png>) |
+| ![alt text](images/ads-reimagined.png) | ![alt text](<images/Screenshot from 2026-03-30 13-17-23-2.png>) |
 
 ### Features:
  - 24-bit resolution
@@ -78,10 +78,21 @@ We read this data and draw our conclusions
 
 ## Controller Board
 
-![alt text](images/controller.png)
+| Render | PCB |
+|--------|--------|
+| ![alt text](images/cb-reimagined.png) | ![alt text](images/cb-case.png)|
 
 Using simulator is easy you can connect to your PC via system ui bluetooth but we don't have any way to connect out Teensy 4.0 to our PC. So, this PCB has 3 push buttons, 
-Teensy 4.0, OLED 0.96 Display and a bluetooth module for data transfer. 
+Teensy 4.0, OLED 0.96 Display and a bluetooth module for data transfer.
+
+Controller Board case Onshape [link here.](https://cad.onshape.com/documents/cf77a823cf461f5b911517e3/w/527c1a40b344ced2cb5cf64d/e/4507412c1ac5528a6c833cb1?renderMode=0&uiState=69ee44c7155ef2a92238ec7a)
+
+Features of Case:
+
+1. Smooth curves / No sharp edges
+2. No screws required
+3. Proper spacing for NRF24L01 module and USB for debugging
+
 
 ## BOM
 Please refer to [BOM.csv](https://github.com/Raghav67816/NID-24/blob/master/BOM.csv)
