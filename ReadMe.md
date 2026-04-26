@@ -95,7 +95,7 @@ Features of Case:
 
 
 ## BOM
-Please refer to [BOM.csv](https://github.com/Raghav67816/NID-24/blob/master/BOM.csv)
+Please refer to [BOM.csv](github.com/Raghav67816/NID-24/blob/master/BOM%20Final.csv)
 
 ## How To Use ?
 
