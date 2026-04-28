@@ -1,8 +1,8 @@
 # import dependencies
 from ui.app import Ui_AppWindow
 
+from PySide6.QtGui import QIcon
 from PySide6.QtCore import QMargins, Qt
-from PySide6.QtBluetooth import QBluetoothLocalDevice
 from PySide6.QtWidgets import QApplication, QMainWindow, QMenu, QMessageBox, QListWidgetItem
 
 import numpy as np
@@ -68,14 +68,16 @@ class AppWindow(QMainWindow):
         self.loadFromDir.setPlaceholderText("Load from directory...")
         self.loadFromDir.clicked.connect(self.on_load_from_dir_clicked)
         
-        swap_widgets(self.ui.deviceSelectionBox, self.loadFromDir)
+        swap_widgets(self.ui.loadFilePathEdit, self.loadFromDir)
         
 
         """
         Connect to signals here
         """
         self.ui.toggleDataBtn.clicked.connect(self.on_start_clicked)
-        self.ui.recordBtn.clicked.connect(self.recorder.toggleRecording)
+        self.ui.recordBtn.clicked.connect(
+            lambda state, btn=self.ui.recordBtn: self.recorder.toggleRecording(btn)
+        )
         self.ui.modeToggleBtn.clicked.connect(self.change_application_mode)
         
         self.data_reader.update.connect(self.update_graphs)
@@ -133,12 +135,15 @@ class AppWindow(QMainWindow):
                 """.format(self.theme_engine.get_color("primary-color"))
             )
 
+    def toggleRecorder(self):
+        self.recorder.toggleRecording()
+        self.ui.recordBtn.setIcon(QIcon(""))
+
 
     """
     update the graph when data is received
     """
     def update_graphs(self, cha: np.ndarray, chb: np.ndarray, chc: np.ndarray):
-        print("recvd signals")
         self.curves["channel_1"].setData(cha)
         self.curves["channel_2"].setData(chb)
         self.curves["channel_3"].setData(chc)

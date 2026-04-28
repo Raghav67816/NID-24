@@ -307,6 +307,36 @@
              <property name="title">
               <string>Features</string>
              </property>
+             <layout class="QVBoxLayout" name="verticalLayout_4">
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QTabWidget" name="featuresTabWidget">
+                <property name="currentIndex">
+                 <number>0</number>
+                </property>
+                <widget class="QWidget" name="channel_1_features">
+                 <attribute name="title">
+                  <string>Channel 1</string>
+                 </attribute>
+                </widget>
+                <widget class="QWidget" name="channel_2_features">
+                 <attribute name="title">
+                  <string>Channel 2</string>
+                 </attribute>
+                </widget>
+                <widget class="QWidget" name="channel_3_features">
+                 <attribute name="title">
+                  <string>Channel 3</string>
+                 </attribute>
+                </widget>
+               </widget>
+              </item>
+             </layout>
             </widget>
            </item>
           </layout>

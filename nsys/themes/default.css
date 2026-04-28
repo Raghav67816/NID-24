@@ -167,3 +167,7 @@ QMainWindow{
 	background-color: "$primary-background";
 	/* background-color: #111111; */
 }
+
+#featuresTabWidget{
+	border: none;
+}

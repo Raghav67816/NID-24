@@ -94,7 +94,6 @@ class DataReader(QObject):
 
     def on_data_rcvd(self):
         data_packed = self.serial_port.read(self.BUFFER_LEN)
-        print(data_packed.size())
         try:
             self.data_unpacked = unpack("<3f", data_packed.data())
 
@@ -133,7 +132,6 @@ class DataReader(QObject):
             self.vbuffer_c[-1] = round(self.data_unpacked[2], self.DECI_CNT)
         
             if self.isReading:
-                print(f'is reading: {self.isReading}')
                 self.update.emit(self.vbuffer_a, self.vbuffer_b, self.vbuffer_c)
     
     def cleanup(self):
