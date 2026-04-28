@@ -138,6 +138,7 @@ class AppWindow(QMainWindow):
     update the graph when data is received
     """
     def update_graphs(self, cha: np.ndarray, chb: np.ndarray, chc: np.ndarray):
+        print("recvd signals")
         self.curves["channel_1"].setData(cha)
         self.curves["channel_2"].setData(chb)
         self.curves["channel_3"].setData(chc)

@@ -8,7 +8,7 @@ from recorder.rec_service import RecorderService
 
 from PySide6.QtWidgets import QMessageBox
 from PySide6.QtSerialPort import QSerialPort
-from PySide6.QtCore import QProcess, Signal, QObject, QTimer
+from PySide6.QtCore import QProcess, Signal, QObject, QTimer, QByteArray
 
 
 """
@@ -30,6 +30,7 @@ class DataReader(QObject):
     MAX_PACKET_INDEX = 1024
     BUFFER_SIZE = 1000
     VBUFFER_SIZE = 100
+    BUFFER_LEN = 12
 
     def __init__(self, recorder_service: RecorderService):
         super(DataReader, self).__init__()
@@ -92,15 +93,10 @@ class DataReader(QObject):
             self.connected.emit(True)
 
     def on_data_rcvd(self):
-
-        # data coming might not receive 12 bytes directly
-        # we must manually check if the data is 12 bytes
-        # if not manually add successive bytes to complete 12 bytes
-        data_packed = self.serial_port.readAll()
-        print(f"Data size: {data_packed.size()}")
+        data_packed = self.serial_port.read(self.BUFFER_LEN)
+        print(data_packed.size())
         try:
-            if data_packed.size() >= 12:
-                self.data_unpacked = unpack("<fff", data_packed.data())
+            self.data_unpacked = unpack("<3f", data_packed.data())
 
         except error:
             pass
@@ -128,8 +124,6 @@ class DataReader(QObject):
 
     def update_plots(self):
         if self.data_unpacked:
-
-        
             self.vbuffer_a[:-1] = self.vbuffer_a[1:]
             self.vbuffer_b[:-1] = self.vbuffer_b[1:]
             self.vbuffer_c[:-1] = self.vbuffer_c[1:]
@@ -139,6 +133,7 @@ class DataReader(QObject):
             self.vbuffer_c[-1] = round(self.data_unpacked[2], self.DECI_CNT)
         
             if self.isReading:
+                print(f'is reading: {self.isReading}')
                 self.update.emit(self.vbuffer_a, self.vbuffer_b, self.vbuffer_c)
     
     def cleanup(self):
