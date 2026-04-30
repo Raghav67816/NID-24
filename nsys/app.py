@@ -8,6 +8,7 @@ from PySide6.QtWidgets import QApplication, QMainWindow, QMenu, QMessageBox, QLi
 import numpy as np
 
 from settings import SettingsApp, Settings
+from features_extrator import prepare_features_box
 
 from recorder.loader import DataLoader
 from recorder.rec_service import RecorderService
@@ -62,6 +63,8 @@ class AppWindow(QMainWindow):
         self.settings.load_config()
         print("dumping config")
         print(self.settings.config)
+
+        prepare_features_box(self, self.ui.featuresTabWidget)
 
         # change the device selection combo box to custom line edit
         self.loadFromDir = Mod_LineEdit()

@@ -316,6 +316,9 @@
               </property>
               <item>
                <widget class="QTabWidget" name="featuresTabWidget">
+                <property name="styleSheet">
+                 <string notr="true">border: none;</string>
+                </property>
                 <property name="currentIndex">
                  <number>0</number>
                 </property>
@@ -323,6 +326,7 @@
                  <attribute name="title">
                   <string>Channel 1</string>
                  </attribute>
+                 <layout class="QVBoxLayout" name="verticalLayout_6"/>
                 </widget>
                 <widget class="QWidget" name="channel_2_features">
                  <attribute name="title">

@@ -1,18 +1,27 @@
-import numpy as np
-from PySide6.QtCore import QThread, Signal
+from os import getcwd
+from PySide6.QtWidgets import QTabWidget, QFormLayout, QLabel
 
+def prepare_features_box(parent, features_box: QTabWidget):
+    with open(f"{getcwd()}\\config\\features.txt", "r") as f_file:
+        features = f_file.readlines()
+        f_file.close()
 
-class FeaturesWorker(QThread):
+        num_tabs = features_box.count()
+        refs = {}
 
-    readyRead = Signal(dict)
+        for i in range(num_tabs):
 
-    def __init__(self, features: list):
-        super(FeaturesWorker, self).__init__()
+            widget = features_box.widget(i)
+            layout = QFormLayout(parent)
 
-        self.features = ["rms"]
+            for feature in features:
+                label = QLabel(f"{feature}: ".replace("\n", ""))
+                label_val = QLabel("-")
+                label_val.setObjectName(f"channel_1_{feature}")
+                
+                layout.addRow(label, label_val)
 
-    def calc_rms(self):
-        pass
+                refs[label_val.objectName] = label_val
 
-    def set_signal(self, signal: np.ndarray):
-        pass
+            widget.setLayout(layout)
+
