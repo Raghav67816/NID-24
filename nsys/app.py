@@ -5,6 +5,7 @@ from PySide6.QtGui import QIcon
 from PySide6.QtCore import QMargins, Qt
 from PySide6.QtWidgets import QApplication, QMainWindow, QMenu, QMessageBox, QListWidgetItem
 
+from platform import platform
 import numpy as np
 
 from settings import SettingsApp, Settings
@@ -33,6 +34,13 @@ class AppWindow(QMainWindow):
         super(AppWindow, self).__init__()
         
         self.theme_engine = ThemeEngine()
+        self.platform = None
+
+        if platform().lower().startswith("win"):
+            self.platform = "win"
+
+        else:
+            self.platform = "linux"
 
         """
         Setup Ui here
@@ -49,10 +57,14 @@ class AppWindow(QMainWindow):
         """
         self.menu = QMenu(self)
         self.settings = Settings()
-        self.conn_manager = RFCommProcess(self)
         self.recorder = RecorderService()
         self.data_loader = DataLoader()
         self.data_reader = DataReader(self.recorder)
+
+        self.conn_manager = None
+        if self.platform != "win":
+            self.conn_manager = RFCommProcess(self)
+            self.conn_manager.start_process()
 
         self.normal_mode = True
         
@@ -85,8 +97,6 @@ class AppWindow(QMainWindow):
         
         self.data_reader.update.connect(self.update_graphs)
         self.data_reader.connected.connect(self.update_status)
-        
-        self.conn_manager.start_process()
 
         self.ui.settingsBtn.clicked.connect(self.open_settings)
 
@@ -219,7 +229,10 @@ class AppWindow(QMainWindow):
     
     def closeEvent(self, event):
         print("Exiting")
-        self.conn_manager.cleanup()
+
+        if self.platform != "win":
+            self.conn_manager.cleanup()
+
         event.accept()
         
 
