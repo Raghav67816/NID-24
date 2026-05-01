@@ -2,8 +2,8 @@
 from ui.app import Ui_AppWindow
 
 from PySide6.QtGui import QIcon
-from PySide6.QtCore import QMargins, Qt
-from PySide6.QtWidgets import QApplication, QMainWindow, QMenu, QMessageBox, QListWidgetItem
+from PySide6.QtCore import QMargins, Qt, Signal
+from PySide6.QtWidgets import QApplication, QMainWindow, QMenu, QMessageBox
 
 from platform import platform
 import numpy as np
@@ -30,11 +30,13 @@ but considering i will have a standalone board which does not know where to conn
 """
 
 class AppWindow(QMainWindow):
+
+    app_exit = Signal()
+
     def __init__(self):
         super(AppWindow, self).__init__()
         
         self.theme_engine = ThemeEngine()
-        self.platform = None
 
         """
         Setup Ui here
@@ -53,12 +55,13 @@ class AppWindow(QMainWindow):
         self.settings = Settings()
         self.recorder = RecorderService()
         self.data_loader = DataLoader()
-        self.data_reader = DataReader(self.recorder)
+        self.data_reader = DataReader(
+            self,
+            self.recorder,
+            self.settings
+        )
 
-        self.conn_manager = None
-        if self.platform != "win":
-            self.conn_manager = RFCommProcess(self)
-            self.conn_manager.start_process()
+        
 
         self.normal_mode = True
         
@@ -232,10 +235,7 @@ class AppWindow(QMainWindow):
     
     def closeEvent(self, event):
         print("Exiting")
-
-        if self.platform != "win":
-            self.conn_manager.cleanup()
-
+        self.app_exit.emit()
         event.accept()
         
 

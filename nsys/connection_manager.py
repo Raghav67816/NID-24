@@ -4,6 +4,7 @@ from signal import SIGINT
 from os import kill, system
 from struct import unpack, error
 
+from settings import Settings
 from recorder.rec_service import RecorderService
 
 from PySide6.QtWidgets import QMessageBox
@@ -32,11 +33,31 @@ class DataReader(QObject):
     VBUFFER_SIZE = 100
     BUFFER_LEN = 12
 
-    def __init__(self, recorder_service: RecorderService):
+    def __init__(self, app, recorder_service: RecorderService, settings_obj: Settings):
         super(DataReader, self).__init__()
+
+        """
+        check for platform first 
+        if windows:
+            don't open port ask user to select a port
+
+        else i.e linux:
+            start the rfcomm process internally.
+        """
+        self.rfcomm_proc = None
+
+        platform = settings_obj.settings_obj.value("platform")
+
+        if platform == "linux":
+            self.rfcomm_proc = RFCommProcess(app)
+
+        else:
+            pass
+
 
         self.isReading = False
         self.isOpen = False
+        self.port = settings_obj.settings_obj.value("port")
 
         self.data_unpacked = None
 
@@ -75,7 +96,7 @@ class DataReader(QObject):
 
     def open_port(self):
         try:
-            self.serial_port.setPortName("/dev/rfcomm0")
+            self.serial_port.setPortName(self.port)
             self.isOpen = self.serial_port.open(QSerialPort.ReadOnly)
 
             if self.isOpen:
@@ -170,6 +191,8 @@ class RFCommProcess(QProcess):
         self.finished.connect(self.on_process_finish)
         self.errorOccurred.connect(self.on_error_occurred)
         self.readyReadStandardOutput.connect(self.on_read_output)
+
+        app.app_exit.connect(self.cleanup)
 
     def set_device_addr(self, addr: str):
         self.addr = addr

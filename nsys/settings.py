@@ -1,8 +1,7 @@
 from os import getcwd
 from pathlib import Path
 
-import serial
-
+from PySide6.QtSerialPort import QSerialPortInfo
 from PySide6.QtCore import QSettings, QObject, QSize, Signal
 from PySide6.QtWidgets import QMainWindow, QMessageBox, QFileDialog, QLineEdit, QComboBox
 
@@ -27,8 +26,10 @@ class Settings(QObject):
             "updateInterval": 60,
             "theme": "default",
             "saveDataFilePath": "~/home/nid-data",
-            "maxPacketLen": 10^6
+            "maxPacketLen": 10^6,
+            "port": QSerialPortInfo().availablePorts()[0].portName()
         }
+
 
         self.valid_keys = [
             "updateInterval",
@@ -86,15 +87,19 @@ class SettingsApp(QMainWindow):
         input_widgets = [
             self.ui.theme,
             self.ui.updateInterval,
-            self.saveDataPath
+            self.saveDataPath,
+            self.portBox
         ]
 
         for widget in input_widgets:
             if type(widget) == Mod_LineEdit or type(widget) == QLineEdit:
-                self.settings_obj.settings_obj.setValue(widget.objectName(), str(widget.text()))
+                val = widget.text()
+                self.settings_obj.settings_obj.setValue(widget.objectName(), str(val))
+                print(str(widget.text()))
 
             elif type(widget) == QComboBox:
-                self.settings_obj.settings_obj.setValue(widget.objectName(), str(widget.currentText()))
+                val = widget.currentText()
+                self.settings_obj.settings_obj.setValue(widget.objectName(), val)
 
         self.close()
 
@@ -119,7 +124,7 @@ class SettingsApp(QMainWindow):
         url = QFileDialog.getExistingDirectoryUrl(
             self,
             "Select Data Directory",
-            "~/",
+            Path("~/"),
             options=QFileDialog.Option.ShowDirsOnly
         )
                 
@@ -128,7 +133,7 @@ class SettingsApp(QMainWindow):
 
     
     def on_portbox_clicked(self):
-        ports = serial.tools.list_ports.comports()
         self.portBox.clear()
+        ports = QSerialPortInfo().availablePorts()
         for port in ports:
-            self.portBox.addItem(str(port))    
+            self.portBox.addItem(port.portName())

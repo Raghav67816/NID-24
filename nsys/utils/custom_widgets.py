@@ -13,16 +13,16 @@ def swap_widgets(old: QWidget, new: QWidget):
 class Mod_ComboBox(QComboBox):
     clicked = Signal()
 
-    def __init__(self, theme: str = None):
-        super(Mod_ComboBox, self).__init__()
+    # def __init__(self, theme: str = None):
+    #     super(Mod_ComboBox, self).__init__()
         
-        if theme:
-            self.setStyleSheet(theme)
+    #     if theme:
+    #         self.setStyleSheet(theme)
 
     def showPopup(self):
         print("clicked")
         self.clicked.emit()
-        super().showPopup()
+        return super().showPopup()
         
 
 class Mod_LineEdit(QLineEdit):

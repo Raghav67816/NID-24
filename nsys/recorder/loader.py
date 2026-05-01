@@ -15,6 +15,6 @@ class DataLoader(QObject):
             options=QFileDialog.Option.ShowDirsOnly
         )
         
-        if url != "":
-            self.selected.emit(url.toString())
+        if url:
+            self.selected.emit(url[0])
         
