@@ -5,16 +5,16 @@ from PySide6.QtGui import QIcon
 from PySide6.QtCore import QMargins, Qt, Signal
 from PySide6.QtWidgets import QApplication, QMainWindow, QMenu, QMessageBox
 
-from platform import platform
 import numpy as np
+from platform import platform
 
 from settings import SettingsApp, Settings
-from features_extrator import prepare_features_box
+from features_extrator import prepare_features_box, FeatureExtractor
 
 from recorder.loader import DataLoader
+from connection_manager import DataReader
 from recorder.rec_service import RecorderService
 from graphs_manager import prepare_graphs, prepare_menu
-from connection_manager import RFCommProcess, DataReader
 
 from utils.theme_engine import ThemeEngine
 from utils.custom_widgets import Mod_LineEdit, swap_widgets, DataControlsWidget
@@ -55,10 +55,12 @@ class AppWindow(QMainWindow):
         self.settings = Settings()
         self.recorder = RecorderService()
         self.data_loader = DataLoader()
+        self.features_extractor = FeatureExtractor()
         self.data_reader = DataReader(
             self,
             self.recorder,
-            self.settings
+            self.settings,
+            self.features_extractor
         )
 
         
@@ -79,7 +81,7 @@ class AppWindow(QMainWindow):
             self.platform = "win"
             self.settings.settings_obj.setValue("platform", "win")
 
-        else:
+        elif "linux" in platform().lower():
             self.platform = "linux"
             self.settings.settings_obj.setValue("platform", "linux")
 

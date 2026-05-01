@@ -5,7 +5,9 @@ from os import kill, system
 from struct import unpack, error
 
 from settings import Settings
+from features_extrator import FeatureExtractor
 from recorder.rec_service import RecorderService
+
 
 from PySide6.QtWidgets import QMessageBox
 from PySide6.QtSerialPort import QSerialPort
@@ -33,8 +35,16 @@ class DataReader(QObject):
     VBUFFER_SIZE = 100
     BUFFER_LEN = 12
 
-    def __init__(self, app, recorder_service: RecorderService, settings_obj: Settings):
+    def __init__(
+            self, 
+            app, 
+            recorder_service: RecorderService, 
+            settings_obj: Settings,
+            features_extractor: FeatureExtractor
+        ):
         super(DataReader, self).__init__()
+
+        self.features_extractor = features_extractor 
 
         """
         check for platform first 
@@ -50,6 +60,7 @@ class DataReader(QObject):
 
         if platform == "linux":
             self.rfcomm_proc = RFCommProcess(app)
+            print("Using the rfcomm class")
 
         else:
             pass
@@ -138,6 +149,12 @@ class DataReader(QObject):
             self.buffer_a[-1] = round(self.data_unpacked[0], self.DECI_CNT)
             self.buffer_b[-1] = round(self.data_unpacked[1], self.DECI_CNT) 
             self.buffer_c[-1] = round(self.data_unpacked[2], self.DECI_CNT)
+
+            self.features_extractor.write_data(
+                self.buffer_a, 
+                self.buffer_b, 
+                self.buffer_c                
+            )
     
             self.packet_index += 1
 
@@ -239,9 +256,8 @@ class RFCommProcess(QProcess):
             kill(self.processId(), SIGINT)
             print("Process finished")
 
-        except Exception as error:
-            print("error intterupting the process")
-            print(str(error))
+        except KeyboardInterrupt:
+            print("Process terminated gracefully")
 
         hasEnded = self.waitForFinished(5000)
         if not hasEnded:
