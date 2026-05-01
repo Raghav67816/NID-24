@@ -141,6 +141,10 @@ QComboBox {
 	background-color: transparent;
 }
 
+QComboBox:drop-down{
+	color: white;
+}
+
 
 #modeToggleBtn {
 	color: green;
@@ -170,4 +174,13 @@ QMainWindow{
 
 #featuresTabWidget{
 	border: none;
+}
+/* 
+QTabWidget:tab{
+	border: none;
+} */
+
+QSplitter::handle:vertical {
+    color: "$primary-background";
+	height: 0px;
 }

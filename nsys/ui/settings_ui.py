@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'settings.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.10.2
+## Created by: Qt User Interface Compiler version 6.11.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -108,6 +108,16 @@ class Ui_SettingsWindow(object):
 
         self.formLayout_3.setWidget(1, QFormLayout.ItemRole.FieldRole, self.maxPacketIndex)
 
+        self.serialPortLabel = QLabel(self.groupBox_3)
+        self.serialPortLabel.setObjectName(u"serialPortLabel")
+
+        self.formLayout_3.setWidget(2, QFormLayout.ItemRole.LabelRole, self.serialPortLabel)
+
+        self.serialPortBox = QComboBox(self.groupBox_3)
+        self.serialPortBox.setObjectName(u"serialPortBox")
+
+        self.formLayout_3.setWidget(2, QFormLayout.ItemRole.FieldRole, self.serialPortBox)
+
 
         self.verticalLayout_3.addWidget(self.groupBox_3)
 
@@ -145,7 +155,7 @@ class Ui_SettingsWindow(object):
 
         self.retranslateUi(SettingsWindow)
 
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(SettingsWindow)
@@ -164,6 +174,7 @@ class Ui_SettingsWindow(object):
         self.saveDataPath.setPlaceholderText(QCoreApplication.translate("SettingsWindow", u"/path/to/dir", None))
         self.mPackIndexLabel.setText(QCoreApplication.translate("SettingsWindow", u"Max Packet Index:", None))
         self.maxPacketIndex.setPlaceholderText(QCoreApplication.translate("SettingsWindow", u"1000 by default", None))
+        self.serialPortLabel.setText(QCoreApplication.translate("SettingsWindow", u"Serial Port: ", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.widget), QCoreApplication.translate("SettingsWindow", u"Project", None))
         self.discardBtn.setText(QCoreApplication.translate("SettingsWindow", u"Close", None))
         self.applyBtn.setText(QCoreApplication.translate("SettingsWindow", u"Apply", None))

@@ -36,12 +36,6 @@ class AppWindow(QMainWindow):
         self.theme_engine = ThemeEngine()
         self.platform = None
 
-        if platform().lower().startswith("win"):
-            self.platform = "win"
-
-        else:
-            self.platform = "linux"
-
         """
         Setup Ui here
         """
@@ -76,8 +70,17 @@ class AppWindow(QMainWindow):
         print("dumping config")
         print(self.settings.config)
 
-        prepare_features_box(self, self.ui.featuresTabWidget)
+        prepare_features_box(self.ui.featuresTabWidget)
 
+        if platform().lower().startswith("win"):
+            self.platform = "win"
+            self.settings.settings_obj.setValue("platform", "win")
+
+        else:
+            self.platform = "linux"
+            self.settings.settings_obj.setValue("platform", "linux")
+
+        # check platform 
         # change the device selection combo box to custom line edit
         self.loadFromDir = Mod_LineEdit()
         self.loadFromDir.setPlaceholderText("Load from directory...")
@@ -225,7 +228,7 @@ class AppWindow(QMainWindow):
         )
 
         settings_app.show()
-        settings_app.exec_()
+        settings_app.exec()
     
     def closeEvent(self, event):
         print("Exiting")

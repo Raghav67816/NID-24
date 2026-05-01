@@ -1,11 +1,12 @@
 from os import getcwd
 from json import loads
+from pathlib import Path
 
 class ThemeEngine:
     def __init__(self):
         super(ThemeEngine, self).__init__()
         
-        self.path = f"{getcwd()}/themes/default.json"
+        self.path = Path(f"{getcwd()}/themes/default.json")
         self.colors = None
         self.params = ["primary-color", "secondary-color", "primary-hover-color", "danger-color", "secondary-background", "primary-background", "success-color"]
         
@@ -17,7 +18,7 @@ class ThemeEngine:
             
     def prepare_sheet(self):
 
-        with open("./themes/default.css") as sheet:
+        with open(Path("./themes/default.css")) as sheet:
             style_ = sheet.read()
 
         for param in self.params:

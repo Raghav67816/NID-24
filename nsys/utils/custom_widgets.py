@@ -1,7 +1,7 @@
 from ui.dataControlWidget_ui import Ui_dataControlWidget
 
 from PySide6.QtGui import QIcon
-from PySide6.QtCore import Signal, QUrl
+from PySide6.QtCore import Signal
 from PySide6.QtWidgets import QComboBox, QLineEdit, QWidget
 
 def swap_widgets(old: QWidget, new: QWidget):
@@ -13,9 +13,11 @@ def swap_widgets(old: QWidget, new: QWidget):
 class Mod_ComboBox(QComboBox):
     clicked = Signal()
 
-    def __init__(self):
+    def __init__(self, theme: str = None):
         super(Mod_ComboBox, self).__init__()
-        pass
+        
+        if theme:
+            self.setStyleSheet(theme)
 
     def showPopup(self):
         print("clicked")

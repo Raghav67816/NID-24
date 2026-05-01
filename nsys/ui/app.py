@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'app.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.10.2
+## Created by: Qt User Interface Compiler version 6.11.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -173,6 +173,7 @@ class Ui_AppWindow(object):
         self.verticalLayout_4.setContentsMargins(0, -1, 0, -1)
         self.featuresTabWidget = QTabWidget(self.featuresBox)
         self.featuresTabWidget.setObjectName(u"featuresTabWidget")
+        self.featuresTabWidget.setStyleSheet(u"border: none;")
         self.channel_1_features = QWidget()
         self.channel_1_features.setObjectName(u"channel_1_features")
         self.featuresTabWidget.addTab(self.channel_1_features, "")

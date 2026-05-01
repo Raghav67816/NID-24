@@ -1,4 +1,7 @@
 from os import getcwd
+from pathlib import Path
+
+import serial
 
 from PySide6.QtCore import QSettings, QObject, QSize, Signal
 from PySide6.QtWidgets import QMainWindow, QMessageBox, QFileDialog, QLineEdit, QComboBox
@@ -6,7 +9,7 @@ from PySide6.QtWidgets import QMainWindow, QMessageBox, QFileDialog, QLineEdit, 
 from ui.settings_ui import Ui_SettingsWindow
 from utils.theme_engine import ThemeEngine
 
-from utils.custom_widgets import swap_widgets, Mod_LineEdit
+from utils.custom_widgets import swap_widgets, Mod_LineEdit, Mod_ComboBox
 
 
 class Settings(QObject):
@@ -14,7 +17,7 @@ class Settings(QObject):
         super(Settings, self).__init__()
 
         self.cwd = getcwd()
-        self.default_location = f"{self.cwd}/config/settings.ini"
+        self.default_location = Path(f"{self.cwd}/config/settings.ini")
 
         self.settings_obj = QSettings("NID-24", "Raghav67816")
 
@@ -66,6 +69,13 @@ class SettingsApp(QMainWindow):
             str(self.settings_obj.config['updateInterval'])
         )
 
+        self.portBox = Mod_ComboBox()
+        self.portBox.setPlaceholderText("--Select Serial Port--")
+        self.portBox.setEditable(False)
+        self.portBox.clicked.connect(self.on_portbox_clicked)
+        
+        swap_widgets(self.ui.serialPortBox, self.portBox)
+
         self.saveDataPath = Mod_LineEdit()
         self.saveDataPath.setText(str(self.settings_obj.config['saveDataFilePath']))
 
@@ -115,3 +125,10 @@ class SettingsApp(QMainWindow):
                 
         if url != "":
             self.saveDataPath.setText(url)
+
+    
+    def on_portbox_clicked(self):
+        ports = serial.tools.list_ports.comports()
+        self.portBox.clear()
+        for port in ports:
+            self.portBox.addItem(str(port))    

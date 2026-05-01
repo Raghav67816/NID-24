@@ -326,7 +326,6 @@
                  <attribute name="title">
                   <string>Channel 1</string>
                  </attribute>
-                 <layout class="QVBoxLayout" name="verticalLayout_6"/>
                 </widget>
                 <widget class="QWidget" name="channel_2_features">
                  <attribute name="title">
