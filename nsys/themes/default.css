@@ -170,6 +170,7 @@ QTabBar::tab:selected{
 QMainWindow{
 	background-color: "$primary-background";
 	/* background-color: #111111; */
+<<<<<<< HEAD
 }
 
 #featuresTabWidget{
@@ -183,4 +184,6 @@ QTabWidget:tab{
 QSplitter::handle:vertical {
     color: "$primary-background";
 	height: 0px;
+=======
+>>>>>>> parent of 775f7ec (added channel tabs and fixed recorder button ui logic)
 }

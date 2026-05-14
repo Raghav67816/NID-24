@@ -128,6 +128,11 @@ class DataReader(QObject):
             self.connected.emit(True)
 
     def on_data_rcvd(self):
+<<<<<<< HEAD
+=======
+        data_packed = self.serial_port.read(self.BUFFER_LEN)
+        print(data_packed.size())
+>>>>>>> parent of 775f7ec (added channel tabs and fixed recorder button ui logic)
         try:
             data_packed = self.serial_port.read(self.BUFFER_LEN)
             # data_packed = self.serial_port.readAll()
@@ -174,6 +179,7 @@ class DataReader(QObject):
             self.vbuffer_c[-1] = round(self.data_unpacked[2], self.DECI_CNT)
         
             if self.isReading:
+                print(f'is reading: {self.isReading}')
                 self.update.emit(self.vbuffer_a, self.vbuffer_b, self.vbuffer_c)
     
     def cleanup(self):

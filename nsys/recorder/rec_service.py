@@ -3,8 +3,6 @@ record incoming data for later analysis
 """
 import numpy as np
 from os import getcwd
-
-from PySide6.QtGui import QIcon
 from PySide6.QtCore import Signal, QObject, QTimer
 
 from datetime import datetime
@@ -75,15 +73,15 @@ class RecorderService(QObject):
 
             self.update_time.emit(self.time)
 
-    def toggleRecording(self, button):
-        print("recording now")
+    def toggleRecording(self):
         if not self.isRunning:
             self.isRunning = True
-            button.setIcon(QIcon(":/icons/icons8-pause-32.png"))
             self.started.emit()
 
         else:
             self.isRunning = False
-            button.setIcon(QIcon(":/icons/icons8-play-30.png"))
             self.paused.emit()
+
+    def load_caset(self, caset_path: str):
+        pass
 

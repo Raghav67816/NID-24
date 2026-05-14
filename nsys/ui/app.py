@@ -15,10 +15,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QFormLayout, QFrame, QGroupBox,
-    QHBoxLayout, QLabel, QLineEdit, QMainWindow,
+from PySide6.QtWidgets import (QApplication, QComboBox, QFormLayout, QFrame,
+    QGroupBox, QHBoxLayout, QLabel, QMainWindow,
     QPushButton, QSizePolicy, QSpacerItem, QSplitter,
-    QTabWidget, QToolButton, QVBoxLayout, QWidget)
+    QToolButton, QVBoxLayout, QWidget)
 from ui import resources_rc
 
 class Ui_AppWindow(object):
@@ -134,10 +134,10 @@ class Ui_AppWindow(object):
         self.ds_box.setObjectName(u"ds_box")
         self.verticalLayout_3 = QVBoxLayout(self.ds_box)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.loadFilePathEdit = QLineEdit(self.ds_box)
-        self.loadFilePathEdit.setObjectName(u"loadFilePathEdit")
+        self.deviceSelectionBox = QComboBox(self.ds_box)
+        self.deviceSelectionBox.setObjectName(u"deviceSelectionBox")
 
-        self.verticalLayout_3.addWidget(self.loadFilePathEdit)
+        self.verticalLayout_3.addWidget(self.deviceSelectionBox)
 
         self.frame = QFrame(self.ds_box)
         self.frame.setObjectName(u"frame")
@@ -168,6 +168,7 @@ class Ui_AppWindow(object):
 
         self.featuresBox = QGroupBox(self.right_container)
         self.featuresBox.setObjectName(u"featuresBox")
+<<<<<<< HEAD
         self.verticalLayout_4 = QVBoxLayout(self.featuresBox)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.verticalLayout_4.setContentsMargins(0, -1, 0, -1)
@@ -186,6 +187,8 @@ class Ui_AppWindow(object):
 
         self.verticalLayout_4.addWidget(self.featuresTabWidget)
 
+=======
+>>>>>>> parent of 775f7ec (added channel tabs and fixed recorder button ui logic)
 
         self.verticalLayout_2.addWidget(self.featuresBox)
 
@@ -236,9 +239,6 @@ class Ui_AppWindow(object):
 
         self.retranslateUi(AppWindow)
 
-        self.featuresTabWidget.setCurrentIndex(0)
-
-
         QMetaObject.connectSlotsByName(AppWindow)
     # setupUi
 
@@ -250,7 +250,7 @@ class Ui_AppWindow(object):
         self.modeToggleBtn.setText(QCoreApplication.translate("AppWindow", u"NOR", None))
         self.settingsBtn.setText("")
         self.ds_box.setTitle(QCoreApplication.translate("AppWindow", u"Data Tools", None))
-        self.loadFilePathEdit.setPlaceholderText(QCoreApplication.translate("AppWindow", u"Load From File....", None))
+        self.deviceSelectionBox.setPlaceholderText(QCoreApplication.translate("AppWindow", u"Select Your Device", None))
 #if QT_CONFIG(tooltip)
         self.latencyLabel.setToolTip(QCoreApplication.translate("AppWindow", u"<html><head/><body><p>Ideal Value is 1 ms for 1KHz Frequency</p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
@@ -258,9 +258,6 @@ class Ui_AppWindow(object):
         self.latencyVal.setText(QCoreApplication.translate("AppWindow", u"0", None))
         self.toggleDataBtn.setText(QCoreApplication.translate("AppWindow", u"Start", None))
         self.featuresBox.setTitle(QCoreApplication.translate("AppWindow", u"Features", None))
-        self.featuresTabWidget.setTabText(self.featuresTabWidget.indexOf(self.channel_1_features), QCoreApplication.translate("AppWindow", u"Channel 1", None))
-        self.featuresTabWidget.setTabText(self.featuresTabWidget.indexOf(self.channel_2_features), QCoreApplication.translate("AppWindow", u"Channel 2", None))
-        self.featuresTabWidget.setTabText(self.featuresTabWidget.indexOf(self.channel_3_features), QCoreApplication.translate("AppWindow", u"Channel 3", None))
         self.statusText.setText(QCoreApplication.translate("AppWindow", u"Status:", None))
         self.statusVal.setText(QCoreApplication.translate("AppWindow", u"Disconnected", None))
     # retranslateUi
