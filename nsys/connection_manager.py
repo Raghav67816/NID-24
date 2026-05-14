@@ -47,26 +47,6 @@ class DataReader(QObject):
         self.features_extractor = features_extractor
         self.settings_obj = settings_obj
 
-        """
-        check for platform first 
-        if windows:
-            don't open port ask user to select a port
-
-        else i.e linux:
-            start the rfcomm process internally.
-        """
-        self.rfcomm_proc = None
-
-        platform = settings_obj.settings_obj.value("platform")
-
-        if platform == "linux":
-            self.rfcomm_proc = RFCommProcess(app)
-            self.rfcomm_proc.start_process()
-            print("Using the rfcomm class")
-
-        else:
-            pass
-
 
         self.isReading = False
         self.isOpen = False
