@@ -44,7 +44,8 @@ class DataReader(QObject):
         ):
         super(DataReader, self).__init__()
 
-        self.features_extractor = features_extractor 
+        self.features_extractor = features_extractor
+        self.settings_obj = settings_obj
 
         """
         check for platform first 
@@ -60,6 +61,7 @@ class DataReader(QObject):
 
         if platform == "linux":
             self.rfcomm_proc = RFCommProcess(app)
+            self.rfcomm_proc.start_process()
             print("Using the rfcomm class")
 
         else:
@@ -68,7 +70,6 @@ class DataReader(QObject):
 
         self.isReading = False
         self.isOpen = False
-        self.port = settings_obj.settings_obj.value("port")
 
         self.data_unpacked = None
 
@@ -107,7 +108,9 @@ class DataReader(QObject):
 
     def open_port(self):
         try:
-            self.serial_port.setPortName(self.port)
+            port_name = self.settings_obj.settings_obj.value("port")
+            print(f"Port name: {port_name}")
+            self.serial_port.setPortName(f"/dev/{port_name}")
             self.isOpen = self.serial_port.open(QSerialPort.ReadOnly)
 
             if self.isOpen:
@@ -125,12 +128,13 @@ class DataReader(QObject):
             self.connected.emit(True)
 
     def on_data_rcvd(self):
-        data_packed = self.serial_port.read(self.BUFFER_LEN)
         try:
+            data_packed = self.serial_port.read(self.BUFFER_LEN)
+            # data_packed = self.serial_port.readAll()
             self.data_unpacked = unpack("<3f", data_packed.data())
 
-        except error:
-            pass
+        except Exception as error:
+            print(error)
 
         
         if self.data_unpacked != None:

@@ -37,7 +37,7 @@ class FeatureExtractor(QObject):
     readyRead = Signal(dict) # new feature values are calculate
 
     def __init__(self):
-        super(FeatureExtractor, self).__init__(self)
+        super(FeatureExtractor, self).__init__()
 
         self.refs = {}
         self.features = []

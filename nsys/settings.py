@@ -72,6 +72,7 @@ class SettingsApp(QMainWindow):
 
         self.portBox = Mod_ComboBox()
         self.portBox.setPlaceholderText("--Select Serial Port--")
+        self.portBox.setObjectName("port")
         self.portBox.setEditable(False)
         self.portBox.clicked.connect(self.on_portbox_clicked)
         
@@ -97,8 +98,9 @@ class SettingsApp(QMainWindow):
                 self.settings_obj.settings_obj.setValue(widget.objectName(), str(val))
                 print(str(widget.text()))
 
-            elif type(widget) == QComboBox:
+            elif type(widget) == Mod_ComboBox:
                 val = widget.currentText()
+                print(f"Value for {widget.objectName()}: {val}")
                 self.settings_obj.settings_obj.setValue(widget.objectName(), val)
 
         self.close()

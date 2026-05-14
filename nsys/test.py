@@ -1,18 +1,19 @@
-refs = {}
-features = ["RMS", "STD DEV"]
+import serial
 
-def register_feature_calc(name):
-    def decorator(func):
-        if name not in features:
-            print("invalid feature")
-        else:
-            refs[name] = func
-        return func  # Return the function so it remains callable
-    return decorator
+# Configure the serial port
+# For Windows: Use 'COM3', 'COM4', etc.
+# For Linux: Use '/dev/ttyUSB0' or '/dev/ttyACM0'
+ser = serial.Serial(
+    port='/dev/rfcomm0',      # Replace with your actual port
+    baudrate=115200,    # Must match the device's baud rate
+)
 
-@register_feature_calc("abc")
-def calc_rms(x):
-    return x + 1
-
-print(calc_rms(1))
-print(refs)
+try:
+    while True:
+        # Check if data is available
+        line = ser.readall()       # Read until a '\n' is received
+        print(line) # Decode bytes and remove extra whitespace
+except KeyboardInterrupt:
+    print("Stopping...")
+finally:
+    ser.close() # Always close the port when done

@@ -11,7 +11,7 @@ from platform import platform
 from settings import SettingsApp, Settings
 from features_extrator import prepare_features_box, FeatureExtractor
 
-from recorder.loader import DataLoader
+from recorder.loader import request_loader
 from connection_manager import DataReader
 from recorder.rec_service import RecorderService
 from graphs_manager import prepare_graphs, prepare_menu
@@ -54,7 +54,6 @@ class AppWindow(QMainWindow):
         self.menu = QMenu(self)
         self.settings = Settings()
         self.recorder = RecorderService()
-        self.data_loader = DataLoader()
         self.features_extractor = FeatureExtractor()
         self.data_reader = DataReader(
             self,
@@ -89,7 +88,6 @@ class AppWindow(QMainWindow):
         # change the device selection combo box to custom line edit
         self.loadFromDir = Mod_LineEdit()
         self.loadFromDir.setPlaceholderText("Load from directory...")
-        self.loadFromDir.clicked.connect(self.on_load_from_dir_clicked)
         
         swap_widgets(self.ui.loadFilePathEdit, self.loadFromDir)
         
@@ -110,13 +108,11 @@ class AppWindow(QMainWindow):
 
         self.recorder.update_time.connect(self.update_recorder_time)
 
+        self.loadFromDir.clicked.connect(self.load_data_from_file)
+
     # override default context menu
     def contextMenuEvent(self, event):
         self.menu.exec(event.globalPos())
-
-
-    def on_load_from_dir_clicked(self):
-        self.data_loader.request_loader(self)
 
     """
     start simulating data
@@ -224,6 +220,21 @@ class AppWindow(QMainWindow):
 
         else:
             pass
+
+    def load_data_from_file(self):
+        url = request_loader(self)
+        if url != "":
+            self.loadFromDir.setText(url)
+
+            if self.normal_mode:
+                self.change_application_mode()
+
+            self.data_reader = DataReader(
+                self,
+                self.recorder,
+                self.settings.settings_obj,
+                self.features_extractor
+            )
 
     
     def open_settings(self):
