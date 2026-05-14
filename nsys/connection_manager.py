@@ -87,6 +87,7 @@ class DataReader(QObject):
         self.serial_port.setParity(QSerialPort.Parity.NoParity)
 
     def open_port(self):
+        print("port open")
         try:
             port_name = self.settings_obj.settings_obj.value("port")
             print(f"Port name: {port_name}")

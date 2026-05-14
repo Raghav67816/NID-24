@@ -16,7 +16,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QComboBox, QFormLayout, QFrame,
-    QGroupBox, QHBoxLayout, QLabel, QMainWindow,
+    QGroupBox, QHBoxLayout, QLabel, QMainWindow, QTabWidget,
     QPushButton, QSizePolicy, QSpacerItem, QSplitter,
     QToolButton, QVBoxLayout, QWidget)
 from ui import resources_rc
@@ -168,7 +168,6 @@ class Ui_AppWindow(object):
 
         self.featuresBox = QGroupBox(self.right_container)
         self.featuresBox.setObjectName(u"featuresBox")
-<<<<<<< HEAD
         self.verticalLayout_4 = QVBoxLayout(self.featuresBox)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.verticalLayout_4.setContentsMargins(0, -1, 0, -1)
@@ -187,8 +186,6 @@ class Ui_AppWindow(object):
 
         self.verticalLayout_4.addWidget(self.featuresTabWidget)
 
-=======
->>>>>>> parent of 775f7ec (added channel tabs and fixed recorder button ui logic)
 
         self.verticalLayout_2.addWidget(self.featuresBox)
 

@@ -1,39 +1,22 @@
 # import dependencies
 from ui.app import Ui_AppWindow
 
-<<<<<<< HEAD
-from PySide6.QtGui import QIcon
 from PySide6.QtCore import QMargins, Qt, Signal
 from PySide6.QtWidgets import QApplication, QMainWindow, QMenu, QMessageBox
-=======
-from PySide6.QtCore import QMargins, Qt
-from PySide6.QtBluetooth import QBluetoothLocalDevice
-from PySide6.QtWidgets import QApplication, QMainWindow, QMenu, QMessageBox, QListWidgetItem
->>>>>>> parent of 775f7ec (added channel tabs and fixed recorder button ui logic)
 
 import numpy as np
-from platform import platform
 
 from settings import SettingsApp, Settings
 from features_extrator import prepare_features_box, FeatureExtractor
 
 from recorder.loader import request_loader
-from connection_manager import DataReader
 from recorder.rec_service import RecorderService
 from graphs_manager import prepare_graphs, prepare_menu
+from connection_manager import DataReader, RFCommProcess
 
 from utils.theme_engine import ThemeEngine
 from utils.custom_widgets import Mod_LineEdit, swap_widgets, DataControlsWidget
 
-
-"""
-Rethinking the board connection flow.
-
-Earlier a device address was required
-but now it's not
-
-but considering i will have a standalone board which does not know where to connect 
-"""
 
 class AppWindow(QMainWindow):
 
@@ -67,8 +50,7 @@ class AppWindow(QMainWindow):
             self.settings,
             self.features_extractor
         )
-
-        
+        self.comm_process = RFCommProcess(self)
 
         self.normal_mode = True
         
@@ -82,16 +64,6 @@ class AppWindow(QMainWindow):
 
         prepare_features_box(self.ui.featuresTabWidget)
 
-        if platform().lower().startswith("win"):
-            self.platform = "win"
-            self.settings.settings_obj.setValue("platform", "win")
-
-        elif "linux" in platform().lower():
-            self.platform = "linux"
-            self.settings.settings_obj.setValue("platform", "linux")
-
-        # check platform 
-        # change the device selection combo box to custom line edit
         self.loadFromDir = Mod_LineEdit()
         self.loadFromDir.setPlaceholderText("Load from directory...")
         
@@ -113,6 +85,8 @@ class AppWindow(QMainWindow):
         self.recorder.update_time.connect(self.update_recorder_time)
 
         self.loadFromDir.clicked.connect(self.load_data_from_file)
+
+        self.comm_process.start_process()
 
     # override default context menu
     def contextMenuEvent(self, event):

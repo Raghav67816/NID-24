@@ -10,6 +10,8 @@ from PySide6.QtWidgets import QTabWidget, QFormLayout, QLabel
 
 def prepare_features_box(features_box: QTabWidget):
 
+    print("preaparing...")
+
     with open(Path(f"{getcwd()}/config/features.txt"), "r") as f_file:
         features = f_file.readlines()
         f_file.close()
