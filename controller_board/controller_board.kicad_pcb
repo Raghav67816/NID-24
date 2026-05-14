@@ -79,7 +79,7 @@
 			(mirror no)
 			(drillshape 0)
 			(scaleselection 1)
-			(outputdirectory "./gerber_out_teensy")
+			(outputdirectory "gerber-new/")
 		)
 	)
 	(net 0 "")
