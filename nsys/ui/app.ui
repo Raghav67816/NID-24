@@ -307,7 +307,6 @@
              <property name="title">
               <string>Features</string>
              </property>
-<<<<<<< HEAD
              <layout class="QVBoxLayout" name="verticalLayout_4">
               <property name="leftMargin">
                <number>0</number>
@@ -341,8 +340,6 @@
                </widget>
               </item>
              </layout>
-=======
->>>>>>> parent of 775f7ec (added channel tabs and fixed recorder button ui logic)
             </widget>
            </item>
           </layout>

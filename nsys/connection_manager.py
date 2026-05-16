@@ -4,10 +4,7 @@ from signal import SIGINT
 from os import kill, system
 from struct import unpack, error
 
-from settings import Settings
-from features_extrator import FeatureExtractor
 from recorder.rec_service import RecorderService
-
 
 from PySide6.QtWidgets import QMessageBox
 from PySide6.QtSerialPort import QSerialPort
@@ -35,18 +32,8 @@ class DataReader(QObject):
     VBUFFER_SIZE = 100
     BUFFER_LEN = 12
 
-    def __init__(
-            self, 
-            app, 
-            recorder_service: RecorderService, 
-            settings_obj: Settings,
-            features_extractor: FeatureExtractor
-        ):
+    def __init__(self, recorder_service: RecorderService):
         super(DataReader, self).__init__()
-
-        self.features_extractor = features_extractor
-        self.settings_obj = settings_obj
-
 
         self.isReading = False
         self.isOpen = False
@@ -87,11 +74,8 @@ class DataReader(QObject):
         self.serial_port.setParity(QSerialPort.Parity.NoParity)
 
     def open_port(self):
-        print("port open")
         try:
-            port_name = self.settings_obj.settings_obj.value("port")
-            print(f"Port name: {port_name}")
-            self.serial_port.setPortName(f"/dev/{port_name}")
+            self.serial_port.setPortName("/dev/rfcomm0")
             self.isOpen = self.serial_port.open(QSerialPort.ReadOnly)
 
             if self.isOpen:
@@ -109,13 +93,12 @@ class DataReader(QObject):
             self.connected.emit(True)
 
     def on_data_rcvd(self):
+        data_packed = self.serial_port.read(self.BUFFER_LEN)
         try:
-            data_packed = self.serial_port.read(self.BUFFER_LEN)
-            # data_packed = self.serial_port.readAll()
             self.data_unpacked = unpack("<3f", data_packed.data())
 
-        except Exception as error:
-            print(error)
+        except error:
+            pass
 
         
         if self.data_unpacked != None:
@@ -134,12 +117,6 @@ class DataReader(QObject):
             self.buffer_a[-1] = round(self.data_unpacked[0], self.DECI_CNT)
             self.buffer_b[-1] = round(self.data_unpacked[1], self.DECI_CNT) 
             self.buffer_c[-1] = round(self.data_unpacked[2], self.DECI_CNT)
-
-            self.features_extractor.write_data(
-                self.buffer_a, 
-                self.buffer_b, 
-                self.buffer_c                
-            )
     
             self.packet_index += 1
 
@@ -194,8 +171,6 @@ class RFCommProcess(QProcess):
         self.errorOccurred.connect(self.on_error_occurred)
         self.readyReadStandardOutput.connect(self.on_read_output)
 
-        app.app_exit.connect(self.cleanup)
-
     def set_device_addr(self, addr: str):
         self.addr = addr
 
@@ -241,8 +216,9 @@ class RFCommProcess(QProcess):
             kill(self.processId(), SIGINT)
             print("Process finished")
 
-        except KeyboardInterrupt:
-            print("Process terminated gracefully")
+        except Exception as error:
+            print("error intterupting the process")
+            print(str(error))
 
         hasEnded = self.waitForFinished(5000)
         if not hasEnded:

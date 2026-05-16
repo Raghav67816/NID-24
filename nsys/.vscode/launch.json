@@ -11,7 +11,7 @@
             "program": "${cwd}/app.py",
             "console": "integratedTerminal",
             "sudo": true,
-            "python": "${cwd}/../env/bin/python3"
+            "python": "sudo ${cwd}/../env/bin/python3"
         }
     ]
 }

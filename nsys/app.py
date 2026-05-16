@@ -1,27 +1,33 @@
 # import dependencies
 from ui.app import Ui_AppWindow
 
-from PySide6.QtCore import QMargins, Qt, Signal
-from PySide6.QtWidgets import QApplication, QMainWindow, QMenu, QMessageBox
+from PySide6.QtGui import QIcon
+from PySide6.QtCore import QMargins, Qt
+from PySide6.QtWidgets import QApplication, QMainWindow, QMenu, QMessageBox, QListWidgetItem
 
 import numpy as np
 
 from settings import SettingsApp, Settings
-from features_extrator import prepare_features_box, FeatureExtractor
 
 from recorder.loader import request_loader
 from recorder.rec_service import RecorderService
 from graphs_manager import prepare_graphs, prepare_menu
-from connection_manager import DataReader, RFCommProcess
+from connection_manager import RFCommProcess, DataReader
 
 from utils.theme_engine import ThemeEngine
 from utils.custom_widgets import Mod_LineEdit, swap_widgets, DataControlsWidget
 
 
+"""
+Rethinking the board connection flow.
+
+Earlier a device address was required
+but now it's not
+
+but considering i will have a standalone board which does not know where to connect 
+"""
+
 class AppWindow(QMainWindow):
-
-    app_exit = Signal()
-
     def __init__(self):
         super(AppWindow, self).__init__()
         
@@ -42,15 +48,9 @@ class AppWindow(QMainWindow):
         """
         self.menu = QMenu(self)
         self.settings = Settings()
+        self.conn_manager = RFCommProcess(self)
         self.recorder = RecorderService()
-        self.features_extractor = FeatureExtractor()
-        self.data_reader = DataReader(
-            self,
-            self.recorder,
-            self.settings,
-            self.features_extractor
-        )
-        self.comm_process = RFCommProcess(self)
+        self.data_reader = DataReader(self.recorder)
 
         self.normal_mode = True
         
@@ -62,35 +62,39 @@ class AppWindow(QMainWindow):
         print("dumping config")
         print(self.settings.config)
 
-        prepare_features_box(self.ui.featuresTabWidget)
-
+        # change the device selection combo box to custom line edit
         self.loadFromDir = Mod_LineEdit()
         self.loadFromDir.setPlaceholderText("Load from directory...")
+        self.loadFromDir.clicked.connect(self.on_load_from_dir_clicked)
         
-        swap_widgets(self.ui.deviceSelectionBox, self.loadFromDir)
+        swap_widgets(self.ui.loadFilePathEdit, self.loadFromDir)
         
 
         """
         Connect to signals here
         """
         self.ui.toggleDataBtn.clicked.connect(self.on_start_clicked)
-        self.ui.recordBtn.clicked.connect(self.recorder.toggleRecording)
+        self.ui.recordBtn.clicked.connect(
+            lambda state, btn=self.ui.recordBtn: self.recorder.toggleRecording(btn)
+        )
         self.ui.modeToggleBtn.clicked.connect(self.change_application_mode)
         
         self.data_reader.update.connect(self.update_graphs)
         self.data_reader.connected.connect(self.update_status)
+        
+        self.conn_manager.start_process()
 
         self.ui.settingsBtn.clicked.connect(self.open_settings)
 
         self.recorder.update_time.connect(self.update_recorder_time)
 
-        self.loadFromDir.clicked.connect(self.load_data_from_file)
-
-        self.comm_process.start_process()
-
     # override default context menu
     def contextMenuEvent(self, event):
         self.menu.exec(event.globalPos())
+
+
+    def on_load_from_dir_clicked(self):
+        request_loader(self)
 
     """
     start simulating data
@@ -130,12 +134,15 @@ class AppWindow(QMainWindow):
                 """.format(self.theme_engine.get_color("primary-color"))
             )
 
+    def toggleRecorder(self):
+        self.recorder.toggleRecording()
+        self.ui.recordBtn.setIcon(QIcon(""))
+
 
     """
     update the graph when data is received
     """
     def update_graphs(self, cha: np.ndarray, chb: np.ndarray, chc: np.ndarray):
-        print("recvd signals")
         self.curves["channel_1"].setData(cha)
         self.curves["channel_2"].setData(chb)
         self.curves["channel_3"].setData(chc)
@@ -196,21 +203,6 @@ class AppWindow(QMainWindow):
         else:
             pass
 
-    def load_data_from_file(self):
-        url = request_loader(self)
-        if url != "":
-            self.loadFromDir.setText(url)
-
-            if self.normal_mode:
-                self.change_application_mode()
-
-            self.data_reader = DataReader(
-                self,
-                self.recorder,
-                self.settings.settings_obj,
-                self.features_extractor
-            )
-
     
     def open_settings(self):
         settings_app = SettingsApp(
@@ -219,11 +211,11 @@ class AppWindow(QMainWindow):
         )
 
         settings_app.show()
-        settings_app.exec()
+        settings_app.exec_()
     
     def closeEvent(self, event):
         print("Exiting")
-        self.app_exit.emit()
+        self.conn_manager.cleanup()
         event.accept()
         
 

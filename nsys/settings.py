@@ -35,7 +35,8 @@ class Settings(QObject):
             "updateInterval",
             "theme",
             "saveDataFilePath",
-            "maxPacketLen"
+            "maxPacketLen",
+            "port"
         ]
     
     def load_config(self):
