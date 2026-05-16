@@ -3,64 +3,51 @@ import numpy as np
 from os import getcwd
 from pathlib import Path
 
-from functools import wraps
-
 from PySide6.QtCore import Signal, QObject
 from PySide6.QtWidgets import QTabWidget, QFormLayout, QLabel
 
-def prepare_features_box(features_box: QTabWidget):
 
-    with open(Path(f"{getcwd()}/config/features.txt"), "r") as f_file:
+"""
+the base software provides important and basic features.
+users can add more feature by specifying name and compute function.
+"""
+
+def prepare_features_box(refs: dict, features_box: QTabWidget):
+
+    # load default features
+    with open(Path(f"{getcwd()}/config/default_features.txt"), "r") as f_file:
         features = f_file.readlines()
         f_file.close()
 
-        num_tabs = features_box.count()
-        refs = {}
+    for feature in features:
+        feature = feature.replace("\n", "")
+        add_feature(refs, features_box, feature, lambda x: print("hi"))
 
-        for i in range(num_tabs):
+def add_feature(refs: dict, features_box: QTabWidget, name: str, comp_func: callable):
+    if name != None and comp_func != None:
+
+        count = features_box.count()
+
+        for i in range(count):
             widget = features_box.widget(i)
-            layout = QFormLayout(widget)
+            layout = widget.layout()
 
-            for feature in features:
-                feature = feature.replace("\n", "")
-                label = QLabel(f"{feature}: ")
-                label_val = QLabel("-")
-                label_val.setObjectName(f"channel_{i+1}_{feature}")
-                
-                layout.addRow(label, label_val)
+            if not layout:
+                layout = QFormLayout(widget)
 
-                refs[label_val.objectName] = label_val
+            feature_label = QLabel(f"{name}: ")
+            val_label = QLabel("")
+
+            obj_name = f"channel_{i + 1}_{name.lower()}"
+            if obj_name in refs.keys():
+                return
+
+            val_label.setObjectName(f"channel_{i + 1}_{name}")
+            layout.addRow(feature_label, val_label)
 
 
-class FeatureExtractor(QObject):
-    readyRead = Signal(dict) # new feature values are calculate
-
+class FeaturesExtractor(QObject):
     def __init__(self):
-        super(FeatureExtractor, self).__init__()
+        super(FeaturesExtractor, self).__init__()
+        pass
 
-        self.refs = {}
-        self.features = []
-
-        with open(Path(f"{getcwd()}/config/features.txt"), "r") as f_file:
-            self.features = f_file.readline()
-            for feature in self.features:
-                feature = feature.replace("\n", "")
-
-            f_file.close()
-
-
-    def write_data(
-            self,
-            ch1: np.ndarray,
-            ch2: np.ndarray,
-            ch3: np.ndarray
-    ):
-        data = {}
-        for feature in self.refs.keys():
-            data[str(feature)] = self.refs[feature]([
-                ch1,
-                ch2,
-                ch3
-            ])
-
-        self.readyRead.emit(data)
