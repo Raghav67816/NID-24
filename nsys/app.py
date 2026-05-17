@@ -7,7 +7,7 @@ from PySide6.QtWidgets import QApplication, QMainWindow, QMenu, QMessageBox
 import numpy as np
 
 from settings import SettingsApp, Settings
-from features_extrator import prepare_features_box, FeaturesExtractor
+from features_extractor import FeaturesExtractor
 
 from recorder.loader import request_loader
 from recorder.rec_service import RecorderService
@@ -43,29 +43,29 @@ class AppWindow(QMainWindow):
         self.menu = QMenu(self)
         self.settings = Settings()
         self.recorder = RecorderService()
-        self.features_extractor = FeaturesExtractor()
+        self.features_extractor = FeaturesExtractor(self.ui.featuresTabWidget)
         self.data_reader = DataReader(
             self,
             self.recorder,
             self.settings,
             self.features_extractor
         )
+
         self.comm_process = RFCommProcess(self)
-        self.featureRefs = {}
         self.normal_mode = True
+
+        self.featureUiRefs = self.features_extractor.get_ui_refs()
         
         self.channels, self.curves = prepare_graphs(self.ui.graphLayout)
         prepare_menu(self, self.channels, self.menu)
 
         self.settings.load_config()
 
-        prepare_features_box(self.featureRefs, self.ui.featuresTabWidget)
-
         self.loadFromDir = Mod_LineEdit()
         self.loadFromDir.setPlaceholderText("Load from directory...")
         
         swap_widgets(self.ui.loadFilePathEdit, self.loadFromDir)
-        
+    
 
         """
         Connect to signals here
@@ -83,7 +83,11 @@ class AppWindow(QMainWindow):
 
         self.loadFromDir.clicked.connect(self.load_data_from_file)
 
+        self.features_extractor.feature_added.connect(self.on_new_feature_added)
+        self.features_extractor.computed.connect(self.update_feature_vals)
+
         self.comm_process.start_process()
+
 
     # override default context menu
     def contextMenuEvent(self, event):
@@ -207,6 +211,13 @@ class AppWindow(QMainWindow):
                 self.features_extractor
             )
 
+    def on_new_feature_added(self, refs: dict):
+        self.featureUiRefs = refs
+
+    def update_feature_vals(self, computed_vals: dict):
+        print("got values")
+        for value in computed_vals.keys():
+            self.featureUiRefs[f"channel_1_{value}"].setText(str(computed_vals[value]))
     
     def open_settings(self):
         settings_app = SettingsApp(

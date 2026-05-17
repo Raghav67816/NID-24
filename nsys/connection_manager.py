@@ -1,11 +1,11 @@
 import numpy as np
 from time import time_ns
 from signal import SIGINT
+from struct import unpack
 from os import kill, system
-from struct import unpack, error
 
 from settings import Settings
-from features_extrator import FeaturesExtractor
+from features_extractor import FeaturesExtractor
 from recorder.rec_service import RecorderService
 
 
@@ -28,7 +28,7 @@ class DataReader(QObject):
     write_latency = Signal(int)
     connected = Signal(bool)
 
-    PLOT_UPDATE_INTERVAL = 60 # ms
+    PLOT_UPDATE_INTERVAL = 250 # ms
     DECI_CNT = 6
     MAX_PACKET_INDEX = 1024
     BUFFER_SIZE = 1000
@@ -132,12 +132,6 @@ class DataReader(QObject):
             self.buffer_a[-1] = round(self.data_unpacked[0], self.DECI_CNT)
             self.buffer_b[-1] = round(self.data_unpacked[1], self.DECI_CNT) 
             self.buffer_c[-1] = round(self.data_unpacked[2], self.DECI_CNT)
-
-            self.features_extractor.write_data(
-                self.buffer_a, 
-                self.buffer_b, 
-                self.buffer_c                
-            )
     
             self.packet_index += 1
 
@@ -151,6 +145,12 @@ class DataReader(QObject):
             self.vbuffer_a[-1] = round(self.data_unpacked[0], self.DECI_CNT)
             self.vbuffer_b[-1] = round(self.data_unpacked[1], self.DECI_CNT)
             self.vbuffer_c[-1] = round(self.data_unpacked[2], self.DECI_CNT)
+
+            self.features_extractor.compute_features(
+                self.buffer_a, 
+                self.buffer_b, 
+                self.buffer_c                
+            )
         
             if self.isReading:
                 self.update.emit(self.vbuffer_a, self.vbuffer_b, self.vbuffer_c)
