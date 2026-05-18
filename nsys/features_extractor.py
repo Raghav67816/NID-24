@@ -79,7 +79,7 @@ class FeaturesExtractor(QObject):
 
     def rms(self, ch1: np.ndarray, ch2: np.ndarray, ch3: np.ndarray):
         rms_a = np.sqrt(np.mean(np.square(ch1)))
-        # rms_b = np.sqrt(np.mean(np.square(ch2)))
-        # rms_c = np.sqrt(np.mean(np.square(ch3)))
+        rms_b = np.sqrt(np.mean(np.square(ch2)))
+        rms_c = np.sqrt(np.mean(np.square(ch3)))
 
-        return (rms_a, 0, 0)
+        return (rms_a, rms_b, rms_c)

@@ -76,6 +76,7 @@ class AppWindow(QMainWindow):
         
         self.data_reader.update.connect(self.update_graphs)
         self.data_reader.connected.connect(self.update_status)
+        self.data_reader.write_latency.connect(self.update_latency)
 
         self.ui.settingsBtn.clicked.connect(self.open_settings)
 
@@ -144,8 +145,9 @@ class AppWindow(QMainWindow):
     def update_recorder_time(self, time: str):
         self.ui.recordingTime.setText(time)
 
-    def update_latency(self, latency: int):
-        self.ui.latencyVal.setText(f"{str(latency)} sec")
+    def update_latency(self, latency: float):
+        print(latency)
+        self.ui.latencyVal.setText(f"{str(latency)} ms")
 
     def update_status(self, isConnected: bool):
         def set_color(text: str, color: str):
@@ -215,7 +217,6 @@ class AppWindow(QMainWindow):
         self.featureUiRefs = refs
 
     def update_feature_vals(self, computed_vals: dict):
-        print("got values")
         for value in computed_vals.keys():
             self.featureUiRefs[f"channel_1_{value}"].setText(str(computed_vals[value]))
     

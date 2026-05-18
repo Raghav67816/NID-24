@@ -1,5 +1,5 @@
 import numpy as np
-from time import time_ns
+from time import time
 from signal import SIGINT
 from struct import unpack
 from os import kill, system
@@ -25,7 +25,7 @@ for now we only create vbuffers should hold 100 values
 class DataReader(QObject):
 
     update = Signal(object, object, object)
-    write_latency = Signal(int)
+    write_latency = Signal(float)
     connected = Signal(bool)
 
     PLOT_UPDATE_INTERVAL = 250 # ms
@@ -57,7 +57,7 @@ class DataReader(QObject):
 
         self.packet_index = 0
 
-        self.prev_time = time_ns() * 10**9
+        self.prev_time = time()
 
         # buffers
         self.buffer_a = np.zeros(self.BUFFER_SIZE + 1)
@@ -111,6 +111,11 @@ class DataReader(QObject):
             data_packed = self.serial_port.read(self.BUFFER_LEN)
             # data_packed = self.serial_port.readAll()
             self.data_unpacked = unpack("<3f", data_packed.data())
+
+            # calculate latency
+            latency = (time() - self.prev_time)
+            self.write_latency.emit(round(latency * 1000, 2))
+            self.prev_time = time()
 
         except Exception as error:
             print(error)
