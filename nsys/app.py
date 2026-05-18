@@ -146,7 +146,6 @@ class AppWindow(QMainWindow):
         self.ui.recordingTime.setText(time)
 
     def update_latency(self, latency: float):
-        print(latency)
         self.ui.latencyVal.setText(f"{str(latency)} ms")
 
     def update_status(self, isConnected: bool):

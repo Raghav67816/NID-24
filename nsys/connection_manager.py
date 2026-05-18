@@ -57,6 +57,7 @@ class DataReader(QObject):
 
         self.packet_index = 0
 
+        self.latency = 0
         self.prev_time = time()
 
         # buffers
@@ -74,7 +75,13 @@ class DataReader(QObject):
         self.update_timer.setInterval(self.PLOT_UPDATE_INTERVAL)
         self.update_timer.timeout.connect(self.update_plots)
         self.update_timer.start()
-        
+
+        # latency timer
+        self.latency_timer = QTimer()
+        self.latency_timer.setInterval(self.PLOT_UPDATE_INTERVAL)
+        self.latency_timer.timeout.connect(self.calc_latency)
+        self.latency_timer.start()
+
         self.serial_port = QSerialPort()
         self.init_serial()
                 
@@ -112,9 +119,8 @@ class DataReader(QObject):
             # data_packed = self.serial_port.readAll()
             self.data_unpacked = unpack("<3f", data_packed.data())
 
-            # calculate latency
-            latency = (time() - self.prev_time)
-            self.write_latency.emit(round(latency * 1000, 2))
+            _latency = time() - self.prev_time
+            self.latency = round(_latency, 2)
             self.prev_time = time()
 
         except Exception as error:
@@ -159,6 +165,9 @@ class DataReader(QObject):
         
             if self.isReading:
                 self.update.emit(self.vbuffer_a, self.vbuffer_b, self.vbuffer_c)
+
+    def calc_latency(self):
+        self.write_latency.emit(self.latency)
     
     def cleanup(self):
         self.isOpen = False
