@@ -1,1 +1,5 @@
 RMS
+MEA
+Variance
+Waveform Length
+Difference Abs Mean Value

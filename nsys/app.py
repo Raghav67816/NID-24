@@ -216,8 +216,11 @@ class AppWindow(QMainWindow):
         self.featureUiRefs = refs
 
     def update_feature_vals(self, computed_vals: dict):
-        for value in computed_vals.keys():
-            self.featureUiRefs[f"channel_1_{value}"].setText(str(computed_vals[value]))
+        for feature in computed_vals.keys():
+            feature_out = computed_vals[feature]
+            for i in range(len(feature_out)):
+                round_ = round(feature_out[i], 3)
+                self.featureUiRefs[f"channel_{i + 1}_{feature}"].setText(str(round_))
     
     def open_settings(self):
         settings_app = SettingsApp(
@@ -229,7 +232,6 @@ class AppWindow(QMainWindow):
         settings_app.exec()
     
     def closeEvent(self, event):
-        print("Exiting")
         self.app_exit.emit()
         event.accept()
         
