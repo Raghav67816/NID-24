@@ -6,10 +6,10 @@ from PySide6.QtWidgets import QApplication, QMainWindow, QMenu, QMessageBox
 
 import numpy as np
 
+from pyqtgraph import PlotWidget
+
 from settings import SettingsApp, Settings
 from features_extractor import FeaturesExtractor
-
-from pyqtgraph import PlotWidget, PlotDataItem
 
 from recorder.loader import request_loader
 from recorder.rec_service import RecorderService
@@ -135,9 +135,9 @@ class AppWindow(QMainWindow):
                 """
                 QPushButton{
                     color: white;
-                    background-color: {0}
+                    background-color: _color_
                 }
-                """.format(self.theme_engine.get_color("danger-color"))
+                """.replace("_color_", self.theme_engine.get_color("danger-color"))
             )
             
         if btn_text == "stop":
@@ -147,9 +147,9 @@ class AppWindow(QMainWindow):
                 """
                 QPushButton{
                     color: white;
-                    background-color: {0}
+                    background-color: _color_
                 }
-                """.format(self.theme_engine.get_color("primary-color"))
+                """.replace("_color_", self.theme_engine.get_color("primary-color"))
             )
 
 
@@ -245,7 +245,6 @@ class AppWindow(QMainWindow):
     
     def on_points_clicked(self, points: list, channel: PlotWidget, channel_name: str):
         attach_lrt(channel)
-        print(channel_name)
 
     def toggle_points(self, checked: bool):
         if checked:
