@@ -11,10 +11,11 @@
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
     QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
+    QCursor, QFont, QFontDatabase, QGradient,
+    QIcon, QImage, QKeySequence, QLinearGradient,
+    QPainter, QPalette, QPixmap, QRadialGradient,
+    QTransform)
 from PySide6.QtWidgets import (QApplication, QFormLayout, QFrame, QGroupBox,
     QHBoxLayout, QLabel, QLineEdit, QMainWindow,
     QPushButton, QSizePolicy, QSpacerItem, QSplitter,
@@ -27,6 +28,9 @@ class Ui_AppWindow(object):
             AppWindow.setObjectName(u"AppWindow")
         AppWindow.setWindowModality(Qt.WindowModality.NonModal)
         AppWindow.resize(800, 600)
+        self.actionTogglePoints = QAction(AppWindow)
+        self.actionTogglePoints.setObjectName(u"actionTogglePoints")
+        self.actionTogglePoints.setMenuRole(QAction.MenuRole.NoRole)
         self.centralwidget = QWidget(AppWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayout = QVBoxLayout(self.centralwidget)
@@ -244,6 +248,10 @@ class Ui_AppWindow(object):
 
     def retranslateUi(self, AppWindow):
         AppWindow.setWindowTitle(QCoreApplication.translate("AppWindow", u"NID-24 Analysis Software", None))
+        self.actionTogglePoints.setText(QCoreApplication.translate("AppWindow", u"Toggle Points Visibility", None))
+#if QT_CONFIG(shortcut)
+        self.actionTogglePoints.setShortcut(QCoreApplication.translate("AppWindow", u"H", None))
+#endif // QT_CONFIG(shortcut)
         self.recLabel.setText(QCoreApplication.translate("AppWindow", u"Data Recorder: ", None))
         self.recordBtn.setText("")
         self.recordingTime.setText(QCoreApplication.translate("AppWindow", u"00:00", None))

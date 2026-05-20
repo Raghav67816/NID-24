@@ -424,6 +424,17 @@
     </item>
    </layout>
   </widget>
+  <action name="actionTogglePoints">
+   <property name="text">
+    <string>Toggle Points Visibility</string>
+   </property>
+   <property name="shortcut">
+    <string>H</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::MenuRole::NoRole</enum>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="resources.qrc"/>

@@ -9,10 +9,12 @@ import numpy as np
 from settings import SettingsApp, Settings
 from features_extractor import FeaturesExtractor
 
+from pyqtgraph import PlotWidget, PlotDataItem
+
 from recorder.loader import request_loader
 from recorder.rec_service import RecorderService
-from graphs_manager import prepare_graphs, prepare_menu
 from connection_manager import DataReader, RFCommProcess
+from graphs_manager import prepare_graphs, prepare_menu, attach_lrt
 
 from utils.theme_engine import ThemeEngine
 from utils.custom_widgets import Mod_LineEdit, swap_widgets, DataControlsWidget
@@ -36,6 +38,8 @@ class AppWindow(QMainWindow):
 
         self.ui.graphLayout.setSpacing(12)
         self.ui.graphLayout.setContentsMargins(QMargins(12, 12, 12, 12))
+
+        self.ui.actionTogglePoints.setCheckable(True)
 
         """
         Define all utilities here.
@@ -64,8 +68,7 @@ class AppWindow(QMainWindow):
         self.loadFromDir = Mod_LineEdit()
         self.loadFromDir.setPlaceholderText("Load from directory...")
         
-        swap_widgets(self.ui.loadFilePathEdit, self.loadFromDir)
-    
+        swap_widgets(self.ui.loadFilePathEdit, self.loadFromDir)  
 
         """
         Connect to signals here
@@ -87,7 +90,24 @@ class AppWindow(QMainWindow):
         self.features_extractor.feature_added.connect(self.on_new_feature_added)
         self.features_extractor.computed.connect(self.update_feature_vals)
 
+        for curve in self.curves.keys():
+            self.curves[curve].sigPointsClicked.connect(
+                lambda points, item, event, curve=curve: self.on_points_clicked(
+                    points,
+                    self.channels[curve],
+                    curve
+                )
+            )
+
         self.comm_process.start_process()
+
+
+        """
+        connect to actions here
+        """
+        self.ui.actionTogglePoints.setParent(self)
+        self.addAction(self.ui.actionTogglePoints)
+        self.ui.actionTogglePoints.toggled.connect(self.toggle_points)
 
 
     # override default context menu
@@ -221,6 +241,20 @@ class AppWindow(QMainWindow):
             for i in range(len(feature_out)):
                 round_ = round(feature_out[i], 3)
                 self.featureUiRefs[f"channel_{i + 1}_{feature}"].setText(str(round_))
+
+    
+    def on_points_clicked(self, points: list, channel: PlotWidget, channel_name: str):
+        attach_lrt(channel)
+        print(channel_name)
+
+    def toggle_points(self, checked: bool):
+        if checked:
+            for curve in self.curves.values():
+                curve.setSymbol(None)
+
+        else:
+            for curve in self.curves.values():
+                curve.setSymbol("o")
     
     def open_settings(self):
         settings_app = SettingsApp(

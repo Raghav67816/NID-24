@@ -86,8 +86,8 @@ class FeaturesExtractor(QObject):
         for feature in self.features_data.keys():
             out = self.features_data[feature](ch1, ch2, ch3)
             self.computed_values[feature] = out
-
-        self.computed.emit(self.computed_values)
+            self.computed.emit(self.computed_values)
+            return self.computed_values
 
     def get_ui_refs(self):
         return self.featuresUiRefs

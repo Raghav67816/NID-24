@@ -6,9 +6,25 @@ manages functions related to graphs
 """
 
 import pyqtgraph as pg
-from PySide6.QtCore import QSize
 from PySide6.QtGui import QAction
 from PySide6.QtWidgets import QLayout, QMenu, QSizePolicy, QColorDialog
+
+def on_region_finished(lrt: pg.LinearRegionItem):
+    print("Finished")
+    return lrt.getRegion()
+
+def attach_lrt(graph: pg.PlotWidget):
+    lrt = pg.LinearRegionItem(
+        orientation="vertical",
+        pen=pg.mkPen("r"),
+    )
+
+    lrt.sigRegionChangeFinished.connect(on_region_finished)
+
+    graph.addItem(lrt)
+
+def detach_lrt(graph: pg.PlotWidget, lrt: pg.LinearRegionItem):
+    graph.removeItem(lrt)
 
 def prepare_graphs(layout: QLayout) -> tuple:
     ch1 = pg.PlotWidget()
