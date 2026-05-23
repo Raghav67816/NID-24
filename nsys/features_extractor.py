@@ -20,10 +20,10 @@ class FeaturesExtractor(QObject):
     def __init__(self, featuresBox: QTabWidget):
         super(FeaturesExtractor, self).__init__()
 
-        self.features_data = {}
-        self.computed_values = {}
-        self.featuresUiRefs = {}
-        self.active_channel = 0
+        self.features_data = {} # stores features and their names
+        self.computed_values = {} # stores computed values
+        self.featuresUiRefs = {} # stores reference to label to update
+        self.active_channel = 0 # set the active tab we are looking at
 
         featuresBox.currentChanged.connect(self.set_active_channel)
 
@@ -52,8 +52,9 @@ class FeaturesExtractor(QObject):
 
     def add_feature(self, featuresBox: QTabWidget, feature: str, compute_func: callable):
         feature = feature.replace("\n", "")
-        
+
         if feature in self.features_data.keys():
+            print("exiting")
             return
         
         self.features_data[feature.lower().replace(" ", "_")] = compute_func
@@ -84,10 +85,10 @@ class FeaturesExtractor(QObject):
         ch3: np.ndarray
     ):
         for feature in self.features_data.keys():
-            out = self.features_data[feature](ch1, ch2, ch3)
-            self.computed_values[feature] = out
+            output = self.features_data[feature](ch1, ch2, ch3)
+            self.computed_values[feature] = output
             self.computed.emit(self.computed_values)
-            return self.computed_values
+        return self.computed_values
 
     def get_ui_refs(self):
         return self.featuresUiRefs

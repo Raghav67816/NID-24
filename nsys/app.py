@@ -41,6 +41,12 @@ class AppWindow(QMainWindow):
 
         self.ui.actionTogglePoints.setCheckable(True)
 
+        self.lrt_ref = {
+            "channel_1": None,
+            "channel_2": None,
+            "channel_3": None
+        }
+
         """
         Define all utilities here.
         """
@@ -108,6 +114,10 @@ class AppWindow(QMainWindow):
         self.ui.actionTogglePoints.setParent(self)
         self.addAction(self.ui.actionTogglePoints)
         self.ui.actionTogglePoints.toggled.connect(self.toggle_points)
+
+        self.ui.actionConfirm_Regions.setParent(self)
+        self.addAction(self.ui.actionConfirm_Regions)
+        self.ui.actionConfirm_Regions.triggered.connect(self.confirm_regions)
 
 
     # override default context menu
@@ -244,7 +254,7 @@ class AppWindow(QMainWindow):
 
     
     def on_points_clicked(self, points: list, channel: PlotWidget, channel_name: str):
-        attach_lrt(channel)
+        attach_lrt(channel, self.lrt_ref)
 
     def toggle_points(self, checked: bool):
         if checked:
@@ -254,6 +264,10 @@ class AppWindow(QMainWindow):
         else:
             for curve in self.curves.values():
                 curve.setSymbol("o")
+
+    def confirm_regions(self):
+        print("Confirming regions")
+
     
     def open_settings(self):
         settings_app = SettingsApp(

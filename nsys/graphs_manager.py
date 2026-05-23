@@ -10,10 +10,9 @@ from PySide6.QtGui import QAction
 from PySide6.QtWidgets import QLayout, QMenu, QSizePolicy, QColorDialog
 
 def on_region_finished(lrt: pg.LinearRegionItem):
-    print("Finished")
     return lrt.getRegion()
 
-def attach_lrt(graph: pg.PlotWidget):
+def attach_lrt(graph: pg.PlotWidget, lrt_refs: dict):
     lrt = pg.LinearRegionItem(
         orientation="vertical",
         pen=pg.mkPen("r"),
