@@ -14,7 +14,7 @@ from features_extractor import FeaturesExtractor
 from recorder.loader import request_loader
 from recorder.rec_service import RecorderService
 from connection_manager import DataReader, RFCommProcess
-from graphs_manager import prepare_graphs, prepare_menu, attach_lrt
+from graphs_manager import prepare_graphs, prepare_menu, attach_lrt, confirm_regions
 
 from utils.theme_engine import ThemeEngine
 from utils.custom_widgets import Mod_LineEdit, swap_widgets, DataControlsWidget
@@ -100,8 +100,7 @@ class AppWindow(QMainWindow):
             self.curves[curve].sigPointsClicked.connect(
                 lambda points, item, event, curve=curve: self.on_points_clicked(
                     points,
-                    self.channels[curve],
-                    curve
+                    self.channels[curve]
                 )
             )
 
@@ -117,7 +116,7 @@ class AppWindow(QMainWindow):
 
         self.ui.actionConfirm_Regions.setParent(self)
         self.addAction(self.ui.actionConfirm_Regions)
-        self.ui.actionConfirm_Regions.triggered.connect(self.confirm_regions)
+        self.ui.actionConfirm_Regions.triggered.connect(self.on_confirm_regions)
 
 
     # override default context menu
@@ -253,8 +252,8 @@ class AppWindow(QMainWindow):
                 self.featureUiRefs[f"channel_{i + 1}_{feature}"].setText(str(round_))
 
     
-    def on_points_clicked(self, points: list, channel: PlotWidget, channel_name: str):
-        attach_lrt(channel, self.lrt_ref)
+    def on_points_clicked(self, points: list, channel: PlotWidget):
+        attach_lrt(channel, self.lrt_ref, self.channels)
 
     def toggle_points(self, checked: bool):
         if checked:
@@ -265,8 +264,8 @@ class AppWindow(QMainWindow):
             for curve in self.curves.values():
                 curve.setSymbol("o")
 
-    def confirm_regions(self):
-        print("Confirming regions")
+    def on_confirm_regions(self):
+        confirm_regions(self.lrt_ref, self.channels)
 
     
     def open_settings(self):

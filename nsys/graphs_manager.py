@@ -12,17 +12,49 @@ from PySide6.QtWidgets import QLayout, QMenu, QSizePolicy, QColorDialog
 def on_region_finished(lrt: pg.LinearRegionItem):
     return lrt.getRegion()
 
-def attach_lrt(graph: pg.PlotWidget, lrt_refs: dict):
+
+def attach_lrt(graph: pg.PlotWidget, lrt_refs: dict, channels: dict):
     lrt = pg.LinearRegionItem(
         orientation="vertical",
         pen=pg.mkPen("r"),
     )
 
     lrt.sigRegionChangeFinished.connect(on_region_finished)
-
     graph.addItem(lrt)
 
-def detach_lrt(graph: pg.PlotWidget, lrt: pg.LinearRegionItem):
+    channel_keys = list(channels.keys())
+
+    for index, channel in enumerate(channels.values()):
+        if channel == graph:
+            channel_key = channel_keys[index]
+            lrt_refs[channel_key] = lrt
+            return
+
+
+def confirm_regions(lrt_refs: dict, channels: dict):
+    if list(lrt_refs.values()).count(None) == 3:
+        return
+    
+    # get non None reference
+    global lrt_ref_
+    for lrt_ref in lrt_refs.values():
+        if lrt_ref != None:
+            lrt_ref_ = lrt_ref
+    
+    # attach 
+    for channel in channels:
+        if lrt_refs[channel] == None:
+            attach_lrt(channels[channel], lrt_refs, channels)
+
+    for lrt_ref in lrt_refs.values():
+        lrt_ref.setRegion(lrt_ref_.getRegion())
+
+def detach_lrt(graph: pg.PlotWidget, lrt: pg.LinearRegionItem, lrt_refs: dict):
+    for index, lrt_ in enumerate(lrt_refs.values()):
+        if lrt == lrt_:
+            lrt_refs[lrt_refs.keys()[index]] = None
+            break
+
     graph.removeItem(lrt)
 
 def prepare_graphs(layout: QLayout) -> tuple:
