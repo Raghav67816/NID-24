@@ -52,7 +52,7 @@ def confirm_regions(lrt_refs: dict, channels: dict):
 def detach_lrt(graph: pg.PlotWidget, lrt: pg.LinearRegionItem, lrt_refs: dict):
     for index, lrt_ in enumerate(lrt_refs.values()):
         if lrt == lrt_:
-            lrt_refs[lrt_refs.keys()[index]] = None
+            lrt_refs[list(lrt_refs.keys())[index]] = None
             break
 
     graph.removeItem(lrt)

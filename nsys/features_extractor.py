@@ -89,6 +89,18 @@ class FeaturesExtractor(QObject):
             self.computed_values[feature] = output
             self.computed.emit(self.computed_values)
         return self.computed_values
+    
+    def compute_local(
+        self,
+        ch1: np.ndarray,
+        ch2: np.ndarray,
+        ch3: np.ndarray
+    ):
+        computed_values = {}
+        for feature in self.features_data.keys():
+            output = self.features_data[feature](ch1, ch2, ch3)
+            computed_values[feature] = output
+        return computed_values
 
     def get_ui_refs(self):
         return self.featuresUiRefs

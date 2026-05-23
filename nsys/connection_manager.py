@@ -168,6 +168,21 @@ class DataReader(QObject):
 
     def calc_latency(self):
         self.write_latency.emit(self.latency)
+
+    def buffer_snapshot(self, start_idx: int, end_idx: int):
+        if start_idx > 0 and end_idx <= min(
+            len(self.buffer_a),
+            len(self.buffer_b),
+            len(self.buffer_c)
+        ):
+            return (
+                self.buffer_a[start_idx:end_idx],
+                self.buffer_b[start_idx:end_idx],
+                self.buffer_c[start_idx:end_idx]
+            )
+        
+        else:
+            return None
     
     def cleanup(self):
         self.isOpen = False

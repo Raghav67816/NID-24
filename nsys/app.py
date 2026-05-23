@@ -2,7 +2,7 @@
 from ui.app import Ui_AppWindow
 
 from PySide6.QtCore import QMargins, Qt, Signal
-from PySide6.QtWidgets import QApplication, QMainWindow, QMenu, QMessageBox
+from PySide6.QtWidgets import QApplication, QMainWindow, QMenu, QMessageBox, QDialog
 
 import numpy as np
 
@@ -11,10 +11,12 @@ from pyqtgraph import PlotWidget
 from settings import SettingsApp, Settings
 from features_extractor import FeaturesExtractor
 
+from save_data_app import SaveDataDialog
+
 from recorder.loader import request_loader
 from recorder.rec_service import RecorderService
 from connection_manager import DataReader, RFCommProcess
-from graphs_manager import prepare_graphs, prepare_menu, attach_lrt, confirm_regions
+from graphs_manager import prepare_graphs, prepare_menu, attach_lrt, confirm_regions, detach_lrt
 
 from utils.theme_engine import ThemeEngine
 from utils.custom_widgets import Mod_LineEdit, swap_widgets, DataControlsWidget
@@ -266,6 +268,17 @@ class AppWindow(QMainWindow):
 
     def on_confirm_regions(self):
         confirm_regions(self.lrt_ref, self.channels)
+        # get region of any 1 lrt and take snapshots of the buffer immediately
+        start_idx, end_idx = self.lrt_ref['channel_1'].getRegion()
+
+        start_idx = round(start_idx)
+        end_idx = round(end_idx)
+
+        region = self.data_reader.buffer_snapshot(start_idx, end_idx)
+        if region != None:
+            self.open_save_data_dialog(
+                region
+            )
 
     
     def open_settings(self):
@@ -276,6 +289,26 @@ class AppWindow(QMainWindow):
 
         settings_app.show()
         settings_app.exec()
+
+    def open_save_data_dialog(self, buffer_snapshots: tuple):
+        sd_dialog = SaveDataDialog(
+            self.theme_engine.prepare_sheet(),
+            self.features_extractor.compute_local(
+                buffer_snapshots[0],
+                buffer_snapshots[1],
+                buffer_snapshots[2]
+            )
+        )
+        sd_dialog.show()
+        ret_code = sd_dialog.exec()
+        if ret_code:
+            # clear markings
+            for index, lrt_ref in enumerate(self.lrt_ref.values()):
+                detach_lrt(
+                    list(self.channels.values())[index],
+                    lrt_ref, 
+                    self.lrt_ref
+                )
     
     def closeEvent(self, event):
         self.app_exit.emit()
