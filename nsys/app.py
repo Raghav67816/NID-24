@@ -48,6 +48,7 @@ class AppWindow(QMainWindow):
             "channel_2": None,
             "channel_3": None
         }
+        self.class_labels_ref = {}
 
         """
         Define all utilities here.
@@ -297,7 +298,9 @@ class AppWindow(QMainWindow):
                 buffer_snapshots[0],
                 buffer_snapshots[1],
                 buffer_snapshots[2]
-            )
+            ),
+            self.settings,
+            self.class_labels_ref
         )
         sd_dialog.show()
         ret_code = sd_dialog.exec()

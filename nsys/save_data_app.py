@@ -1,5 +1,9 @@
 from os import getcwd
-from random import Random
+from random import randint
+
+from time import time
+
+from settings import Settings
 
 import numpy as np
 from PySide6.QtCore import Qt
@@ -7,7 +11,11 @@ from ui.SaveDataDialog import Ui_SaveDataDialog
 from PySide6.QtWidgets import QDialog, QTableWidgetItem, QDialogButtonBox
 
 class SaveDataDialog(QDialog):
-    def __init__(self, style: str, computed_features: dict):
+    def __init__(self,
+                style: str, 
+                computed_features: dict,
+                settings_obj: Settings, 
+                class_labels_ref: dict):
         super(SaveDataDialog, self).__init__()
         
         self.ui = Ui_SaveDataDialog()
@@ -18,11 +26,15 @@ class SaveDataDialog(QDialog):
 
         self.computed_features = computed_features
 
-        self.label_ids = {}
+        self.class_labels_ref = class_labels_ref
+        self.settings_obj = settings_obj
+
+        self.class_id = 0
 
         self.show_feature_vals()
 
-        self.ui.buttonBox.clicked.connect(self.on_buttonBox_clicked)
+        self.ui.saveBtn.clicked.connect(self.on_save_clicked)
+        self.ui.cancelBtn.clicked.connect(self.on_cancel_clicked)
 
     def show_feature_vals(self):
         self.ui.featuresTable.setRowCount(len(self.computed_features.keys()))
@@ -44,18 +56,26 @@ class SaveDataDialog(QDialog):
                 self.ui.featuresTable.setItem(index, v_index + 1, val_item)
 
     def save_data(self):
-        self.r_id = Random.randint(0, 20)
-        while self.r_id in self.label_ids.values():
-            self.r_id = Random.randint(0, 20)
-
         class_label = self.ui.labelEdit.text()
-        if class_label not in self.label_ids.keys():
-            self.label_ids[class_label] = self.r_id
+        if class_label in list(self.class_labels_ref.keys()):
+            print(f"{class_label} found in label ids")
+            self.class_id = self.class_labels_ref[class_label]
+        
+        else:
+            self.class_id = randint(0, 20)
+            while self.class_id in list(self.class_labels_ref.values()):
+                self.class_id = randint(0, 20)
 
-        array = np.array([self.r_id, self.computed_features])
-        np.save(f"{getcwd()}/data/{self.r_id}.npy", array)
+            self.class_labels_ref[class_label] = self.class_id
 
-    
-    def on_buttonBox_clicked(self, button):
-        if button.text() == QDialogButtonBox.ButtonRole.AcceptRole:
-            print("accepted")
+        path = f"{getcwd()}/data/{time()}.npy"
+        np.save(path, np.array([self.class_labels_ref[class_label], self.computed_features]))
+
+        print(self.class_labels_ref)
+
+    def on_save_clicked(self):
+        self.save_data()
+        self.accept()
+
+    def on_cancel_clicked(self):
+        self.reject()

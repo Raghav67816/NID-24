@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'data_labeling_dialog.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.11.0
+## Created by: Qt User Interface Compiler version 6.10.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -15,8 +15,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QAbstractButton, QApplication, QDialog, QDialogButtonBox,
-    QHeaderView, QLineEdit, QSizePolicy, QTableWidget,
+from PySide6.QtWidgets import (QApplication, QDialog, QHBoxLayout, QHeaderView,
+    QLineEdit, QPushButton, QSizePolicy, QTableWidget,
     QTableWidgetItem, QVBoxLayout, QWidget)
 
 class Ui_SaveDataDialog(object):
@@ -46,17 +46,23 @@ class Ui_SaveDataDialog(object):
 
         self.verticalLayout.addWidget(self.labelEdit)
 
-        self.buttonBox = QDialogButtonBox(SaveDataDialog)
-        self.buttonBox.setObjectName(u"buttonBox")
-        self.buttonBox.setOrientation(Qt.Orientation.Horizontal)
-        self.buttonBox.setStandardButtons(QDialogButtonBox.StandardButton.Cancel|QDialogButtonBox.StandardButton.Ok)
+        self.horizontalLayout_3 = QHBoxLayout()
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.saveBtn = QPushButton(SaveDataDialog)
+        self.saveBtn.setObjectName(u"saveBtn")
 
-        self.verticalLayout.addWidget(self.buttonBox)
+        self.horizontalLayout_3.addWidget(self.saveBtn)
+
+        self.cancelBtn = QPushButton(SaveDataDialog)
+        self.cancelBtn.setObjectName(u"cancelBtn")
+
+        self.horizontalLayout_3.addWidget(self.cancelBtn)
+
+
+        self.verticalLayout.addLayout(self.horizontalLayout_3)
 
 
         self.retranslateUi(SaveDataDialog)
-        self.buttonBox.accepted.connect(SaveDataDialog.accept)
-        self.buttonBox.rejected.connect(SaveDataDialog.reject)
 
         QMetaObject.connectSlotsByName(SaveDataDialog)
     # setupUi
@@ -64,12 +70,14 @@ class Ui_SaveDataDialog(object):
     def retranslateUi(self, SaveDataDialog):
         SaveDataDialog.setWindowTitle(QCoreApplication.translate("SaveDataDialog", u"Label Data & Save", None))
         ___qtablewidgetitem = self.featuresTable.horizontalHeaderItem(0)
-        ___qtablewidgetitem.setText(QCoreApplication.translate("SaveDataDialog", u"Feature", None))
+        ___qtablewidgetitem.setText(QCoreApplication.translate("SaveDataDialog", u"Feature", None));
         ___qtablewidgetitem1 = self.featuresTable.horizontalHeaderItem(1)
-        ___qtablewidgetitem1.setText(QCoreApplication.translate("SaveDataDialog", u"Channel 1", None))
+        ___qtablewidgetitem1.setText(QCoreApplication.translate("SaveDataDialog", u"Channel 1", None));
         ___qtablewidgetitem2 = self.featuresTable.horizontalHeaderItem(2)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("SaveDataDialog", u"Channel 2", None))
+        ___qtablewidgetitem2.setText(QCoreApplication.translate("SaveDataDialog", u"Channel 2", None));
         ___qtablewidgetitem3 = self.featuresTable.horizontalHeaderItem(3)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("SaveDataDialog", u"Channel 3", None))
+        ___qtablewidgetitem3.setText(QCoreApplication.translate("SaveDataDialog", u"Channel 3", None));
+        self.saveBtn.setText(QCoreApplication.translate("SaveDataDialog", u"Save", None))
+        self.cancelBtn.setText(QCoreApplication.translate("SaveDataDialog", u"Cancel", None))
     # retranslateUi
 
