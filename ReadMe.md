@@ -33,7 +33,7 @@ Also, I have some experience in working with EEG, however, I don't have access t
 
 ## Analysis Software 
 
-![alt text](<images/Screenshot from 2026-03-31 21-12-26.png>)
+![alt text](<images/image copy.png>)
  <!-- Replace this image -->
 
 The Analysis Software allows developers to study the signals to gather information about the signal.
