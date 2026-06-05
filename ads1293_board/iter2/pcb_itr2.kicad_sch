@@ -4422,7 +4422,7 @@
 		(fields_autoplaced yes)
 		(uuid "22cfe7c1-8a98-414f-ac78-252145bee99f")
 		(property "Reference" "R11"
-			(at 182.88 128.27 0)
+			(at 182.88 128.2699 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4430,8 +4430,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "12K Ohm"
-			(at 182.88 130.81 0)
+		(property "Value" "22K Ohm"
+			(at 182.88 130.8099 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5645,7 +5645,7 @@
 		(fields_autoplaced yes)
 		(uuid "894abd2d-e5f1-4740-8fd4-3da084cc1d71")
 		(property "Reference" "R10"
-			(at 182.88 115.57 0)
+			(at 182.88 115.5699 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -5653,8 +5653,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "22K Ohm"
-			(at 182.88 118.11 0)
+		(property "Value" "12K Ohm"
+			(at 182.88 118.1099 0)
 			(effects
 				(font
 					(size 1.27 1.27)
