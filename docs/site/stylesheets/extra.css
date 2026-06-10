@@ -1,0 +1,10 @@
+[data-md-color-scheme="slate"] {
+  /* 1. Base Foreground Overrides (Ensures general text is readable) */
+  --md-default-fg-color:        rgba(255, 255, 255, 0.87); /* Body text */
+  --md-default-fg-color--light:  rgba(255, 255, 255, 0.54); /* Subtitles / Muted text */
+  --md-default-fg-color--lighter:rgba(255, 255, 255, 0.32); /* Disabled / Dividers */
+
+  /* 2. Specific Typography Variable Fixes for Material-MkDocs */
+  --md-typeset-color:           rgba(255, 255, 255, 0.87); /* Main article text */
+  --md-typeset-a-color:         #8ab4f8;                   /* Inline text link colors */
+}
