@@ -13,7 +13,7 @@ decorator==5.2.1
 executing==2.2.1
 fonttools==4.62.1
 ghp-import==2.1.0
-idna==3.11
+idna==3.15
 ipykernel==7.2.0
 ipython==9.11.0
 ipython_pygments_lexers==1.1.1
