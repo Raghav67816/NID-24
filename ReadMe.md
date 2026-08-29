@@ -99,25 +99,28 @@ Features of Case:
 ## BOM
 Please refer to [BOM.csv](https://github.com/Raghav67816/NID-24/blob/9190ff4f1dc71be3fecc9d7e1874cc27b3e914db/BOM%20Final.csv)
 
-## How To Use ?
+## Software Installation 
 
-Step 1: Order all the parts.
+ - Clone the repository
+   ```bash
+   git clone https://github.com/Raghav67816/NID-24.git
+   ```
 
-Step 2: Get the PCBs printed.
+- Install requirements
+  ```bash
+  pip3 install -r requirements.txt
+  ```
+  
+- Either Setup Real Hardware or Use The Simulator
+**WARNING FOR HARDWARE USERS: I am currently unable to disable RLD because of some unknown reasons, their are strong chances that ADS1293 was damaged during assembly. Please measure RLD output before putting electrodes on your body**.
 
-Step 3: Assemble by yourself or get it assembled by PCB manufacturer using the schematics.
+  For hardware, assemble both the boards as defined in the PCB files. And flash the firmware on Controller Board
 
-Step 4: (Important) Before plugging the ADS1293 into the board check all the input passives.
-No input passives should exceed the limits provided by Texas Instruments in their documentation.
+  Or, safest option is to use the ADS1293 Simulator app
 
-Step 5: Load the firmwares for both boards
-
-Step 6: Connect both boads via breakout pins on the ADS1293 Breakout board
-
-Step 7: Connect to the Analysis software via bluetooth using Controller Board
-
-Step 8: Enjoy
-
-**Note: This project involves RLD i.e small amount of current is injected in your body to counter noise. Since, this project is still under development. DO NOT USE THE RLD ELECTRODE UNTIL DEVELOPMENT STATUS IS UPDATED IN THE README**
-
-However, you can try the Signals Simulator App to simulate the ADS1293 Breakout Board.
+  1. Install the app
+  2. Make sure that you enable bluetooth and connect to your PC before starting the app.
+  3. Open the app
+  4. Select your PC as target device
+  5. Click start in NID-24 Analysis Software on your PC
+  6. Click Start in your simulator app on mobile
