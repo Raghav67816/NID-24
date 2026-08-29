@@ -4,6 +4,8 @@ NID-24 is a EMG based Humand Device Interface system that allows users to experi
 
 ![alt text](<images/Zine.png>)
 
+Demo Link - [NID-24 Demo](https://youtu.be/rfTXhZ9J3WQ)
+
 This project allows users to use their hand as mouse. Based on ADS1293 and state-of-the-art software architecture, it continously classifies intent and executes it via bluetooth.
 
 ## Why I am building NID-24 ?
